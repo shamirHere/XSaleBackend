@@ -1,50 +1,41 @@
 import mongoose from "mongoose";
 
-const farmAnimalSchema = new mongoose.Schema(
+const goat_sheep_schema = new mongoose.Schema(
   {
-    type: {
+    itemName: {
       type: String,
       enum: ["cow", "buffalo"],
+      required: true,
+    },
+    gender: {
+      type: String,
       required: true,
     },
     breed: {
       type: String,
       required: true,
     },
+    ageInMonth: {
+      type: Number,
+      required: true,
+    },
     lactation: {
       type: Number,
-      rerquired: true,
     },
-    currentMilkPerDay: {
+    currentMilkCapacityPerDay: {
       type: Number,
     },
     totalMilkCapacityPerDay: {
       type: Number,
-      required: true,
     },
-    hasDelliverdBaby: {
+    hasDeliverdBaby: {
       type: Boolean,
-      default: false,
     },
-    whenDelivered: {
-      type: String,
-      required: true,
-    },
-    whenDeliveredBaby: {
-      type: Date,
-      default: null,
-    },
-    isCalf: {
+    hasKid: {
       type: Boolean,
-      default: false,
     },
     isPregnant: {
       type: Boolean,
-      default: false,
-    },
-    monthsPregnant: {
-      type: Number,
-      default: false,
     },
     images: [{ type: String, required: true }],
     location: {
@@ -59,5 +50,6 @@ const farmAnimalSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const FarmAnimal = mongoose.model("FarmAnimal", cowSchema);
-export default FarmAnimal;
+export const Goat_Sheep = mongoose.model("GoatSheep", goat_sheep_schema);
+
+export default Goat_Sheep;
