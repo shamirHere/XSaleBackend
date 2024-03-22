@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const farmAnimalSchema = new mongoose.Schema(
+const cow_buffalo_schema = new mongoose.Schema(
   {
     type: {
       type: String,
@@ -15,10 +15,10 @@ const farmAnimalSchema = new mongoose.Schema(
       type: Number,
       rerquired: true,
     },
-    currentMilkCapacityPerDay: {
+    currentCapacity: {
       type: Number,
     },
-    totalMilkCapacityPerDay: {
+    maximumCapacity: {
       type: Number,
       required: true,
     },
@@ -27,14 +27,10 @@ const farmAnimalSchema = new mongoose.Schema(
       default: false,
     },
     whenDelivered: {
-      type: String,
-      required: true,
-    },
-    whenDeliveredBaby: {
       type: Date,
       default: null,
     },
-    isCalf: {
+    hasCalf: {
       type: Boolean,
       default: false,
     },
@@ -59,5 +55,5 @@ const farmAnimalSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const FarmAnimal = mongoose.model("FarmAnimal", cowSchema);
-export default FarmAnimal;
+const CowBuffalo = mongoose.model("cowBuffalo", cow_buffalo_schema);
+export default CowBuffalo;

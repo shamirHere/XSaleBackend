@@ -1,4 +1,4 @@
-export { default as FarmAnimal } from "./farmAnimal.model.js";
+export { default as CowBuffalo } from "./cow_buffalo.model.js";
 export { default as Bull } from "./bull.model.js";
 export { default as Goat_Sheep } from "./goat_sheep.model.js";
 export { default as Dog } from "./dog.models.js";

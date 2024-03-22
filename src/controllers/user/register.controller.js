@@ -1,8 +1,13 @@
 import { AsyncHandler, ApiError, ApiResponse } from "../../utils/index.js";
-import { User } from "../../models/user/index.js";
+import { User, Location } from "../../models/user/index.js";
 
 const registerUser = AsyncHandler(async (req, res) => {
-  const { userName, phoneNumber, profilePicture } = req.body;
+  const {
+    userName,
+    phoneNumber,
+    profilePicture,
+    location: locationData,
+  } = req.body;
 
   if (!userName) {
     return res.status(400).json(new ApiResponse(400, "User name is required"));
@@ -17,14 +22,31 @@ const registerUser = AsyncHandler(async (req, res) => {
         console.log(existedUser, "this user already exits");
         return res
           .status(409)
-          .json(new ApiResponse(409, "User with phone number"));
+          .json(
+            new ApiResponse(409, "User with this phone number already exist")
+          );
       }
 
-      const user = await User.create({
+      const userLocation = new Location({
+        city: locationData.city,
+        state: locationData.city,
+        pincode: locationData.pincode,
+        country: locationData.country,
+        latitude: locationData.latitude,
+        longitude: locationData.longitude,
+      });
+
+      const savedLocation = await userLocation.save();
+
+      const newUser = new User({
         userName,
         phoneNumber,
         profilePicture,
+        location: savedLocation._id,
       });
+
+      const savedUser = await newUser.save();
+
       const createdUser = await User.find({ phoneNumber });
       if (!createdUser) {
         return res
@@ -33,7 +55,7 @@ const registerUser = AsyncHandler(async (req, res) => {
       }
       return res
         .status(201)
-        .json(new ApiResponse(201, "User registered successfully", user));
+        .json(new ApiResponse(201, "User registered successfully", savedUser));
     } catch (error) {
       return res
         .status(500)
