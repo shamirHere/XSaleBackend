@@ -9,7 +9,7 @@ const loginUser = AsyncHandler(async (req, res) => {
   } else if (phoneNumber.length !== 10) {
     throw new ApiError(400, "please enter a valid phone number");
   }
-  const user = await User.findOne({ phoneNumber });
+  const user = await User.findOne({ phoneNumber }).populate("location");
   if (!user) {
     throw new ApiError(404, "user is not registered , please register");
   }
