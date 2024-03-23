@@ -27,36 +27,42 @@ const registerUser = AsyncHandler(async (req, res) => {
           );
       }
 
-      const userLocation = new Location({
-        city: locationData.city,
-        state: locationData.city,
-        pincode: locationData.pincode,
-        country: locationData.country,
-        latitude: locationData.latitude,
-        longitude: locationData.longitude,
-      });
-
-      const savedLocation = await userLocation.save();
-
       const newUser = new User({
         userName,
         phoneNumber,
         profilePicture,
+      });
+      const savedUser = await newUser.save();
+      const userLocation = new Location({
+        city: locationData.city,
+        state: locationData.state,
+        pincode: locationData.pincode,
+        country: locationData.country,
+        latitude: locationData.latitude,
+        longitude: locationData.longitude,
+        userId: savedUser._id,
+      });
+      const savedLocation = await userLocation.save();
+      const updateUser = await User.findByIdAndUpdate(savedUser._id, {
         location: savedLocation._id,
       });
 
-      const savedUser = await newUser.save();
+      const userWithLocation = await User.findById(savedUser._id).populate(
+        "location"
+      );
 
-      const createdUser = await User.find({ phoneNumber });
-      if (!createdUser) {
+      if (!updateUser) {
         return res
           .status(500)
           .json(new ApiResponse(500, "Internal server error"));
       }
       return res
         .status(201)
-        .json(new ApiResponse(201, "User registered successfully", savedUser));
+        .json(
+          new ApiResponse(201, "User registered successfully", userWithLocation)
+        );
     } catch (error) {
+      console.log("this is error", error);
       return res
         .status(500)
         .json(new ApiResponse(500, "Internal server error"));

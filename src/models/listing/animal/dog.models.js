@@ -33,4 +33,5 @@ const dogSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Dog = mongoose.Model("Dog", dogSchema);
+const Dog = mongoose.model("Dog", dogSchema);
+export default Dog;

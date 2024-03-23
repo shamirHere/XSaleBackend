@@ -1,8 +1,9 @@
 import { ApiError, AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import cowBuffalo from "../../../models/listing/animal/cow_buffalo.model.js";
+import { CowBuffalo } from "../../../models/listing/animal/index.js";
 
-const cow_buffaloController = AsyncHandler(async (req, res) => {
+const createCowBuffalo = async (req, res) => {
   const {
+    user,
     type,
     breed,
     lactation,
@@ -13,13 +14,171 @@ const cow_buffaloController = AsyncHandler(async (req, res) => {
     hasCalf,
     isPregnant,
     monthsPregnant,
-    images,
-    location,
+    additionalInformation,
+    media,
     askingPrice,
+    location,
   } = req.body;
 
-  const createdAnimal = await cowBuffalo.create({
-    type,
+  try {
+    if (!user) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, userId, "id of the user is required"));
+    } else if (!type) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, type, "type is required"));
+    } else if (!breed) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, breed, "breed of the animal is required"));
+    } else if (!lactation) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(
+            400,
+            lactation,
+            "lactation cycle of the animal is required"
+          )
+        );
+    } else if (!maximumCapacity) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(
+            400,
+            maximumCapacity,
+            "maximum capacity the animal is required"
+          )
+        );
+    } else if (media.length == 0) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(400, media, "atleast one image or video is required")
+        );
+    } else if (!location) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(400, location, "location of the animal is required")
+        );
+    } else if (!askingPrice) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, askingPrice, "asking price is required"));
+    } else {
+      const newCowBuffalo = new CowBuffalo(req.body);
+      const savedCowBuffalo = await newCowBuffalo.save();
+      const animal_location_user = await CowBuffalo.find(
+        savedCowBuffalo._id
+      ).populate({ path: "user", populate: { path: "location" } });
+      res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            animal_location_user,
+            "farm animal listing created successfully"
+          )
+        );
+    }
+  } catch (error) {
+    console.log(error, "this is the error");
+    return res
+      .status(500)
+      .json(
+        new ApiResponse(
+          500,
+          location,
+          "Internal server error while saving the animal to the db"
+        )
+      );
+  }
+};
+
+const getAllCowBuffalo = async (req, res) => {
+  const { type } = req.body;
+  try {
+    let query = {};
+    if (!type) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, type, "type of the animal is required"));
+    }
+    if (type == "cow" || type == "buffalo") {
+      query.type = type.toLowerCase();
+      const cowOrBuffaloes = await CowBuffalo.find(query).populate({
+        path: "user",
+        populate: { path: "location" },
+      });
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            cowOrBuffaloes,
+            `these are all the available ${query.type}`
+          )
+        );
+    } else if (type == "all") {
+      const cowsBuffaloes = await CowBuffalo.find().populate({
+        path: "user",
+        populate: {
+          path: "location",
+        },
+      });
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            cowsBuffaloes,
+            "All cows and buffaloes fetched successfully"
+          )
+        );
+    }
+  } catch (error) {
+    console.log(error, "this is the error");
+    return res
+      .status(500)
+      .json(
+        new ApiResponse(
+          500,
+          "",
+          "Internal server error while fetching all the cow and buffalo"
+        )
+      );
+  }
+};
+
+const getSingleCowBuffalo = async (req, res) => {
+  const { _id } = req.body;
+  try {
+    const cowBuffalo = await CowBuffalo.findOne({ _id: id }).populate({
+      path: "user",
+      populate: { path: "location" },
+    });
+    if (!cowBuffalo) {
+      return res
+        .status(404)
+        .json(new ApiResponse(404, cowBuffalo, "cow / buffalo not found"));
+    }
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, cowBuffalo, "cow/buffalo fetched successfully")
+      );
+  } catch (error) {
+    console.log(`error while fetching single cow/buffalo ${error}`);
+  }
+};
+
+const updateCowBuffalo = async (req, res) => {
+  const {
+    _id,
     breed,
     lactation,
     currentCapacity,
@@ -29,12 +188,76 @@ const cow_buffaloController = AsyncHandler(async (req, res) => {
     hasCalf,
     isPregnant,
     monthsPregnant,
-    images,
-    location,
+    addtionalInformation,
+    media,
     askingPrice,
-  });
-  const find = await cowBuffalo.find();
-  res.send(find);
-});
+    location,
+  } = req.body;
+  try {
+    if (!_id) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, _id, "is the of the document is required"));
+    }
+    const updatedCowBuffalo = await CowBuffalo.findByIdAndUpdate(
+      _id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (!updateCowBuffalo) {
+      return res
+        .status(404)
+        .json(new ApiResponse(404, updatedCowBuffalo, "cow/buffalo not found"));
+    } else if (updatedCowBuffalo) {
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            updatedCowBuffalo,
+            "your listing for this cow/buffalo updated"
+          )
+        );
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json(new ApiResponse(500, error, "error while updating cow/buffalo"));
+  }
+};
 
-export default cow_buffaloController;
+const deleteCowBuffalo = async (req, res) => {
+  const { _id } = req.body;
+
+  try {
+    const deleteCowBuffalo = await CowBuffalo.findByIdAndDelete(_id);
+    if (!deleteCowBuffalo) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, _id, "cow / buffalo not found"));
+    }
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "", "cow / buffalo deleted successfully"));
+  } catch (error) {
+    res
+      .status(500)
+      .json(
+        new ApiResponse(
+          500,
+          "",
+          "internal server error while deleting cow / buffalo"
+        )
+      );
+  }
+};
+
+export {
+  createCowBuffalo,
+  getAllCowBuffalo,
+  updateCowBuffalo,
+  getSingleCowBuffalo,
+  deleteCowBuffalo,
+};
