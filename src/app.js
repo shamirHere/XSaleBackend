@@ -18,7 +18,6 @@ import userRouter from "./routes/userRoutes.js";
 import animalRouter from "./routes/listingRoutes.js";
 // // routes for the user
 app.use("/api/v1/user", userRouter);
-
 app.use("/api/v1/listing", animalRouter);
 
 export { app };
