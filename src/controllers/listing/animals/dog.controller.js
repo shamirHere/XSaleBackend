@@ -16,7 +16,7 @@ const createDog = AsyncHandler(async (req, res) => {
   if (!user) {
     return res
       .status(400)
-      .json(new ApiResponse(400, user, "user id is required"));
+      .json(new ApiResponse(400, _id, "user id is required"));
   } else if (!breed) {
     return res
       .status(400)
@@ -28,14 +28,14 @@ const createDog = AsyncHandler(async (req, res) => {
   } else if (!age) {
     return res
       .status(400)
-      .json(new ApiResponse(400, gender, "age of the dog is required"));
+      .json(new ApiResponse(400, age, "age of the dog is required"));
   } else if (!vaccination) {
     return res
       .status(400)
       .json(
         new ApiResponse(
           400,
-          gender,
+          vaccination,
           "vaccination detail of the dog is required"
         )
       );
@@ -84,7 +84,7 @@ const getAllDog = AsyncHandler(async (req, res) => {
     console.log("error while fetching all the dogs ", error);
     return res
       .status(500)
-      .json(new ApiResponse(500, "", "error while fetching all the dogs"));
+      .json(new ApiResponse(500, error, "error while fetching all the dogs"));
   }
 });
 const getSingleDog = AsyncHandler(async (req, res) => {
@@ -111,7 +111,7 @@ const getSingleDog = AsyncHandler(async (req, res) => {
     console.log("error while fetching single dog ", error);
     return res
       .status(500)
-      .json(new ApiResponse(500, "", "error while fething single dog"));
+      .json(new ApiResponse(500, error, "error while fething single dog"));
   }
 });
 const updateDog = AsyncHandler(async (req, res) => {

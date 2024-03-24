@@ -2,12 +2,16 @@ import mongoose from "mongoose";
 
 const donkeySchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     gender: {
       type: String,
       enum: ["male", "female", "kid"],
       required: true,
     },
-    ageInYears: {
+    age: {
       type: Number,
       required: true,
     },
@@ -17,13 +21,13 @@ const donkeySchema = new mongoose.Schema(
     hasDeliveredBaby: {
       type: Boolean,
     },
-    hasKid: {
+    hasFoal: {
       type: Boolean,
     },
     isPregnant: {
       type: Boolean,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

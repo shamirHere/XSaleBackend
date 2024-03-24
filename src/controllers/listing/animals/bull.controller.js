@@ -155,6 +155,9 @@ const updateBull = async (req, res) => {
 const deleteBull = async (req, res) => {
   const { _id } = req.body;
   try {
+    if (!_id) {
+      return res.send(400).json(new ApiResponse(400, _id, "please provide the id of the document"))
+    }
     const deletedBull = await Bull.findByIdAndDelete(_id);
     if (!deletedBull) {
       return res
@@ -165,6 +168,7 @@ const deleteBull = async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, "", "bull deleted successfully"));
   } catch (error) {
+    console.log("error while deleting the bull ", error)
     res
       .status(500)
       .json(

@@ -22,6 +22,14 @@ import {
   deleteDog,
 } from "../controllers/listing/animals/dog.controller.js";
 
+import {
+  createDonkey,
+  getAllDonkeys,
+  getSingleDonkey,
+  updateDonkey,
+  deleteDonkey,
+} from "../controllers/listing/animals/donkey.controller.js";
+
 const router = Router();
 
 // for cows and buffalo
@@ -44,5 +52,12 @@ router.route("/fetch/singleDog").get(getSingleDog);
 router.route("/create/dog").post(createDog);
 router.route("/update/dog").post(updateDog);
 router.route("/delete/dog").post(deleteDog);
+
+// for donkeys
+router.route("/fetch/donkey").get(getAllDonkeys);
+router.route("/fetch/singleDonkey").get(getSingleDonkey);
+router.route("/create/donkey").post(createDonkey);
+router.route("/update/donkey").post(updateDonkey);
+router.route("/delete/donkey").post(deleteDonkey);
 
 export default router;
