@@ -29,6 +29,13 @@ import {
   updateDonkey,
   deleteDonkey,
 } from "../controllers/listing/animals/donkey.controller.js";
+import {
+  createGoatSheep,
+  getAllGoatSheep,
+  getSingleGoatSheep,
+  updateGoatSheep,
+  deleteGoatSheep,
+} from "../controllers/listing/animals/goat_sheep.controller.js";
 
 const router = Router();
 
@@ -59,5 +66,12 @@ router.route("/fetch/singleDonkey").get(getSingleDonkey);
 router.route("/create/donkey").post(createDonkey);
 router.route("/update/donkey").post(updateDonkey);
 router.route("/delete/donkey").post(deleteDonkey);
+
+// for goat sheep
+router.route("/fetch/goatSheep").get(getAllGoatSheep);
+router.route("/fetch/singleGoatSheep").get(getSingleGoatSheep);
+router.route("/create/goatSheep").post(createGoatSheep);
+router.route("/update/goatSheep").post(updateGoatSheep);
+router.route("/delete/goatSheep").post(deleteGoatSheep);
 
 export default router;

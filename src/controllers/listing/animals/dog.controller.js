@@ -178,7 +178,7 @@ const deleteDog = AsyncHandler(async (req, res) => {
     res
       .status(500)
       .json(
-        new ApiResponse(500, "", "internal server error while deleting dog")
+        new ApiResponse(500, error, "internal server error while deleting dog")
       );
   }
 });

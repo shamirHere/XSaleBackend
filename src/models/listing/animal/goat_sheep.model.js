@@ -2,10 +2,14 @@ import mongoose from "mongoose";
 
 const goat_sheep_schema = new mongoose.Schema(
   {
-    itemName: {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    type: {
       type: String,
-      enum: ["cow", "buffalo"],
-      required: true,
+      enum: ["goat", "sheep"],
+      required: [true, "type of the animal is required goat or sheep"],
     },
     gender: {
       type: String,
@@ -15,17 +19,17 @@ const goat_sheep_schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    ageInMonth: {
+    age: {
       type: Number,
       required: true,
     },
     lactation: {
       type: Number,
     },
-    currentMilkCapacityPerDay: {
+    currentCapacity: {
       type: Number,
     },
-    totalMilkCapacityPerDay: {
+    maximumCapacity: {
       type: Number,
     },
     hasDeliverdBaby: {
@@ -37,7 +41,7 @@ const goat_sheep_schema = new mongoose.Schema(
     isPregnant: {
       type: Boolean,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
