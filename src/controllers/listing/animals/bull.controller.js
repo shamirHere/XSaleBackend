@@ -76,6 +76,9 @@ const getAllBulls = async (req, res) => {
       .json(new ApiResponse(200, bulls, "these are all the bulls"));
   } catch (error) {
     console.log("error while fetching all the bulls ", error);
+    return res
+      .status(500)
+      .json(new ApiResponse(500, "", "error while fetching all the bulls"));
   }
 };
 
@@ -85,7 +88,7 @@ const getSingleBull = async (req, res) => {
     if (!_id) {
       return res
         .status(400)
-        .json(new ApiResponse(400, _id, "please provide the if of the bull"));
+        .json(new ApiResponse(400, _id, "please provide the id of the bull"));
     }
     const bull = await Bull.findOne({ _id }).populate({
       path: "user",
@@ -141,7 +144,12 @@ const updateBull = async (req, res) => {
           )
         );
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log("error while updating the bull  ", error);
+    return res
+      .status(500)
+      .json(new ApiResponse(500, "", "erorr while updating the bull"));
+  }
 };
 
 const deleteBull = async (req, res) => {
