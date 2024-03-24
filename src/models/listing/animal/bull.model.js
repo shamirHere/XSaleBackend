@@ -2,11 +2,23 @@ import mongoose from "mongoose";
 
 const bullSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     breed: {
       type: String,
       requried: true,
     },
-    images: [{ type: String, required: true }],
+    age: {
+      type: Number,
+      required: true,
+    },
+    additionalInformation: {
+      type: String,
+    },
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

@@ -24,7 +24,7 @@ const createCowBuffalo = async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json(new ApiResponse(400, userId, "id of the user is required"));
+        .json(new ApiResponse(400, user, "id of the user is required"));
     } else if (!type) {
       return res
         .status(400)
@@ -75,7 +75,7 @@ const createCowBuffalo = async (req, res) => {
       const animal_location_user = await CowBuffalo.find(
         savedCowBuffalo._id
       ).populate({ path: "user", populate: { path: "location" } });
-      res
+      return res
         .status(200)
         .json(
           new ApiResponse(
@@ -141,7 +141,10 @@ const getAllCowBuffalo = async (req, res) => {
         );
     }
   } catch (error) {
-    console.log(error, "this is the error");
+    console.log(
+      error,
+      "this is the error while fetching all the cows and buffaloes"
+    );
     return res
       .status(500)
       .json(
@@ -173,6 +176,11 @@ const getSingleCowBuffalo = async (req, res) => {
       );
   } catch (error) {
     console.log(`error while fetching single cow/buffalo ${error}`);
+    return res
+      .status(500)
+      .json(
+        new ApiResponse(500, "", "error while fething single cow or buffalo")
+      );
   }
 };
 
