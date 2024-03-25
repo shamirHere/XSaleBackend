@@ -38,6 +38,9 @@ const horse_cat_schema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    additionalInformation: {
+      type: String,
+    },
     media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,

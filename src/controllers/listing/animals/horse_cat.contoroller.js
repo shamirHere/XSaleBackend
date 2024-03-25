@@ -12,6 +12,7 @@ const createHorseCat = AsyncHandler(async (req, res) => {
     deliveredBaby,
     hasKid,
     isPregnant,
+    additionalInformation,
     media,
     location,
     askingPrice,
