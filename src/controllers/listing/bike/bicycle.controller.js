@@ -1,5 +1,5 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import { Bicycle } from "../../../models/listing/bike/bicycle.model.js";
+import { Bicycle } from "../../../models/listing/bike/index.js";
 
 const createBicycle = AsyncHandler(async (req, res) => {
   const {
