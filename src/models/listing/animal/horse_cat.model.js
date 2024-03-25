@@ -2,6 +2,15 @@ import mongoose from "mongoose";
 
 const horse_cat_schema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    type: {
+      type: String,
+      enum: ["horse", "cat"],
+      required: [true, "type of the animal is required horse or cat"],
+    },
     gender: {
       type: String,
       enum: ["male", "female"],
@@ -29,12 +38,15 @@ const horse_cat_schema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    image: [{ type: String, required: true }],
+    additionalInformation: {
+      type: String,
+    },
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
     },
-    askinPrice: {
+    askingPrice: {
       type: Number,
       required: true,
     },

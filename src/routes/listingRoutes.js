@@ -29,6 +29,28 @@ import {
   updateDonkey,
   deleteDonkey,
 } from "../controllers/listing/animals/donkey.controller.js";
+import {
+  createGoatSheep,
+  getAllGoatSheep,
+  getSingleGoatSheep,
+  updateGoatSheep,
+  deleteGoatSheep,
+} from "../controllers/listing/animals/goat_sheep.controller.js";
+import {
+  createOtherAnimal,
+  getAllOtherAnimals,
+  getSingleOtherAnimal,
+  updateOtherAnimal,
+  deleteOtherAnimal,
+} from "../controllers/listing/animals/otherAnimal.controller.js";
+
+import {
+  createHorseCat,
+  getAllHorseCat,
+  getSingleHorseCat,
+  updateHorseCat,
+  deleteHorseCat,
+} from "../controllers/listing/animals/horse_cat.contoroller.js";
 
 const router = Router();
 
@@ -59,5 +81,26 @@ router.route("/fetch/singleDonkey").get(getSingleDonkey);
 router.route("/create/donkey").post(createDonkey);
 router.route("/update/donkey").post(updateDonkey);
 router.route("/delete/donkey").post(deleteDonkey);
+
+// for goat sheep
+router.route("/fetch/goatSheep").get(getAllGoatSheep);
+router.route("/fetch/singleGoatSheep").get(getSingleGoatSheep);
+router.route("/create/goatSheep").post(createGoatSheep);
+router.route("/update/goatSheep").post(updateGoatSheep);
+router.route("/delete/goatSheep").post(deleteGoatSheep);
+
+// for horse cat
+router.route("/fetch/horseCat").get(getAllHorseCat);
+router.route("/fetch/singleHorseCat").get(getSingleHorseCat);
+router.route("/create/horseCat").post(createHorseCat);
+router.route("/update/horseCat").post(updateHorseCat);
+router.route("/delete/horseCat").post(deleteHorseCat);
+
+// for other animal
+router.route("/fetch/otherAnimal").get(getAllOtherAnimals);
+router.route("/fetch/singleOtherAnimal").get(getSingleOtherAnimal);
+router.route("/create/otherAnimal").post(createOtherAnimal);
+router.route("/update/otherAnimal").post(updateOtherAnimal);
+router.route("/delete/otherAnimal").post(deleteOtherAnimal);
 
 export default router;

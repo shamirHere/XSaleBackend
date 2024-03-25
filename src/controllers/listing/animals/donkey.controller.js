@@ -56,7 +56,7 @@ const createDonkey = AsyncHandler(async (req, res) => {
           new ApiResponse(
             200,
             donkey_location_user,
-            "new dog created successfully"
+            "new donkey created successfully"
           )
         );
     } catch (error) {
@@ -85,10 +85,12 @@ const getAllDonkeys = AsyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, donkeys, "these are all the donkeys"));
   } catch (error) {
-    console.log("error while fetching all the dogs ", error);
+    console.log("error while fetching all the donkeys ", error);
     return res
       .status(500)
-      .json(new ApiResponse(500, error, "error while fetching all the dogs"));
+      .json(
+        new ApiResponse(500, error, "error while fetching all the donkeys")
+      );
   }
 });
 const getSingleDonkey = AsyncHandler(async (req, res) => {
@@ -161,7 +163,7 @@ const updateDonkey = AsyncHandler(async (req, res) => {
     console.log("error while updating the donkey", error);
     return res
       .status(500)
-      .json(new ApiResponse(500, "", "erorr while updating the dog"));
+      .json(new ApiResponse(500, "", "erorr while updating the donkey"));
   }
 });
 const deleteDonkey = AsyncHandler(async (req, res) => {
@@ -175,20 +177,24 @@ const deleteDonkey = AsyncHandler(async (req, res) => {
         );
     }
     const deletedDonkey = await Donkey.findByIdAndDelete(_id);
-    if (!deleteDonkey) {
+    if (!deletedDonkey) {
       return res
         .status(400)
-        .json(new ApiResponse(400, _id, "dog does not exist"));
+        .json(new ApiResponse(400, _id, "donkey does not exist"));
     }
     return res
       .status(200)
-      .json(new ApiResponse(200, "", "dog deleted successfully"));
+      .json(new ApiResponse(200, "", "donkey deleted successfully"));
   } catch (error) {
     console.log("error while deleting the donkey ", error);
     res
       .status(500)
       .json(
-        new ApiResponse(500, error, "internal server error while deleting dog")
+        new ApiResponse(
+          500,
+          error,
+          "internal server error while deleting donkey"
+        )
       );
   }
 });

@@ -1,25 +1,23 @@
-import { ApiError, AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import { CowBuffalo } from "../../../models/listing/animal/index.js";
+import { Goat_Sheep } from "../../../models/listing/animal/goat_sheep.model.js";
+import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 
-const createCowBuffalo = async (req, res) => {
+const createGoatSheep = AsyncHandler(async (req, res) => {
   const {
     user,
     type,
+    gender,
     breed,
+    age,
     lactation,
     currentCapacity,
     maximumCapacity,
     hasDeliverdBaby,
-    whenDelivered,
-    hasCalf,
+    hasKid,
     isPregnant,
-    monthsPregnant,
-    additionalInformation,
     media,
-    askingPrice,
     location,
+    askingPrice,
   } = req.body;
-
   try {
     if (!user) {
       return res
@@ -29,35 +27,23 @@ const createCowBuffalo = async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, type, "type is required"));
-    } else if (!breed) {
+    } else if (!gender) {
       return res
         .status(400)
-        .json(new ApiResponse(400, breed, "breed of the animal is required"));
-    } else if (!lactation) {
+        .json(new ApiResponse(400, breed, "gender of the animal is required"));
+    } else if (!age) {
       return res
         .status(400)
-        .json(
-          new ApiResponse(
-            400,
-            lactation,
-            "lactation cycle of the animal is required"
-          )
-        );
-    } else if (!maximumCapacity) {
-      return res
-        .status(400)
-        .json(
-          new ApiResponse(
-            400,
-            maximumCapacity,
-            "maximum capacity the animal is required"
-          )
-        );
+        .json(new ApiResponse(400, age, "age of the animal is required"));
     } else if (media.length == 0) {
       return res
         .status(400)
         .json(
-          new ApiResponse(400, media, "atleast one image or video is required")
+          new ApiResponse(
+            400,
+            media,
+            "at least one image or video of the animal is required"
+          )
         );
     } else if (!location) {
       return res
@@ -68,12 +54,12 @@ const createCowBuffalo = async (req, res) => {
     } else if (!askingPrice) {
       return res
         .status(400)
-        .json(new ApiResponse(400, askingPrice, "asking price is required"));
+        .json(new ApiResponse(400, askingPrice, "askingPrice is required"));
     } else {
-      const newCowBuffalo = new CowBuffalo(req.body);
-      const savedCowBuffalo = await newCowBuffalo.save();
-      const animal_location_user = await CowBuffalo.find(
-        savedCowBuffalo._id
+      const newGoatSheep = new Goat_Sheep(req.body);
+      const savedGoatSheep = await newGoatSheep.save();
+      const animal_location_user = await Goat_Sheep.find(
+        savedGoatSheep._id
       ).populate({ path: "user", populate: { path: "location" } });
       return res
         .status(200)
@@ -81,7 +67,7 @@ const createCowBuffalo = async (req, res) => {
           new ApiResponse(
             200,
             animal_location_user,
-            "farm animal listing created successfully"
+            "goat/sheep animal listing created successfully"
           )
         );
     }
@@ -92,14 +78,14 @@ const createCowBuffalo = async (req, res) => {
       .json(
         new ApiResponse(
           500,
-          location,
-          "Internal server error while creating new cow / buffalo"
+          error,
+          "Internal server error while creating new goat / sheep"
         )
       );
   }
-};
+});
 
-const getAllCowBuffalo = async (req, res) => {
+const getAllGoatSheep = AsyncHandler(async (req, res) => {
   const { type } = req.body;
   try {
     let query = {};
@@ -108,9 +94,9 @@ const getAllCowBuffalo = async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, type, "type of the animal is required"));
     }
-    if (type == "cow" || type == "buffalo") {
+    if (type == "goat" || type == "sheep") {
       query.type = type.toLowerCase();
-      const cowOrBuffaloes = await CowBuffalo.find(query).populate({
+      const goatOrSheep = await Goat_Sheep.find(query).populate({
         path: "user",
         populate: { path: "location" },
       });
@@ -119,12 +105,12 @@ const getAllCowBuffalo = async (req, res) => {
         .json(
           new ApiResponse(
             200,
-            cowOrBuffaloes,
+            goatOrSheep,
             `these are all the available ${query.type}`
           )
         );
     } else if (type == "all") {
-      const cows_buffaloes = await CowBuffalo.find().populate({
+      const goats_sheeps = await Goat_Sheep.find().populate({
         path: "user",
         populate: {
           path: "location",
@@ -135,7 +121,7 @@ const getAllCowBuffalo = async (req, res) => {
         .json(
           new ApiResponse(
             200,
-            cows_buffaloes,
+            goats_sheeps,
             "All cows and buffaloes fetched successfully"
           )
         );
@@ -143,7 +129,7 @@ const getAllCowBuffalo = async (req, res) => {
   } catch (error) {
     console.log(
       error,
-      "this is the error while fetching all the cows and buffaloes"
+      "this is the error while fetching all the goat and sheep"
     );
     return res
       .status(500)
@@ -151,55 +137,59 @@ const getAllCowBuffalo = async (req, res) => {
         new ApiResponse(
           500,
           "",
-          "Internal server error while fetching all the cow and buffalo"
+          "Internal server error while fetching all the goat and sheep"
         )
       );
   }
-};
+});
 
-const getSingleCowBuffalo = async (req, res) => {
+const getSingleGoatSheep = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
-    const cowBuffalo = await CowBuffalo.findOne({ _id: id }).populate({
+    if (!_id) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(400, _id, "please provide the id of the document")
+        );
+    }
+    const goatSheep = await Goat_Sheep.findOne({ _id: id }).populate({
       path: "user",
       populate: { path: "location" },
     });
-    if (!cowBuffalo) {
+    if (!goatSheep) {
       return res
         .status(404)
-        .json(new ApiResponse(404, cowBuffalo, "cow / buffalo not found"));
+        .json(new ApiResponse(404, goatSheep, "goat/sheep not found"));
     }
     return res
       .status(200)
-      .json(
-        new ApiResponse(200, cowBuffalo, "cow/buffalo fetched successfully")
-      );
+      .json(new ApiResponse(200, goatSheep, "goat/sheep fetched successfully"));
   } catch (error) {
-    console.log(`error while fetching single cow/buffalo ${error}`);
+    console.log(`error while fetching single goat/sheep ${error}`);
     return res
       .status(500)
       .json(
-        new ApiResponse(500, "", "error while fething single cow or buffalo")
+        new ApiResponse(500, "", "error while fething single goat or sheep")
       );
   }
-};
-
-const updateCowBuffalo = async (req, res) => {
+});
+const updateGoatSheep = AsyncHandler(async (req, res) => {
   const {
     _id,
+    type,
+    gender,
     breed,
+    age,
     lactation,
     currentCapacity,
     maximumCapacity,
     hasDeliverdBaby,
-    whenDelivered,
-    hasCalf,
+    hasKid,
     isPregnant,
-    monthsPregnant,
-    addtionalInformation,
     media,
-    askingPrice,
     location,
+    askingPrice,
   } = req.body;
   try {
     if (!_id) {
@@ -207,49 +197,54 @@ const updateCowBuffalo = async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, _id, "is the of the document is required"));
     }
-    const updatedCowBuffalo = await CowBuffalo.findByIdAndUpdate(
-      _id,
-      req.body,
-      {
-        new: true,
-      }
-    );
-    if (!updateCowBuffalo) {
+    const updatedGoatSheep = await Goat_Sheep.findByIdAndUpdate(_id, req.body, {
+      new: true,
+    });
+    if (!updatedGoatSheep) {
       return res
         .status(404)
-        .json(new ApiResponse(404, updatedCowBuffalo, "cow/buffalo not found"));
-    } else if (updatedCowBuffalo) {
+        .json(new ApiResponse(404, updatedGoatSheep, "goat/sheep not found"));
+    } else if (updatedGoatSheep) {
       return res
         .status(200)
         .json(
           new ApiResponse(
             200,
-            updatedCowBuffalo,
-            "your listing for this cow/buffalo updated"
+            updatedGoatSheep,
+            "your listing for this goat/sheep updated"
           )
         );
     }
   } catch (error) {
+    console.log("error while updating the goat sheep ", error);
     res
       .status(500)
-      .json(new ApiResponse(500, error, "error while updating cow/buffalo"));
+      .json(new ApiResponse(500, error, "error while updating goat/sheep"));
   }
-};
+});
 
-const deleteCowBuffalo = async (req, res) => {
+const deleteGoatSheep = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
 
   try {
-    const deleteCowBuffalo = await CowBuffalo.findByIdAndDelete(_id);
-    if (!deleteCowBuffalo) {
+    if (!_id) {
       return res
         .status(400)
-        .json(new ApiResponse(400, _id, "cow / buffalo not found"));
+        .json(
+          new ApiResponse(400, _id, "please provide the id of the document")
+        );
+    }
+    const deletedGoatSheep = await Goat_Sheep.findByIdAndDelete(_id);
+    if (!deletedGoatSheep) {
+      return res
+        .status(404)
+        .json(new ApiResponse(404, _id, "goat / sheep not found"));
     }
     return res
       .status(200)
-      .json(new ApiResponse(200, "", "cow / buffalo deleted successfully"));
+      .json(new ApiResponse(200, "", "goat / sheep deleted successfully"));
   } catch (error) {
+    console.log(`error while deleting the goat sheep ${error}`);
     res
       .status(500)
       .json(
@@ -260,12 +255,12 @@ const deleteCowBuffalo = async (req, res) => {
         )
       );
   }
-};
+});
 
 export {
-  createCowBuffalo,
-  getAllCowBuffalo,
-  updateCowBuffalo,
-  getSingleCowBuffalo,
-  deleteCowBuffalo,
+  createGoatSheep,
+  getAllGoatSheep,
+  getSingleGoatSheep,
+  updateGoatSheep,
+  deleteGoatSheep,
 };
