@@ -166,7 +166,7 @@ const updateDonkey = AsyncHandler(async (req, res) => {
       .json(new ApiResponse(500, "", "erorr while updating the donkey"));
   }
 });
-const deletedDonkey = AsyncHandler(async (req, res) => {
+const deleteDonkey = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
