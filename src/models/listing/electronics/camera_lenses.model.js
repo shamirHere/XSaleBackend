@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const camera_lenseSchema = new mongoose.Schema(
   {
-    whatOffered: {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    type: {
       type: String,
       enum: ["camera", "lenses"],
       required: true,
@@ -17,9 +21,8 @@ const camera_lenseSchema = new mongoose.Schema(
     },
     additionalInformation: {
       type: String,
-      required: true,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

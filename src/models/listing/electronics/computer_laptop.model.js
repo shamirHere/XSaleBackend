@@ -2,12 +2,16 @@ import mongoose from "mongoose";
 
 const computer_laptopSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     type: {
       type: String,
       required: true,
       enum: ["computer", "laptop"],
     },
-    brandName: {
+    brand: {
       type: String,
       required: true,
     },
@@ -22,7 +26,7 @@ const computer_laptopSchema = new mongoose.Schema(
     additionalInformation: {
       type: String,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
