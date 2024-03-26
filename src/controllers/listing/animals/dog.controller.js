@@ -13,60 +13,73 @@ const createDog = AsyncHandler(async (req, res) => {
     askingPrice,
   } = req.body;
 
-  if (!user) {
-    return res
-      .status(400)
-      .json(new ApiResponse(400, _id, "user id is required"));
-  } else if (!breed) {
-    return res
-      .status(400)
-      .json(new ApiResponse(400, breed, "breed of the dog is required"));
-  } else if (!gender) {
-    return res
-      .status(400)
-      .json(new ApiResponse(400, gender, "gender of the dog is required"));
-  } else if (!age) {
-    return res
-      .status(400)
-      .json(new ApiResponse(400, age, "age of the dog is required"));
-  } else if (!vaccination) {
-    return res
-      .status(400)
-      .json(
-        new ApiResponse(
-          400,
-          vaccination,
-          "vaccination detail of the dog is required"
-        )
-      );
-  } else if (media.length === 0) {
-    return res
-      .status(400)
-      .json(
-        new ApiResponse(400, media, "atleast one image or video is required")
-      );
-  } else if (!location) {
-    return res
-      .status(400)
-      .json(new ApiResponse(400, location, "location of the dog is required"));
-  } else if (!askingPrice) {
-    return res
-      .status(400)
-      .json(new ApiResponse(400, askingPrice, "asking price is required"));
-  } else {
-    const newDog = new Dog(req.body);
-    const savedDog = await newDog.save();
-    const dog_location_user = await Dog.find(savedDog._id).populate({
-      path: "user",
-      populate: {
-        path: "location",
-      },
-    });
+  try {
+    if (!user) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, _id, "user id is required"));
+    } else if (!breed) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, breed, "breed of the dog is required"));
+    } else if (!gender) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, gender, "gender of the dog is required"));
+    } else if (!age) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, age, "age of the dog is required"));
+    } else if (!vaccination) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(
+            400,
+            vaccination,
+            "vaccination detail of the dog is required"
+          )
+        );
+    } else if (media.length === 0) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(400, media, "atleast one image or video is required")
+        );
+    } else if (!location) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(400, location, "location of the dog is required")
+        );
+    } else if (!askingPrice) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, askingPrice, "asking price is required"));
+    } else {
+      const newDog = new Dog(req.body);
+      const savedDog = await newDog.save();
+      const dog_location_user = await Dog.find(savedDog._id).populate({
+        path: "user",
+        populate: {
+          path: "location",
+        },
+      });
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            dog_location_user,
+            "new dog created successfully"
+          )
+        );
+    }
+  } catch (error) {
+    console.log(`error while creating new dog ${error}`);
     return res
       .status(200)
-      .json(
-        new ApiResponse(200, dog_location_user, "new dog created successfully")
-      );
+      .json(new ApiResponse(200, error, "error while creating new dog"));
   }
 });
 const getAllDog = AsyncHandler(async (req, res) => {
