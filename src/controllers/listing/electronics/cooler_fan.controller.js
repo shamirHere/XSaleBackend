@@ -1,12 +1,11 @@
-import { CameraLense } from "../../../models/listing/electronics/index.js";
+import { CoolerFan } from "../../../models/listing/electronics/index.js";
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 
-const createCamera_Lense = AsyncHandler(async (req, res) => {
+const createCoolerFan = AsyncHandler(async (req, res) => {
   const {
     user,
     type,
     brand,
-    model,
     additionalInformation,
     media,
     location,
@@ -25,10 +24,6 @@ const createCamera_Lense = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, brand, "brand is required"));
-    } else if (!model) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, model, "model is required"));
     } else if (media.length === 0) {
       return res
         .status(400)
@@ -42,7 +37,7 @@ const createCamera_Lense = AsyncHandler(async (req, res) => {
           new ApiResponse(
             400,
             location,
-            "location of the camera/lense is required"
+            "location of the cooler/fan is required"
           )
         );
     } else if (!askingPrice) {
@@ -50,37 +45,38 @@ const createCamera_Lense = AsyncHandler(async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, askingPrice, "asking price is required"));
     } else {
-      const newCamera_lense = new CameraLense(req.body);
-      const savedCamera_lense = await newCamera_lense.save();
-      const cameraLense_location_user = await CameraLense.find(
-        savedCamera_lense._id
+      const newCooler_fan = new CoolerFan(req.body);
+      const savedCooler_fan = await newCooler_fan.save();
+      const coolerFan_location_user = await CoolerFan.find(
+        savedCooler_fan._id
       ).populate({ path: "user", populate: { path: "location" } });
       return res
         .status(200)
         .json(
           new ApiResponse(
             200,
-            cameraLense_location_user,
-            "camera / lense listing created successfully"
+            coolerFan_location_user,
+            "cooler / fan listing created successfully"
           )
         );
     }
   } catch (error) {
-    console.log(`error while creating a new camera lense ${error}`);
+    console.log(`error while creating a new cooler fan ${error}`);
     return res
       .status(500)
       .json(
         new ApiResponse(
           500,
           error,
-          "internal server error while creating the new camera/lense"
+          "internal server error while creating the new cooler/fan"
         )
       );
   }
 });
-const getAllCamera_Lenses = AsyncHandler(async (req, res) => {
+
+const getAllCoolerFans = AsyncHandler(async (req, res) => {
   try {
-    const cameras_lenses = await CameraLense.find().populate({
+    const coolers_fans = await CoolerFan.find().populate({
       path: "user",
       populate: {
         path: "location",
@@ -89,23 +85,19 @@ const getAllCamera_Lenses = AsyncHandler(async (req, res) => {
     return res
       .status(200)
       .json(
-        new ApiResponse(200, cameras_lenses, "these are all the camera lenses")
+        new ApiResponse(200, coolers_fans, "these are all the cooler fans")
       );
   } catch (error) {
-    console.log("error while fetching all the cameras lenses ", error);
+    console.log("error while fetching all the coolers fans", error);
     return res
       .status(500)
       .json(
-        new ApiResponse(
-          500,
-          error,
-          "error while fetching all the cameras lenses"
-        )
+        new ApiResponse(500, error, "error while fetching all the coolers fans")
       );
   }
 });
 
-const getSingleCamera_Lense = AsyncHandler(async (req, res) => {
+const getSingleCoolerFan = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -115,45 +107,36 @@ const getSingleCamera_Lense = AsyncHandler(async (req, res) => {
           new ApiResponse(400, _id, "please provide the id of the document")
         );
     }
-    const camera_lense = await CameraLense.findOne({ _id }).populate({
+    const coolerFan = await CoolerFan.findOne({ _id }).populate({
       path: "user",
       populate: { path: "location" },
     });
-    if (!camera_lense) {
+    if (!coolerFan) {
       return res
         .status(404)
         .json(
-          new ApiResponse(
-            404,
-            camera_lense,
-            "the camera / lense does not exist"
-          )
+          new ApiResponse(404, coolerFan, "the cooler / fan does not exist")
         );
     }
     return res
       .status(200)
       .json(
-        new ApiResponse(
-          200,
-          camera_lense,
-          "camera / lense fetched successfully"
-        )
+        new ApiResponse(200, coolerFan, "cooler / fan fetched successfully")
       );
   } catch (error) {
-    console.log("error while fetching single camera / lense ", error);
+    console.log("error while fetching single cooler / fan", error);
     return res
       .status(500)
       .json(
-        new ApiResponse(500, error, "error while fething single camera / lense")
+        new ApiResponse(500, error, "error while fething single cooler/fan")
       );
   }
 });
-const updateCamera_Lense = AsyncHandler(async (req, res) => {
+const updateCoolerFan = AsyncHandler(async (req, res) => {
   const {
     _id,
     type,
     brand,
-    model,
     additionalInformation,
     media,
     location,
@@ -165,40 +148,32 @@ const updateCamera_Lense = AsyncHandler(async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, _id, "_id the of the document is required"));
     }
-    const updatedCameraLense = await CameraLense.findByIdAndUpdate(
-      _id,
-      req.body,
-      {
-        new: true,
-      }
-    );
-    if (!updatedCameraLense) {
+    const updatedCoolerFan = await CoolerFan.findByIdAndUpdate(_id, req.body, {
+      new: true,
+    });
+    if (!updatedCoolerFan) {
       return res
         .status(404)
-        .json(
-          new ApiResponse(404, updatedCameraLense, "camera / lense not found")
-        );
-    } else if (updatedCameraLense) {
+        .json(new ApiResponse(404, updatedCoolerFan, "cooler / fan not found"));
+    } else if (updatedCoolerFan) {
       return res
         .status(200)
         .json(
           new ApiResponse(
             200,
-            updatedCameraLense,
-            "your listing for this camera / lense updated"
+            updatedCoolerFan,
+            "your listing for this cooler / fan updated"
           )
         );
     }
   } catch (error) {
-    console.log("error while updating the camera / lense  ", error);
+    console.log("error while updating the cooler / fan ", error);
     return res
       .status(500)
-      .json(
-        new ApiResponse(500, "", "erorr while updating the camera / lense")
-      );
+      .json(new ApiResponse(500, "", "erorr while updating the cooler / fan"));
   }
 });
-const deleteCamera_Lense = AsyncHandler(async (req, res) => {
+const deleteCoolerFan = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -208,33 +183,29 @@ const deleteCamera_Lense = AsyncHandler(async (req, res) => {
           new ApiResponse(400, _id, "please provide the id of the document")
         );
     }
-    const deletedCameraLense = await CameraLense.findByIdAndDelete(_id);
-    if (!deletedCameraLense) {
+    const deletedCoolerFan = await CoolerFan.findByIdAndDelete(_id);
+    if (!deletedCoolerFan) {
       return res
         .status(400)
-        .json(new ApiResponse(400, _id, "camera / lense does not exist"));
+        .json(new ApiResponse(400, _id, "cooler / fan does not exist"));
     }
     return res
       .status(200)
-      .json(new ApiResponse(200, "", "camera / lense deleted successfully"));
+      .json(new ApiResponse(200, "", "coole / fan deleted successfully"));
   } catch (error) {
-    console.log("error while deleting the camera / lense ", error);
+    console.log("error while deleting the cooler / fan ", error);
     res
       .status(500)
       .json(
-        new ApiResponse(
-          500,
-          error,
-          "internal server error while camera / lense"
-        )
+        new ApiResponse(500, error, "internal server error while cooler / fan")
       );
   }
 });
 
 export {
-  createCamera_Lense,
-  getAllCamera_Lenses,
-  getSingleCamera_Lense,
-  updateCamera_Lense,
-  deleteCamera_Lense,
+  createCoolerFan,
+  getAllCoolerFans,
+  getSingleCoolerFan,
+  updateCoolerFan,
+  deleteCoolerFan,
 };
