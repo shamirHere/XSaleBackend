@@ -65,7 +65,7 @@ const createWashingMachine = AsyncHandler(async (req, res) => {
       const newWashingMachine = new WashingMachine(req.body);
       const savedWashingMachine = await newWashingMachine.save();
       const washingMachine_location_user = await WashingMachine.findById(
-        washingMachine_location_user._id
+        savedWashingMachine._id
       ).populate({
         path: "user",
         populate: {
@@ -109,7 +109,7 @@ const getAllWashingMachine = AsyncHandler(async (req, res) => {
         )
       );
   } catch (error) {
-    console.log("error while fetching single washing machine ", error);
+    console.log("error while fetching all washing machine ", error);
     return res
       .status(500)
       .json(

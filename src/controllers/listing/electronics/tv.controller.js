@@ -46,7 +46,7 @@ const createTv = AsyncHandler(async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, askingPrice, "asking price is required"));
     } else {
-      const newTv = new WashingMachine(req.body);
+      const newTv = new Tv(req.body);
       const savedTv = await newTv.save();
       const tv_location_user = await Tv.findById(savedTv._id).populate({
         path: "user",
@@ -85,7 +85,7 @@ const getAllTv = AsyncHandler(async (req, res) => {
       .json(new ApiResponse(500, error, "error while fething all tvs"));
   }
 });
-const getSingleWashingMachine = AsyncHandler(async (req, res) => {
+const getSingleTv = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -112,7 +112,7 @@ const getSingleWashingMachine = AsyncHandler(async (req, res) => {
       .json(new ApiResponse(500, error, "error while fething single tv"));
   }
 });
-const updateWashingMachine = AsyncHandler(async (req, res) => {
+const updateTv = AsyncHandler(async (req, res) => {
   const {
     _id,
     brand,
@@ -150,7 +150,7 @@ const updateWashingMachine = AsyncHandler(async (req, res) => {
       .json(new ApiResponse(500, "", "erorr while updating the tv"));
   }
 });
-const deleteWashingMachine = AsyncHandler(async (req, res) => {
+const deleteTv = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
