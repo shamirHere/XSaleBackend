@@ -21,7 +21,7 @@ const createFridge = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, age, "capcaity of the fridge is required"));
-    } else if (!media) {
+    } else if (media.length === 0) {
       return res
         .status(400)
         .json(

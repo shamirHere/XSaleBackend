@@ -191,13 +191,17 @@ const deleteCoolerFan = AsyncHandler(async (req, res) => {
     }
     return res
       .status(200)
-      .json(new ApiResponse(200, "", "coole / fan deleted successfully"));
+      .json(new ApiResponse(200, "", "cooler / fan deleted successfully"));
   } catch (error) {
     console.log("error while deleting the cooler / fan ", error);
     res
       .status(500)
       .json(
-        new ApiResponse(500, error, "internal server error while cooler / fan")
+        new ApiResponse(
+          500,
+          error,
+          "internal server error while deleting cooler / fan"
+        )
       );
   }
 });
