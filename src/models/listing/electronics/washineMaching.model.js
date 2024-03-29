@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const washingMachineSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     brand: {
       type: String,
       required: true,
@@ -19,7 +23,7 @@ const washingMachineSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
