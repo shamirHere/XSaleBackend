@@ -16,7 +16,7 @@ const createFridge = AsyncHandler(async (req, res) => {
     } else if (!model) {
       return res
         .status(400)
-        .json(new ApiResponse(400, gender, "model of the fridge is required"));
+        .json(new ApiResponse(400, model, "model of the fridge is required"));
     } else if (!capacity) {
       return res
         .status(400)
@@ -155,7 +155,7 @@ const deleteFridge = AsyncHandler(async (req, res) => {
         );
     }
     const deletedFridge = await Fridge.findByIdAndDelete(_id);
-    if (!deletedDog) {
+    if (!deletedFridge) {
       return res
         .status(400)
         .json(new ApiResponse(400, _id, "Fridge does not exist"));
