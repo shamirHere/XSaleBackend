@@ -2,15 +2,18 @@ import mongoose from "mongoose";
 
 const farmMachineSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     machineName: {
       type: String,
       required: true,
     },
     additionalInformation: {
       type: String,
-      required: true,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const phoneSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     brand: {
       type: String,
       required: true,
@@ -22,10 +27,17 @@ const phoneSchema = new mongoose.Schema(
       type: Number,
       requried: true,
     },
-    images: [{ type: String, required: true }],
+    additionalInformation: {
+      type: String,
+    },
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Type.ObjectId,
       ref: "Location",
+    },
+    askingPrice: {
+      type: Number,
+      required: true,
     },
   },
   { timestamps: true }

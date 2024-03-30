@@ -1,4 +1,8 @@
-import { AsyncHandler, ApiError, ApiResponse } from "../../../utils/index.js";
+import {
+  AsyncHandler,
+  ApiResponse,
+  ApiResponse,
+} from "../../../utils/index.js";
 import { Donkey } from "../../../models/listing/animal/index.js";
 
 const createDonkey = AsyncHandler(async (req, res) => {
@@ -16,30 +20,37 @@ const createDonkey = AsyncHandler(async (req, res) => {
   } = req.body;
 
   if (!user) {
-    return res.status(400).json(new ApiError(400, "user id is required"));
+    return res
+      .status(400)
+      .json(new ApiResponse(400, user, "user id is required"));
   } else if (!gender) {
     return res
       .status(400)
-      .json(new ApiError(400, "gender of the donkey is required"));
+      .json(new ApiResponse(400, gender, "gender of the donkey is required"));
   } else if (!age) {
     return res
       .status(400)
-      .json(new ApiError(400, "age of the donkey is required"));
+      .json(new ApiResponse(400, age, "age of the donkey is required"));
   } else if (media.lenth === 0) {
     return res
       .status(400)
       .json(
-        new ApiError(
+        new ApiResponse(
           400,
+          media,
           "atleast one image or video of the donkey is required"
         )
       );
   } else if (!location) {
     return res
       .status(400)
-      .json(new ApiError(400, "location of the donkey is required"));
+      .json(
+        new ApiResponse(400, location, "location of the donkey is required")
+      );
   } else if (!askingPrice) {
-    return res.status(400).json(new ApiError(400, "asking price is required"));
+    return res
+      .status(400)
+      .json(new ApiResponse(400, askingPrice, "asking price is required"));
   } else {
     try {
       const newDonkey = new Donkey(req.body);
@@ -64,7 +75,7 @@ const createDonkey = AsyncHandler(async (req, res) => {
       return res
         .status(500)
         .json(
-          new ApiError(
+          new ApiResponse(
             500,
             "error while creating new donkey , internal server error"
           )
@@ -117,7 +128,7 @@ const getSingleDonkey = AsyncHandler(async (req, res) => {
     console.log("error while fetching single donkey ", error);
     return res
       .status(500)
-      .json(new ApiError(500, error, "error while fething single donkey"));
+      .json(new ApiResponse(500, error, "error while fething single donkey"));
   }
 });
 const updateDonkey = AsyncHandler(async (req, res) => {

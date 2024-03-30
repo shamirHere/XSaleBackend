@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const tabletSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     brand: {
       type: String,
       required: true,
@@ -14,11 +18,11 @@ const tabletSchema = new mongoose.Schema(
       type: Number,
       requried: true,
     },
-    otherDetails: {
+    additonalInformation: {
       type: String,
       required: true,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

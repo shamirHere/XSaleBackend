@@ -49,20 +49,21 @@ const cow_buffalo_schema = new mongoose.Schema(
     additionalInformation: {
       type: String,
     },
-    media: [
-      {
-        type: String,
-        required: true,
-        validate: {
-          validator: (value) => {
-            const urlRegex = /^(http|https):\/\/[^\s]+/;
-            return urlRegex.test(value);
-          },
-          message:
-            "Invalid media URL. Please enter a valid image or video URL.",
-        },
-      },
-    ],
+    // media: [
+    //   {
+    //     type: String,
+    //     required: true,
+    //     validate: {
+    //       validator: (value) => {
+    //         const urlRegex = /^(http|https):\/\/[^\s]+/;
+    //         return urlRegex.test(value);
+    //       },
+    //       message:
+    //         "Invalid media URL. Please enter a valid image or video URL.",
+    //     },
+    //   },
+    // ],
+    media: [{ type: String, required: true }],
     location: {
       required: true,
       type: mongoose.Schema.Types.ObjectId,

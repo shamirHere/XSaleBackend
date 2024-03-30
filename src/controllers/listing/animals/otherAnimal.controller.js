@@ -1,5 +1,9 @@
 import { OtherAnimal } from "../../../models/listing/animal/index.js";
-import { ApiError, AsyncHandler, ApiResponse } from "../../../utils/index.js";
+import {
+  ApiResponse,
+  AsyncHandler,
+  ApiResponse,
+} from "../../../utils/index.js";
 
 const createOtherAnimal = AsyncHandler(async (req, res) => {
   const {
@@ -13,32 +17,43 @@ const createOtherAnimal = AsyncHandler(async (req, res) => {
   } = req.body;
   try {
     if (!user) {
-      return res.status(400).json(new ApiError(400, "user id is required"));
+      return res
+        .status(400)
+        .json(new ApiResponse(400, user, "user id is required"));
     } else if (!name) {
       return res
         .status(400)
-        .json(new ApiError(400, "name of the animal is required"));
+        .json(new ApiResponse(400, name, "name of the animal is required"));
     } else if (!age) {
       return res
         .status(400)
-        .json(new ApiError(400, "age of the animal is required"));
+        .json(new ApiResponse(400, age, "age of the animal is required"));
     } else if (media.length === 0) {
       return res
         .status(400)
         .json(
-          new ApiError(
+          new ApiResponse(
             400,
+            media,
             "atleast one image or video  of the animal is required"
           )
         );
     } else if (!location) {
       return res
         .status(400)
-        .json(new ApiError(400, "location of the animal is required"));
+        .json(
+          new ApiResponse(400, location, "location of the animal is required")
+        );
     } else if (!askingPrice) {
       return res
         .status(400)
-        .json(new ApiError(400, "askingPrice of the animal is required"));
+        .json(
+          new ApiResponse(
+            400,
+            askingPrice,
+            "askingPrice of the animal is required"
+          )
+        );
     } else {
       const newOtherAnimal = new OtherAnimal(req.body);
       const savedOtherAnimal = await newOtherAnimal.save();
@@ -127,7 +142,7 @@ const getSingleOtherAnimal = AsyncHandler(async (req, res) => {
     return res
       .status(500)
       .json(
-        new ApiError(500, error, "error while fething single other animal")
+        new ApiResponse(500, error, "error while fething single other animal")
       );
   }
 });

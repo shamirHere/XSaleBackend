@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const cooler_fanSchema = new mongoose.Schema(
   {
-    item: {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    type: {
       type: String,
       required: true,
       enum: ["cooler", "fan"],
@@ -13,14 +17,13 @@ const cooler_fanSchema = new mongoose.Schema(
     },
     additionInformation: {
       type: String,
-      required: true,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
     },
-    askinPrice: {
+    askingPrice: {
       type: Number,
       required: true,
     },
