@@ -15,7 +15,7 @@ const createFarmMachine = AsyncHandler(async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json(new ApiResponse(400, _id, "user id is required"));
+        .json(new ApiResponse(400, user, "user id is required"));
     } else if (!machineName) {
       return res
         .status(400)

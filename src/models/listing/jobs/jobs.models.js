@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const jobSchema = new mongoose.Schema(
   {
+    user: {
+      type: String,
+      required: true,
+    },
     role: {
       type: String,
       required: true,
@@ -18,7 +22,10 @@ const jobSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    images: [{ type: String, required: true }],
+    additionalInformation: {
+      type: String,
+    },
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

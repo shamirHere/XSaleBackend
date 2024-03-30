@@ -8,7 +8,7 @@ const createFridge = AsyncHandler(async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json(new ApiResponse(400, _id, "user id is required"));
+        .json(new ApiResponse(400, user, "user id is required"));
     } else if (!brand) {
       return res
         .status(400)
@@ -61,8 +61,8 @@ const createFridge = AsyncHandler(async (req, res) => {
   } catch (error) {
     console.log(`error while creating new fridge ${error}`);
     return res
-      .status(200)
-      .json(new ApiResponse(200, error, "error while creating new fridge"));
+      .status(500)
+      .json(new ApiResponse(500, error, "error while creating new fridge"));
   }
 });
 const getAllFridge = AsyncHandler(async (req, res) => {
@@ -77,7 +77,7 @@ const getAllFridge = AsyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, fridges, "these are all the fridges"));
   } catch (error) {
-    console.log("error while fetching single fridges ", error);
+    console.log("error while fetching all fridges ", error);
     return res
       .status(500)
       .json(new ApiResponse(500, error, "error while fething all fridges"));

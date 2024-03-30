@@ -16,7 +16,7 @@ const createWashingMachine = AsyncHandler(async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json(new ApiResponse(400, _id, "user id is required"));
+        .json(new ApiResponse(400, user, "user id is required"));
     } else if (!brand) {
       return res
         .status(400)
@@ -242,8 +242,8 @@ const deleteWashingMachine = AsyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, "", "washing machine deleted successfully"));
   } catch (error) {
-    console.log("error while deleting the washing machine ", error);
-    res
+    onsole.log("error while deleting the washing machine ", error);
+    recs
       .status(500)
       .json(
         new ApiResponse(
