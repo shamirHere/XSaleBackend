@@ -2,16 +2,19 @@ import mongoose from "mongoose";
 
 const printer_monitorSchema = new mongoose.Schema(
   {
-    itemName: {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    type: {
       type: String,
       required: true,
       enum: ["printer", "monitor"],
     },
     additionalInformation: {
       type: String,
-      required: true,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const accessoriesSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     accessoriesType: {
       type: String,
       required: true,
@@ -14,11 +18,11 @@ const accessoriesSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    otherDetails: {
+    additionalInformation: {
       type: String,
       required: true,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

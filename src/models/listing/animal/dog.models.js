@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const dogSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     breed: {
       type: String,
       required: true,
@@ -18,9 +22,12 @@ const dogSchema = new mongoose.Schema(
     vaccination: {
       type: String,
       required: true,
-      enum: ["No Vaccination", "DHPP"],
+      enum: ["no Vaccination", "DHPP"],
     },
-    images: [{ type: String, required: true }],
+    additionalInformation: {
+      type: String,
+    },
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
@@ -33,4 +40,5 @@ const dogSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Dog = mongoose.Model("Dog", dogSchema);
+const Dog = mongoose.model("Dog", dogSchema);
+export default Dog;

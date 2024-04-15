@@ -1,15 +1,22 @@
 import mongoose from "mongoose";
 const otherAnimalSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     name: {
       type: String,
       required: true,
     },
-    ageInYear: {
+    age: {
       type: Number,
       required: true,
     },
-    images: [{ type: String, required: true }],
+    additionalInformation: {
+      type: String,
+    },
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

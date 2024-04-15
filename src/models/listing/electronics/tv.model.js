@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const tvSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     brand: {
       type: String,
       required: true,
@@ -16,9 +20,8 @@ const tvSchema = new mongoose.Schema(
     },
     additionalInformation: {
       type: String,
-      required: true,
     },
-    images: [{ type: String, requried: true }],
+    media: [{ type: String, requried: true }],
     askingPrice: {
       type: Number,
       required: true,

@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
 const furnitureSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     furnitureName: {
       type: String,
       required: true,
     },
     additionalInformation: {
       type: String,
-      requried: true,
     },
-    images: [
+    media: [
       {
         type: String,
         required: true,
@@ -19,7 +22,7 @@ const furnitureSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
     },
-    aksingPrice: {
+    askingPrice: {
       type: Number,
       required: true,
     },

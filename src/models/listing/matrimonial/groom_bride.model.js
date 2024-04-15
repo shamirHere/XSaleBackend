@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const groom_brideSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     type: {
       type: String,
       enum: ["bride", "groom"],
@@ -19,13 +23,17 @@ const groom_brideSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    maritialStatus: {
+      type: String,
+      enum: ["never married", "divorced", "seperated", "widowed"],
+      required: true,
+    },
     religion: {
       type: String,
       required: true,
     },
     caste: {
       type: String,
-      required: true,
     },
     educationQualification: {
       type: String,
@@ -37,13 +45,11 @@ const groom_brideSchema = new mongoose.Schema(
     },
     additionalInformation: {
       type: String,
-      required: true,
     },
     motherTounge: {
       type: String,
-      required: true,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

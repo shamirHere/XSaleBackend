@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const games_entertainmentSchema = new mongoose.Schema(
   {
-    adTitle: {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    title: {
       type: String,
       required: true,
     },
@@ -10,7 +14,7 @@ const games_entertainmentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
@@ -22,8 +26,8 @@ const games_entertainmentSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const GamesEntertainment = mongoose.model(
+const GameEntertainment = mongoose.model(
   "GamesEntertainment",
   games_entertainmentSchema
 );
-export default GamesEntertainment;
+export default GameEntertainment;

@@ -1,16 +1,20 @@
 import mongoose from "mongoose";
 
-const sparePartsSchema = new mongoose.Schema(
+const sparePartSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     sparePartName: {
       type: String,
       required: true,
     },
-    additionalInformation: {
+    additionalFeature: {
       type: String,
       required: true,
     },
-    image: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
@@ -23,5 +27,5 @@ const sparePartsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const SparePart = mongoose.model("SparePart", sparePartsSchema);
+const SparePart = mongoose.model("SparePart", sparePartSchema);
 export default SparePart;

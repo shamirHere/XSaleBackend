@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const motorCycle_scootySchema = new mongoose.Schema(
   {
-    itemName: {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    type: {
       type: String,
       required: true,
       enum: ["motorcycle", "scooty"],
@@ -15,7 +19,7 @@ const motorCycle_scootySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    registerationYear: {
+    registrationYear: {
       type: Number,
       required: true,
     },
@@ -25,7 +29,7 @@ const motorCycle_scootySchema = new mongoose.Schema(
       enum: ["petrol", "electric"],
     },
     kmDriven: {
-      type: String,
+      type: Number,
       required: true,
     },
     numberOfOwner: {
@@ -35,7 +39,7 @@ const motorCycle_scootySchema = new mongoose.Schema(
     additionalInformation: {
       type: String,
     },
-    images: [{ type: String, required: true }],
+    media: [{ type: String, required: true }],
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
@@ -47,8 +51,5 @@ const motorCycle_scootySchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const MotorcycleScooty = mongoose.model(
-  "MotorcycleScooty",
-  motorCycle_scootySchema
-);
-export default MotorcycleScooty;
+const Bike_Scooty = mongoose.model("BikeScooty", motorCycle_scootySchema);
+export default Bike_Scooty;
