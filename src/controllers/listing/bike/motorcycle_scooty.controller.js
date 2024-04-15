@@ -102,7 +102,7 @@ const createBikeScooty = AsyncHandler(async (req, res) => {
 
 const getAllBikeScooty = AsyncHandler(async (req, res) => {
   try {
-    const Bikes_Scooties = await Bike_Scooty.find().populate({
+    const bikes_Scooties = await Bike_Scooty.find().populate({
       path: "user",
       populate: {
         path: "location",
@@ -111,7 +111,7 @@ const getAllBikeScooty = AsyncHandler(async (req, res) => {
     return res
       .status(200)
       .json(
-        new ApiResponse(200, Bikes_Scooties, "these are all the bike scooties")
+        new ApiResponse(200, bikes_Scooties, "these are all the bikes scooties")
       );
   } catch (error) {
     console.log("error while fetching all the bike scooties ", error);
@@ -189,7 +189,7 @@ const updateBikeScooty = AsyncHandler(async (req, res) => {
     if (!updatedBikeScooty) {
       return res
         .status(404)
-        .json(new ApiResponse(404, updatedBikeScooty, "biek scooty not found"));
+        .json(new ApiResponse(404, updatedBikeScooty, "bike scooty not found"));
     } else if (updatedBikeScooty) {
       return res
         .status(200)
@@ -197,12 +197,12 @@ const updateBikeScooty = AsyncHandler(async (req, res) => {
           new ApiResponse(
             200,
             updatedBikeScooty,
-            "your listing for this updatedBikeScooty updated"
+            "your listing for this bike/scooty updated"
           )
         );
     }
   } catch (error) {
-    console.log("error while updating the bike scooty  ", error);
+    console.log("error while updating the bike scooty", error);
     return res
       .status(500)
       .json(new ApiResponse(500, "", "erorr while updating the bike scooty"));
@@ -236,7 +236,7 @@ const deleteBikeScooty = AsyncHandler(async (req, res) => {
         new ApiResponse(
           500,
           error,
-          "internal server error while deleting buke scooty"
+          "internal server error while deleting bike scooty"
         )
       );
   }

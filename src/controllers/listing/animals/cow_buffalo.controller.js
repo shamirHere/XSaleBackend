@@ -1,5 +1,6 @@
 import { ApiError, AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { CowBuffalo } from "../../../models/listing/animal/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createCowBuffalo = async (req, res) => {
   const {
@@ -75,6 +76,8 @@ const createCowBuffalo = async (req, res) => {
       const animal_location_user = await CowBuffalo.find(
         savedCowBuffalo._id
       ).populate({ path: "user", populate: { path: "location" } });
+      const item = new Item({ item: animal_location_user });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(
@@ -86,7 +89,7 @@ const createCowBuffalo = async (req, res) => {
         );
     }
   } catch (error) {
-    console.log(error, "this is the error");
+    console.log(error, "internal server while creating cow/buffalo");
     return res
       .status(500)
       .json(
@@ -160,7 +163,14 @@ const getAllCowBuffalo = async (req, res) => {
 const getSingleCowBuffalo = async (req, res) => {
   const { _id } = req.body;
   try {
-    const cowBuffalo = await CowBuffalo.findOne({ _id: id }).populate({
+    if (!_id) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(400, _id, "please provide the id of the document")
+        );
+    }
+    const cowBuffalo = await CowBuffalo.findOne({ _id: _id }).populate({
       path: "user",
       populate: { path: "location" },
     });
@@ -214,6 +224,13 @@ const updateCowBuffalo = async (req, res) => {
         new: true,
       }
     );
+    const updateItem = await Item.findByIdAndUpdate(
+      _id,
+      { item: req.body },
+      {
+        new: true,
+      }
+    );
     if (!updateCowBuffalo) {
       return res
         .status(404)
@@ -230,6 +247,7 @@ const updateCowBuffalo = async (req, res) => {
         );
     }
   } catch (error) {
+    console.log(`error while update cow/buffalo ${error}`);
     res
       .status(500)
       .json(new ApiResponse(500, error, "error while updating cow/buffalo"));

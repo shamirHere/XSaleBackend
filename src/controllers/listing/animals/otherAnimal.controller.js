@@ -1,9 +1,5 @@
 import { OtherAnimal } from "../../../models/listing/animal/index.js";
-import {
-  ApiResponse,
-  AsyncHandler,
-  ApiResponse,
-} from "../../../utils/index.js";
+import { ApiResponse, AsyncHandler } from "../../../utils/index.js";
 
 const createOtherAnimal = AsyncHandler(async (req, res) => {
   const {
