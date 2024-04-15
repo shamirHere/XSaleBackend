@@ -51,8 +51,12 @@ import {
   updateHorseCat,
   deleteHorseCat,
 } from "../controllers/listing/animals/horse_cat.contoroller.js";
+import { getAllItems } from "../controllers/listing/items/items.controller.js";
 
 const router = Router();
+
+// fot all the items in the
+router.route("/fetch/items").get(getAllItems);
 
 // for cows and buffalo
 router.route("/fetch/cowbuffalo").get(getAllCowBuffalo);

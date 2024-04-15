@@ -1,5 +1,6 @@
 import { ApiResponse, ApiError, AsyncHandler } from "../../../utils/index.js";
 import { Bull } from "../../../models/listing/animal/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createBull = async (req, res) => {
   const {
@@ -11,8 +12,6 @@ const createBull = async (req, res) => {
     location,
     askingPrice,
   } = req.body;
-
-  console.log(media, "this is media");
 
   try {
     if (!user) {
@@ -48,6 +47,8 @@ const createBull = async (req, res) => {
         path: "user",
         populate: { path: "location" },
       });
+      const item = new Item({ item: bull_location_user });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(
@@ -156,7 +157,11 @@ const deleteBull = async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
-      return res.send(400).json(new ApiResponse(400, _id, "please provide the id of the document"))
+      return res
+        .send(400)
+        .json(
+          new ApiResponse(400, _id, "please provide the id of the document")
+        );
     }
     const deletedBull = await Bull.findByIdAndDelete(_id);
     if (!deletedBull) {
@@ -168,7 +173,7 @@ const deleteBull = async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, "", "bull deleted successfully"));
   } catch (error) {
-    console.log("error while deleting the bull ", error)
+    console.log("error while deleting the bull ", error);
     res
       .status(500)
       .json(

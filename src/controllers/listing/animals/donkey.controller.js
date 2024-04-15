@@ -1,8 +1,4 @@
-import {
-  AsyncHandler,
-  ApiResponse,
-  ApiResponse,
-} from "../../../utils/index.js";
+import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { Donkey } from "../../../models/listing/animal/index.js";
 
 const createDonkey = AsyncHandler(async (req, res) => {
