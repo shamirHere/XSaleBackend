@@ -1,9 +1,11 @@
 import { ApiResponse, AsyncHandler } from "../../../utils/index.js";
 import { Bike_Scooty } from "../../../models/listing/bike/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createBikeScooty = AsyncHandler(async (req, res) => {
   const {
     user,
+    productType,
     type,
     brand,
     model,
@@ -21,6 +23,10 @@ const createBikeScooty = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!type) {
       return res
         .status(400)
@@ -76,6 +82,11 @@ const createBikeScooty = AsyncHandler(async (req, res) => {
           path: "location",
         },
       });
+      const item = new Item({
+        item: bikeScooty_location_user,
+        location: bikeScooty_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(

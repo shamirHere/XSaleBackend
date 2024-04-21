@@ -1,9 +1,11 @@
 import { ApiError, AsyncHandler } from "../../../utils/index.js";
 import { CarRent } from "../../../models/listing/car/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createCarRent = AsyncHandler(async (req, res) => {
   const {
     user,
+    productType,
     vehicleType,
     vehicleModel,
     availibility,
@@ -20,6 +22,10 @@ const createCarRent = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!vehicleType) {
       return res
         .status(400)
@@ -67,7 +73,7 @@ const createCarRent = AsyncHandler(async (req, res) => {
     } else {
       const newCarRent = new CarRent(req.body);
       const savedCarRent = await newCarRent.save();
-      const CarRent_location_user = await CarRent.find(
+      const carRent_location_user = await CarRent.find(
         savedCarRent._id
       ).populate({
         path: "user",
@@ -75,12 +81,17 @@ const createCarRent = AsyncHandler(async (req, res) => {
           path: "location",
         },
       });
+      const item = new Item({
+        item: carRent_location_user,
+        location: carRent_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(
           new ApiResponse(
             200,
-            CarRent_location_user,
+            carRent_location_user,
             "new CarRent created successfully"
           )
         );

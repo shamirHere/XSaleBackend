@@ -4,6 +4,7 @@ import Item from "../../../models/listing/items/items.models.js";
 const createDog = AsyncHandler(async (req, res) => {
   const {
     user,
+    productType,
     breed,
     gender,
     age,
@@ -19,6 +20,10 @@ const createDog = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!breed) {
       return res
         .status(400)

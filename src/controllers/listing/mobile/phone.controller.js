@@ -1,9 +1,11 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import Phone from "../../../models/listing/mobile/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createPhone = AsyncHandler(async (req, res) => {
   const {
     user,
+    productType,
     brand,
     model,
     internalStorage,
@@ -18,6 +20,10 @@ const createPhone = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!brand) {
       return res
         .status(400)
@@ -71,6 +77,11 @@ const createPhone = AsyncHandler(async (req, res) => {
           },
         }
       );
+      const item = new Item({
+        item: phone_location_user,
+        location: phone_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(
