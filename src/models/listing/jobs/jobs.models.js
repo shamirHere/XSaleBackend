@@ -6,6 +6,10 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     role: {
       type: String,
       required: true,

@@ -53,6 +53,115 @@ import {
 } from "../controllers/listing/animals/horse_cat.contoroller.js";
 import { getAllItems } from "../controllers/listing/items/items.controller.js";
 
+import {
+  createBicycle,
+  getAllBicycle,
+  getSingleBicycle,
+  updateBicycle,
+  deleteBicycle,
+} from "../controllers/listing/bike/bicycle.controller.js";
+
+import {
+  createBikeScooty,
+  getAllBikeScooty,
+  getSingleBikeScooty,
+  updateBikeScooty,
+  deleteBikeScooty,
+} from "../controllers/listing/bike/motorcycle_scooty.controller.js";
+
+import {
+  createSparePart,
+  getAllSpareParts,
+  getSingleSpartPart,
+  updateSparePart,
+  deleteSparePart,
+} from "../controllers/listing/bike/spareParts.controller.js";
+
+import {
+  createCar,
+  getAllCar,
+  getSingleCar,
+  updateCar,
+  deleteCar,
+} from "../controllers/listing/car/car.controller.js";
+
+import {
+  createCarRent,
+  getAllCarRent,
+  getSingleCarRent,
+  updateCarRent,
+  deleteCarRent,
+} from "../controllers/listing/car/carRent.controller.js";
+
+import {
+  createCameraLense,
+  getAllCameraLenses,
+  getSingleCameraLense,
+  updateCameraLense,
+  deleteCameraLense,
+} from "../controllers/listing/electronics/camera_lenses.controller.js";
+
+import {
+  createComputerLaptop,
+  getSingleComputerLaptop,
+  updateComputerLaptop,
+  deleteComputerLaptop,
+  getAllComputerLaptop,
+} from "../controllers/listing/electronics/computer_laptop.controller.js";
+
+import {
+  createCoolerFan,
+  getAllCoolerFans,
+  getSingleCoolerFan,
+  updateCoolerFan,
+  deleteCoolerFan,
+} from "../controllers/listing/electronics/cooler_fan.controller.js";
+
+import {
+  createFridge,
+  getAllFridge,
+  getSingleFridge,
+  updateFridge,
+  deleteFridge,
+} from "../controllers/listing/electronics/fridge.controller.js";
+
+import {
+  createGameEntertainment,
+  getAllcreateGameEntertainment,
+  getSingleGameEntertainment,
+  updateGameEntertainment,
+  deleteGameEntertainment,
+} from "../controllers/listing/electronics/games_entertainment.controller.js";
+
+import {
+  createKitchenAppliance,
+  getAllKitchenAppliance,
+  getSingleKitchenAppliance,
+  updateKitchenAppliance,
+  deleteKitchenAppliance,
+} from "../controllers/listing/electronics/kitchenAppliance.controller.js";
+import {
+  createPrinterMonitor,
+  getAllPrinterMonitor,
+  getSinglePrinterMonitor,
+  updatePrinterMonitor,
+  deletePrinterMonitor,
+} from "../controllers/listing/electronics/printer_monitor.controller.js";
+import {
+  createTv,
+  deleteTv,
+  getAllTv,
+  getSingleTv,
+  updateTv,
+} from "../controllers/listing/electronics/tv.controller.js";
+import {
+  createWashingMachine,
+  deleteWashingMachine,
+  getAllWashingMachine,
+  getSingleWashingMachine,
+  updateWashingMachine,
+} from "../controllers/listing/electronics/washingMachine.controller.js";
+
 const router = Router();
 
 // fot all the items in the
@@ -106,5 +215,106 @@ router.route("/fetch/singleOtherAnimal").get(getSingleOtherAnimal);
 router.route("/create/otherAnimal").post(createOtherAnimal);
 router.route("/update/otherAnimal").post(updateOtherAnimal);
 router.route("/delete/otherAnimal").post(deleteOtherAnimal);
+
+// for bicycle
+router.route("/fetch/bicycle").get(getAllBicycle);
+router.route("/fetch/singleBicyle").get(getSingleBicycle);
+router.route("/create/bicyle").post(createBicycle);
+router.route("/update/bicycle").post(updateBicycle);
+router.route("/delete/bicyle").post(deleteBicycle);
+
+// for motorcycle
+router.route("/fetch/motorCycle").get(getAllBikeScooty);
+router.route("/fetch/singleMotorCycle").get(getSingleBicycle);
+router.route("/create/motorCycle").post(createBikeScooty);
+router.route("/update/motorCycle").post(updateBikeScooty);
+router.route("/delete/motorCycle").post(deleteBikeScooty);
+
+// for spare parts
+router.route("/fetch/spareParts").get(getAllSpareParts);
+router.route("/fetch/singleSparePart").get(getSingleSpartPart);
+router.route("/create/spareParts").post(createSparePart);
+router.route("/update/spareParts").post(updateSparePart);
+router.route("/delete/spareParts").post(deleteSparePart);
+
+//  for car
+router.route("/fetch/car").get(getAllCar);
+router.route("/fetch/singleCar").get(getSingleCar);
+router.route("/create/car").post(createCar);
+router.route("/update/car").post(updateCar);
+router.route("/delete/car").post(deleteCar);
+
+// for car rent
+router.route("/fetch/carRent").get(getAllCarRent);
+router.route("/fetch/singleCarRent").get(getSingleCarRent);
+router.route("/create/carRent").post(createCarRent);
+router.route("/update/carRent").post(updateCarRent);
+router.route("/delete/carRent").post(deleteCarRent);
+
+// electronics start
+
+// for camera lenses
+router.route("/fetch/cameraLense").get(getAllCameraLenses);
+router.route("/fetch/singleCameraLense").get(getSingleCameraLense);
+router.route("/create/cameraLense").post(createCameraLense);
+router.route("/update/cameraLense").post(updateCameraLense);
+router.route("/delete/cameraLense").post(deleteCameraLense);
+
+// for computer laptop
+router.route("/fetch/computerLaptop").get(getAllComputerLaptop);
+router.route("/fetch/singleComputerLaptop").get(getSingleComputerLaptop);
+router.route("/create/computerLaptop").post(createComputerLaptop);
+router.route("/update/updateComputerLaptop").post(updateComputerLaptop);
+router.route("/delete/deleteComputerLaptop").post(deleteComputerLaptop);
+
+// for cooler fans
+router.route("/fetch/coolerFan").get(getAllCoolerFans);
+router.route("/fetch/singleCoolerFan").get(getSingleCoolerFan);
+router.route("/create/coolerFan").post(createCoolerFan);
+router.route("/update/updateCoolerFan").post(updateCoolerFan);
+router.route("/delete/deleteCoolerFan").post(deleteCoolerFan);
+
+// for fridge
+router.route("/fetch/fridge").get(getAllFridge);
+router.route("/fetch/singleFridge").get(getSingleFridge);
+router.route("/create/fridge").post(createFridge);
+router.route("/update/updateFridge").post(updateFridge);
+router.route("/delete/deleteFridge").post(deleteFridge);
+
+// for games and entertainment
+router.route("/fetch/gamesEntertainment").get(getAllcreateGameEntertainment);
+router.route("/fetch/singleGamesEntertainment").get(getSingleGameEntertainment);
+router.route("/create/gamesEntertainment").post(createGameEntertainment);
+router.route("/update/updateGamesEntertainment").post(updateGameEntertainment);
+router.route("/delete/deleteGamesEntertainment").post(deleteGameEntertainment);
+
+// for kitchen applicances
+
+router.route("/fetch/kitchenAppliance").get(getAllKitchenAppliance);
+router.route("/fetch/singleKitchenAppliance").get(getSingleKitchenAppliance);
+router.route("/create/kitchenAppliance").post(createKitchenAppliance);
+router.route("/update/updateKitchenAppliance").post(updateKitchenAppliance);
+router.route("/delete/deleteKitchenAppliance").post(deleteKitchenAppliance);
+
+// printer and monitor
+router.route("/fetch/printerMonitor").get(getAllPrinterMonitor);
+router.route("/fetch/singlePrinterMonitor").get(getSinglePrinterMonitor);
+router.route("/create/printerMonitor").post(createPrinterMonitor);
+router.route("/update/updatePrinterMonitor").post(updatePrinterMonitor);
+router.route("/delete/deletePrinterMonitor").post(deletePrinterMonitor);
+
+// for tv
+router.route("/fetch/tv").get(getAllTv);
+router.route("/fetch/singleTv").get(getSingleTv);
+router.route("/create/tv").post(createTv);
+router.route("/update/updateTv").post(updateTv);
+router.route("/delete/deleteTv").post(deleteTv);
+
+// for washing machine
+router.route("/fetch/washingMachine").get(getAllWashingMachine);
+router.route("/fetch/singleWashingMachine").get(getSingleWashingMachine);
+router.route("/create/washingMachine").post(createWashingMachine);
+router.route("/update/updateWashingMachine").post(updateWashingMachine);
+router.route("/delete/deleteWashingMachine").post(deleteWashingMachine);
 
 export default router;

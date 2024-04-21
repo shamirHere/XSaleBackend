@@ -1,5 +1,6 @@
 import { ApiError, AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { Dog } from "../../../models/listing/animal/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 const createDog = AsyncHandler(async (req, res) => {
   const {
     user,
@@ -65,6 +66,11 @@ const createDog = AsyncHandler(async (req, res) => {
           path: "location",
         },
       });
+      const item = new Item({
+        item: dog_location_user,
+        location: dog_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(

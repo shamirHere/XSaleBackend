@@ -7,6 +7,10 @@ const bullSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     breed: {
       type: String,
       requried: true,

@@ -136,7 +136,7 @@ const getAllCar = AsyncHandler(async (req, res) => {
   }
 });
 
-const getSingle = AsyncHandler(async (req, res) => {
+const getSingleCar = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -234,4 +234,4 @@ const deleteCar = AsyncHandler(async (req, res) => {
   }
 });
 
-export { createCar, getAllCar, getSingle, updateCar, deleteCar };
+export { createCar, getAllCar, getSingleCar, updateCar, deleteCar };

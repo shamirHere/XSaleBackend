@@ -1,5 +1,5 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import { WashingMachine } from "../../../models/listing/index.js";
+import { WashingMachine } from "../../../models/listing/electronics/index.js";
 
 const createWashingMachine = AsyncHandler(async (req, res) => {
   const {

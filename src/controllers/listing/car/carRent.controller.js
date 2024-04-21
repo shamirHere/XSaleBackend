@@ -1,5 +1,5 @@
 import { ApiError, AsyncHandler } from "../../../utils/index.js";
-import { CarRent } from "../../../models/listing/CarRent/index.js";
+import { CarRent } from "../../../models/listing/car/index.js";
 
 const createCarRent = AsyncHandler(async (req, res) => {
   const {
@@ -121,7 +121,7 @@ const getAllCarRent = AsyncHandler(async (req, res) => {
   }
 });
 
-const getSingle = AsyncHandler(async (req, res) => {
+const getSingleCarRent = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -225,7 +225,7 @@ const deleteCarRent = AsyncHandler(async (req, res) => {
 export {
   createCarRent,
   getAllCarRent,
-  getSingle,
+  getSingleCarRent,
   updateCarRent,
   deleteCarRent,
 };

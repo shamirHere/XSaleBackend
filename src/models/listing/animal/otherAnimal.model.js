@@ -5,9 +5,9 @@ const otherAnimalSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    name: {
+    productType: {
       type: String,
-      required: true,
+      required: [true, "product type is required"],
     },
     age: {
       type: Number,

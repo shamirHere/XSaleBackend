@@ -1,7 +1,7 @@
 import { CameraLense } from "../../../models/listing/electronics/index.js";
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 
-const createCamera_Lense = AsyncHandler(async (req, res) => {
+const createCameraLense = AsyncHandler(async (req, res) => {
   const {
     user,
     type,
@@ -78,7 +78,7 @@ const createCamera_Lense = AsyncHandler(async (req, res) => {
       );
   }
 });
-const getAllCamera_Lenses = AsyncHandler(async (req, res) => {
+const getAllCameraLenses = AsyncHandler(async (req, res) => {
   try {
     const cameras_lenses = await CameraLense.find().populate({
       path: "user",
@@ -105,7 +105,7 @@ const getAllCamera_Lenses = AsyncHandler(async (req, res) => {
   }
 });
 
-const getSingleCamera_Lense = AsyncHandler(async (req, res) => {
+const getSingleCameraLense = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -148,7 +148,7 @@ const getSingleCamera_Lense = AsyncHandler(async (req, res) => {
       );
   }
 });
-const updateCamera_Lense = AsyncHandler(async (req, res) => {
+const updateCameraLense = AsyncHandler(async (req, res) => {
   const {
     _id,
     type,
@@ -198,7 +198,7 @@ const updateCamera_Lense = AsyncHandler(async (req, res) => {
       );
   }
 });
-const deleteCamera_Lense = AsyncHandler(async (req, res) => {
+const deleteCameraLense = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -232,9 +232,9 @@ const deleteCamera_Lense = AsyncHandler(async (req, res) => {
 });
 
 export {
-  createCamera_Lense,
-  getAllCamera_Lenses,
-  getSingleCamera_Lense,
-  updateCamera_Lense,
-  deleteCamera_Lense,
+  createCameraLense,
+  getAllCameraLenses,
+  getSingleCameraLense,
+  updateCameraLense,
+  deleteCameraLense,
 };

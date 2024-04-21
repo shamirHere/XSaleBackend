@@ -47,7 +47,10 @@ const createBull = async (req, res) => {
         path: "user",
         populate: { path: "location" },
       });
-      const item = new Item({ item: bull_location_user });
+      const item = new Item({
+        item: bull_location_user,
+        location: bull_location_user[0].location,
+      });
       const savedInItems = await item.save();
       return res
         .status(200)

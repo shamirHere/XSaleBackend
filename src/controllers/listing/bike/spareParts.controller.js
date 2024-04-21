@@ -1,5 +1,5 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import { SparePart } from "../../../models/listing/index.js";
+import { SparePart } from "../../../models/listing/bike/index.js";
 
 const createSparePart = AsyncHandler(async (req, res) => {
   const {

@@ -1,5 +1,5 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import { GameEntertainment } from "../../../models/listing/index.js";
+import { GameEntertainment } from "../../../models/listing/electronics/index.js";
 
 const createGameEntertainment = AsyncHandler(async (req, res) => {
   const { user, title, description, media, location, askingPrice } = req.body;

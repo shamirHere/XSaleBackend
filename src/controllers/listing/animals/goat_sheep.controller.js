@@ -1,4 +1,5 @@
 import { Goat_Sheep } from "../../../models/listing/animal/goat_sheep.model.js";
+import Item from "../../../models/listing/items/items.models.js";
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 
 const createGoatSheep = AsyncHandler(async (req, res) => {
@@ -61,6 +62,11 @@ const createGoatSheep = AsyncHandler(async (req, res) => {
       const animal_location_user = await Goat_Sheep.find(
         savedGoatSheep._id
       ).populate({ path: "user", populate: { path: "location" } });
+      const item = new Item({
+        item: animal_location_user,
+        location: animal_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(

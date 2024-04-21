@@ -7,6 +7,10 @@ const cow_buffalo_schema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     type: {
       type: String,
       enum: ["cow", "buffalo"],

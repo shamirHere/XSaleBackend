@@ -3,7 +3,7 @@ import Item from "../../../models/listing/items/items.models.js";
 
 const getAllItems = AsyncHandler(async (req, res) => {
   try {
-    const items = await Item.find();
+    const items = await Item.find().populate("location");
     return res
       .status(200)
       .json(new ApiResponse(200, items, "All items  fetched successfully"));

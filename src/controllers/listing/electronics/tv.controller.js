@@ -1,5 +1,5 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import { Tv } from "../../../models/listing/index.js";
+import { Tv } from "../../../models/listing/electronics/index.js";
 
 const createTv = AsyncHandler(async (req, res) => {
   const {

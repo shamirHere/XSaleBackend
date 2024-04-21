@@ -76,7 +76,10 @@ const createCowBuffalo = async (req, res) => {
       const animal_location_user = await CowBuffalo.find(
         savedCowBuffalo._id
       ).populate({ path: "user", populate: { path: "location" } });
-      const item = new Item({ item: animal_location_user });
+      const item = new Item({
+        item: animal_location_user,
+        location: animal_location_user[0].location,
+      });
       const savedInItems = await item.save();
       return res
         .status(200)

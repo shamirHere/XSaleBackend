@@ -7,6 +7,10 @@ const phoneSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     brand: {
       type: String,
       required: true,

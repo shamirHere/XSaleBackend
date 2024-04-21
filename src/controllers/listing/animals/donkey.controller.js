@@ -1,5 +1,6 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { Donkey } from "../../../models/listing/animal/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createDonkey = AsyncHandler(async (req, res) => {
   const {
@@ -57,6 +58,11 @@ const createDonkey = AsyncHandler(async (req, res) => {
           path: "location",
         },
       });
+      const item = new Item({
+        item: donkey_location_user,
+        location: donkey_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(

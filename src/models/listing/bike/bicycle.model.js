@@ -6,6 +6,10 @@ const bicycleSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     brand: { type: String, required: true },
     model: { type: String, required: true },
     isElectric: { type: Boolean, requried: true },
