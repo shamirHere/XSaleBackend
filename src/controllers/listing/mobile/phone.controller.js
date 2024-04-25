@@ -1,5 +1,5 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import Phone from "../../../models/listing/mobile/index.js";
+import { Phone } from "../../../models/listing/mobile/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 
 const createPhone = AsyncHandler(async (req, res) => {

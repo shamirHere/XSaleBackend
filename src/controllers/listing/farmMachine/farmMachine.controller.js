@@ -1,6 +1,6 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import FarmMachine from "../../../models/listing/farmMachine/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { FarmMachine } from "../../../models/listing/farmMachine/index.js";
 
 const createFarmMachine = AsyncHandler(async (req, res) => {
   const {

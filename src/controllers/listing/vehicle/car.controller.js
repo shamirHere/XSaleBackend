@@ -1,5 +1,5 @@
 import { ApiError, AsyncHandler } from "../../../utils/index.js";
-import { Car } from "../../../models/listing/car/index.js";
+import { Car } from "../../../models/listing/vehicle/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 
 const createCar = AsyncHandler(async (req, res) => {
@@ -14,7 +14,7 @@ const createCar = AsyncHandler(async (req, res) => {
     transmission,
     kmDriven,
     numberOfOwner,
-    additionalFeature,
+    additionalInformation,
     media,
     location,
     askingPrice,
@@ -69,11 +69,15 @@ const createCar = AsyncHandler(async (req, res) => {
         .json(
           new ApiResponse(400, numberOfOwner, "number of Owner is required")
         );
-    } else if (!additionalFeature) {
+    } else if (!additionalInformation) {
       return res
         .status(400)
         .json(
-          new ApiResponse(400, additionalFeature, "additional feature required")
+          new ApiResponse(
+            400,
+            additionalInformation,
+            "additional feature required"
+          )
         );
     } else if (media.length === 0) {
       return res
@@ -185,7 +189,7 @@ const updateCar = AsyncHandler(async (req, res) => {
     transmission,
     kmDriven,
     numberOfOwner,
-    additionalFeature,
+    additionalInformation,
     media,
     location,
     askingPrice,

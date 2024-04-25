@@ -1,5 +1,5 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import Accessories from "../../../models/listing/mobile/index.js";
+import { Accessories } from "../../../models/listing/mobile/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 
 const createAccessories = AsyncHandler(async (req, res) => {

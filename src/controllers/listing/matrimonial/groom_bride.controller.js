@@ -1,5 +1,5 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import BrideGroom from "../../../models/listing/matrimonial/index.js";
+import { BrideGroom } from "../../../models/listing/matrimonial/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 
 const createBride_Groom = AsyncHandler(async (req, res) => {

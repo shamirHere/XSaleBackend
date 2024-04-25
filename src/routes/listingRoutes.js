@@ -83,7 +83,7 @@ import {
   getSingleCar,
   updateCar,
   deleteCar,
-} from "../controllers/listing/car/car.controller.js";
+} from "../controllers/listing/vehicle/car.controller.js";
 
 import {
   createCarRent,
@@ -91,7 +91,7 @@ import {
   getSingleCarRent,
   updateCarRent,
   deleteCarRent,
-} from "../controllers/listing/car/carRent.controller.js";
+} from "../controllers/listing/vehicle/carRent.controller.js";
 
 import {
   createCameraLense,
@@ -162,10 +162,83 @@ import {
   updateWashingMachine,
 } from "../controllers/listing/electronics/washingMachine.controller.js";
 
+import { getCategory } from "../controllers/listing/category/category.controller.js";
+import { getSubCategory } from "../controllers/listing/category/subCategory.controller.js";
+
+import {
+  createFarmMachine,
+  getAllFarmMachine,
+  getSingleFarmMachine,
+  updateFarmMachine,
+  deleteFarmMachine,
+} from "../controllers/listing/farmMachine/farmMachine.controller.js";
+
+import {
+  createFashion,
+  getAllFashion,
+  getSingleFashion,
+  updateFashion,
+  deleteFashion,
+} from "../controllers/listing/fashion/fashion.controller.js";
+
+import {
+  createFurniture,
+  getAllFurniture,
+  getSingleFurniture,
+  updateFurniture,
+  deleteFurniture,
+} from "../controllers/listing/furniture/furniture.controller.js";
+
+import {
+  createJob,
+  getAllJob,
+  getSingleJob,
+  updateJob,
+  deleteJob,
+} from "../controllers/listing/jobs/jobs.controller.js";
+
+import {
+  createBride_Groom,
+  getAllBride_Groom,
+  getSingleBride_Groom,
+  updateBride_Groom,
+  deleteBride_Groom,
+} from "../controllers/listing/matrimonial/groom_bride.controller.js";
+
+import {
+  createPhone,
+  getAllPhone,
+  getSinglePhone,
+  updatePhone,
+  deletePhone,
+} from "../controllers/listing/mobile/phone.controller.js";
+
+import {
+  createTablet,
+  getAllTablet,
+  getSingleTablet,
+  updateTablet,
+  deleteTablet,
+} from "../controllers/listing/mobile/tablet.controller.js";
+
+import {
+  createAccessories,
+  getAllAccessories,
+  getSingleAccessories,
+  updateAccessories,
+  deleteAccessories,
+} from "../controllers/listing/mobile/accessories.controller.js";
+
 const router = Router();
 
-// fot all the items in the
+// for all the
 router.route("/fetch/items").get(getAllItems);
+
+// for all the items in a seperate category
+router.route("/fetch/category/:category").get(getCategory);
+
+// for all the sub category inside the category
+router.route("/fetch/subcategory/:subcategory").get(getSubCategory);
 
 // for cows and buffalo
 router.route("/fetch/cowbuffalo").get(getAllCowBuffalo);
@@ -316,5 +389,61 @@ router.route("/fetch/singleWashingMachine").get(getSingleWashingMachine);
 router.route("/create/washingMachine").post(createWashingMachine);
 router.route("/update/updateWashingMachine").post(updateWashingMachine);
 router.route("/delete/deleteWashingMachine").post(deleteWashingMachine);
+
+// farm machines
+router.route("/fetch/farmMachine").get(getAllFarmMachine);
+router.route("/fetch/singleFarmMachine").get(getSingleFarmMachine);
+router.route("/create/farmMachine").post(createFarmMachine);
+router.route("/update/updateFarmMachine").post(updateFarmMachine);
+router.route("/delete/deleteFarmMachine").post(deleteFarmMachine);
+
+// for fashion
+router.route("/fetch/fashion").get(getAllFashion);
+router.route("/fetch/singleFashion").get(getSingleFashion);
+router.route("/create/fashion").post(createFashion);
+router.route("/update/updateFashion").post(updateFashion);
+router.route("/delete/deleteFashion").post(deleteFashion);
+
+// for furniture
+router.route("/fetch/furniture").get(getAllFurniture);
+router.route("/fetch/singleFurniture").get(getSingleFurniture);
+router.route("/create/furniture").post(createFurniture);
+router.route("/update/updateFurniture").post(updateFurniture);
+router.route("/delete/deleteFurniture").post(deleteFurniture);
+
+// for job
+router.route("/fetch/job").get(getAllJob);
+router.route("/fetch/singleJob").get(getSingleJob);
+router.route("/create/job").post(createJob);
+router.route("/update/updateJob").post(updateJob);
+router.route("/delete/deleteJob").post(deleteJob);
+
+// for bride groom
+router.route("/fetch/brideGroom").get(getAllBride_Groom);
+router.route("/fetch/singleBrideGroom").get(getSingleBride_Groom);
+router.route("/create/brideGroom").post(createBride_Groom);
+router.route("/update/updateBrideGroom").post(updateBride_Groom);
+router.route("/delete/deleteBrideGroom").post(deleteBride_Groom);
+
+// for mobile
+router.route("/fetch/phone").get(createPhone);
+router.route("/fetch/singlePhone").get(getSinglePhone);
+router.route("/create/phone").post(createPhone);
+router.route("/update/updatePhone").post(updatePhone);
+router.route("/delete/deletePhone").post(deletePhone);
+
+// for tablet
+router.route("/fetch/tablet").get(createTablet);
+router.route("/fetch/singleTablet").get(getSingleTablet);
+router.route("/create/tablet").post(createTablet);
+router.route("/update/updateTablet").post(updateTablet);
+router.route("/delete/deleteTablet").post(deleteTablet);
+
+// for accessories
+router.route("/fetch/accessories").get(createAccessories);
+router.route("/fetch/singleAccessories").get(getSingleAccessories);
+router.route("/create/accessories").post(createAccessories);
+router.route("/update/updateAccessories").post(updateAccessories);
+router.route("/delete/deleteAccessories").post(deleteAccessories);
 
 export default router;

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const sparePartSchema = new mongoose.Schema(
+const chickenModel = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -10,9 +10,27 @@ const sparePartSchema = new mongoose.Schema(
       type: String,
       required: [true, "product type is required"],
     },
-    sparePartName: {
+
+    breed: {
       type: String,
       required: true,
+      enum: ["Chicken", "Duck", "Turkey", "Quails (Bater)", "Swan", "Other"],
+    },
+    type: {
+      type: String,
+      required: true,
+      enum: ["Birds", "Chicks", "Eggs"],
+    },
+    hasPoultryFarm: {
+      type: Boolean,
+    },
+    sellerType: {
+      type: String,
+    },
+    quantityType: {
+      type: String,
+      required: true,
+      enum: ["Per Piece", "Per Kg"],
     },
     additionalInformation: {
       type: String,
@@ -31,5 +49,5 @@ const sparePartSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const SparePart = mongoose.model("SparePart", sparePartSchema);
-export default SparePart;
+const Chicken = mongoose.model("Chicken", chickenModel);
+export default Chicken;

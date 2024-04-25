@@ -7,7 +7,7 @@ const createSparePart = AsyncHandler(async (req, res) => {
     user,
     productType,
     sparePartName,
-    additionalFeature,
+    additionalInformation,
     media,
     location,
     askingPrice,
@@ -27,13 +27,13 @@ const createSparePart = AsyncHandler(async (req, res) => {
         .json(
           new ApiResponse(400, sparePartName, "spare part name is required")
         );
-    } else if (!additionalFeature) {
+    } else if (!additionalInformation) {
       return res
         .status(400)
         .json(
           new ApiResponse(
             400,
-            additionalFeature,
+            additionalInformation,
             "additional feature is required"
           )
         );
@@ -136,7 +136,7 @@ const updateSparePart = AsyncHandler(async (req, res) => {
   const {
     _id,
     sparePartName,
-    additionalFeature,
+    additionalInformation,
     media,
     location,
     askingPrice,

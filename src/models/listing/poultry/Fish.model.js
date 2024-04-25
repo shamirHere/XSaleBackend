@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const sparePartSchema = new mongoose.Schema(
+const fishModel = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -10,13 +10,27 @@ const sparePartSchema = new mongoose.Schema(
       type: String,
       required: [true, "product type is required"],
     },
-    sparePartName: {
+    type: {
       type: String,
       required: true,
+    },
+    breed: {
+      type: String,
+    },
+    hasFishPound: {
+      type: Boolean,
+    },
+    sellerType: {
+      type: String,
     },
     additionalInformation: {
       type: String,
       required: true,
+    },
+    quantityType: {
+      type: String,
+      required: true,
+      enum: ["Per Piece", "Per Kg"],
     },
     media: [{ type: String, required: true }],
     location: {
@@ -31,5 +45,5 @@ const sparePartSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const SparePart = mongoose.model("SparePart", sparePartSchema);
-export default SparePart;
+const Fish = mongoose.model("Fish", fishModel);
+export default Fish;

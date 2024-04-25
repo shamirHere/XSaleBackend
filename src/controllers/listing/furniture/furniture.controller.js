@@ -1,5 +1,6 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import Furniture from "../../../models/listing/furniture/index.js";
+import { Furniture } from "../../../models/listing/furniture/index.js";
+
 import Item from "../../../models/listing/items/items.models.js";
 
 const createFurniture = AsyncHandler(async (req, res) => {

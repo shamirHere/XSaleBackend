@@ -1,5 +1,5 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import Tablet from "../../../models/listing/mobile/index.js";
+import { Tablet } from "../../../models/listing/mobile/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 
 const createTablet = AsyncHandler(async (req, res) => {
@@ -112,7 +112,7 @@ const getAllTablet = AsyncHandler(async (req, res) => {
       .json(new ApiResponse(500, error, "error while fething all tablets"));
   }
 });
-const getSingleTable = AsyncHandler(async (req, res) => {
+const getSingleTablet = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -214,7 +214,7 @@ const deleteTablet = AsyncHandler(async (req, res) => {
 export {
   createTablet,
   getAllTablet,
-  getSingleTable,
+  getSingleTablet,
   updateTablet,
   deleteTablet,
 };

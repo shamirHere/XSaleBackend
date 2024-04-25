@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const sparePartSchema = new mongoose.Schema(
+const birdSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -10,9 +10,15 @@ const sparePartSchema = new mongoose.Schema(
       type: String,
       required: [true, "product type is required"],
     },
-    sparePartName: {
+    type: {
       type: String,
       required: true,
+      enum: ["Pigeons", "Parrot", "other"],
+    },
+    quantity: {
+      type: String,
+      required: true,
+      enum: ["per kg", "per piece"],
     },
     additionalInformation: {
       type: String,
@@ -31,5 +37,5 @@ const sparePartSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const SparePart = mongoose.model("SparePart", sparePartSchema);
-export default SparePart;
+const Bird = mongoose.model("Bird", birdSchema);
+export default Bird;

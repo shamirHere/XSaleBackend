@@ -1,8 +1,8 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import Job from "../../../models/listing/jobs/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { Job } from "../../../models/listing/jobs/index.js";
 
-const createdJob = AsyncHandler(async (req, res) => {
+const createJob = AsyncHandler(async (req, res) => {
   const {
     user,
     productType,
@@ -101,7 +101,7 @@ const createdJob = AsyncHandler(async (req, res) => {
       .json(new ApiResponse(500, error, "error while creating new job"));
   }
 });
-const getAllJobs = AsyncHandler(async (req, res) => {
+const getAllJob = AsyncHandler(async (req, res) => {
   try {
     const jobs = await Job.find().populate({
       path: "user",
@@ -213,4 +213,4 @@ const deleteJob = AsyncHandler(async (req, res) => {
   }
 });
 
-export { createdJob, getAllJobs, getSingleJob, updateJob, deleteJob };
+export { createJob, getAllJob, getSingleJob, updateJob, deleteJob };
