@@ -6,6 +6,10 @@ const horse_cat_schema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     type: {
       type: String,
       enum: ["horse", "cat"],
@@ -13,7 +17,7 @@ const horse_cat_schema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["male", "female"],
+      enum: ["male", "female", "kid"],
     },
     breed: {
       type: String,

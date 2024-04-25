@@ -1,9 +1,12 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import Furniture from "../../../models/listing/furniture/index.js";
+import { Furniture } from "../../../models/listing/furniture/index.js";
+
+import Item from "../../../models/listing/items/items.models.js";
 
 const createFurniture = AsyncHandler(async (req, res) => {
   const {
     user,
+    productType,
     furnitureName,
     additionalInformation,
     media,
@@ -16,6 +19,10 @@ const createFurniture = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!furnitureName) {
       return res
         .status(400)
@@ -51,6 +58,11 @@ const createFurniture = AsyncHandler(async (req, res) => {
           path: "location",
         },
       });
+      const item = new Item({
+        item: furniture_location_user,
+        location: furniture_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(

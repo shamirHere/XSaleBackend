@@ -6,6 +6,10 @@ const fashionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     adTitle: {
       type: String,
       required: true,

@@ -1,1 +1,1 @@
-export { default as Furniture } from "./furniture.model";
+export { default as Furniture } from "./furniture.model.js";

@@ -6,6 +6,10 @@ const donkeySchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    productType: {
+      type: String,
+      required: true,
+    },
     gender: {
       type: String,
       enum: ["male", "female", "kid"],

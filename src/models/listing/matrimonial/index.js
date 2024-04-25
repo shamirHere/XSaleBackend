@@ -1,1 +1,1 @@
-export { default as BrideGroom } from "./groom_bride.model";
+export { default as BrideGroom } from "./groom_bride.model.js";

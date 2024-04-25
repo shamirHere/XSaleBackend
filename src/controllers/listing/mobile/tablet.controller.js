@@ -1,9 +1,11 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import Tablet from "../../../models/listing/mobile/index.js";
+import { Tablet } from "../../../models/listing/mobile/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createTablet = AsyncHandler(async (req, res) => {
   const {
     user,
+    productType,
     brand,
     model,
     oldInMonths,
@@ -17,6 +19,10 @@ const createTablet = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!brand) {
       return res
         .status(400)
@@ -66,6 +72,11 @@ const createTablet = AsyncHandler(async (req, res) => {
           path: "location",
         },
       });
+      const item = new Item({
+        item: tablet_location_user,
+        location: tablet_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(
@@ -101,7 +112,7 @@ const getAllTablet = AsyncHandler(async (req, res) => {
       .json(new ApiResponse(500, error, "error while fething all tablets"));
   }
 });
-const getSingleTable = AsyncHandler(async (req, res) => {
+const getSingleTablet = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -203,7 +214,7 @@ const deleteTablet = AsyncHandler(async (req, res) => {
 export {
   createTablet,
   getAllTablet,
-  getSingleTable,
+  getSingleTablet,
   updateTablet,
   deleteTablet,
 };

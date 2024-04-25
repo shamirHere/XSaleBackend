@@ -6,11 +6,15 @@ const sparePartSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     sparePartName: {
       type: String,
       required: true,
     },
-    additionalFeature: {
+    additionalInformation: {
       type: String,
       required: true,
     },

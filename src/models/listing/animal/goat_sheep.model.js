@@ -6,6 +6,10 @@ const goat_sheep_schema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     type: {
       type: String,
       enum: ["goat", "sheep"],

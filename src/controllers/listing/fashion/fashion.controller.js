@@ -1,14 +1,26 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import Fashion from "../../../models/listing/fashion/index.js";
+import { Fashion } from "../../../models/listing/fashion/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createFashion = AsyncHandler(async (req, res) => {
-  const { user, adTitle, desribeSelling, media, location, askingPrice } =
-    req.body;
+  const {
+    user,
+    productType,
+    adTitle,
+    desribeSelling,
+    media,
+    location,
+    askingPrice,
+  } = req.body;
   try {
     if (!user) {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!adTitle) {
       return res
         .status(400)
@@ -46,6 +58,11 @@ const createFashion = AsyncHandler(async (req, res) => {
           path: "location",
         },
       });
+      const item = new Item({
+        item: fashion_location_user,
+        location: fashion_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(

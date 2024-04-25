@@ -5,6 +5,7 @@ import Item from "../../../models/listing/items/items.models.js";
 const createBull = async (req, res) => {
   const {
     user,
+    productType,
     breed,
     age,
     addtionalInformation,
@@ -16,6 +17,10 @@ const createBull = async (req, res) => {
   try {
     if (!user) {
       return res.status(400, user, "id of the user is required");
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!breed) {
       return res
         .status(400)
@@ -47,7 +52,10 @@ const createBull = async (req, res) => {
         path: "user",
         populate: { path: "location" },
       });
-      const item = new Item({ item: bull_location_user });
+      const item = new Item({
+        item: bull_location_user,
+        location: bull_location_user[0].location,
+      });
       const savedInItems = await item.save();
       return res
         .status(200)

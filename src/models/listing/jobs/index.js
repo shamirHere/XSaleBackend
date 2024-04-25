@@ -1,1 +1,1 @@
-export { default as Job } from "./jobs.models";
+export { default as Job } from "./jobs.models.js";

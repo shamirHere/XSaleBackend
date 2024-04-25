@@ -5,6 +5,7 @@ import Item from "../../../models/listing/items/items.models.js";
 const createCowBuffalo = async (req, res) => {
   const {
     user,
+    productType,
     type,
     breed,
     lactation,
@@ -26,6 +27,10 @@ const createCowBuffalo = async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "id of the user is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!type) {
       return res
         .status(400)
@@ -76,7 +81,10 @@ const createCowBuffalo = async (req, res) => {
       const animal_location_user = await CowBuffalo.find(
         savedCowBuffalo._id
       ).populate({ path: "user", populate: { path: "location" } });
-      const item = new Item({ item: animal_location_user });
+      const item = new Item({
+        item: animal_location_user,
+        location: animal_location_user[0].location,
+      });
       const savedInItems = await item.save();
       return res
         .status(200)

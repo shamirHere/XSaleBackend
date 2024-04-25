@@ -1,9 +1,11 @@
 import { OtherAnimal } from "../../../models/listing/animal/index.js";
 import { ApiResponse, AsyncHandler } from "../../../utils/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createOtherAnimal = AsyncHandler(async (req, res) => {
   const {
     user,
+    productType,
     name,
     age,
     additionalInformation,
@@ -16,6 +18,10 @@ const createOtherAnimal = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!name) {
       return res
         .status(400)
@@ -61,6 +67,11 @@ const createOtherAnimal = AsyncHandler(async (req, res) => {
           path: "location",
         },
       });
+      const item = new Item({
+        item: otherAnimal_location_user,
+        location: otherAnimal_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(
@@ -123,6 +134,7 @@ const getSingleOtherAnimal = AsyncHandler(async (req, res) => {
       path: "user",
       populate: { path: "location" },
     });
+
     if (!otherAnimal) {
       return res
         .status(404)

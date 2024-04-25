@@ -1,13 +1,26 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { KitchenAppliance } from "../../../models/listing/electronics/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createKitchenAppliance = AsyncHandler(async (req, res) => {
-  const { user, applianceName, brand, media, location, askingPrice } = req.body;
+  const {
+    user,
+    productType,
+    applianceName,
+    brand,
+    media,
+    location,
+    askingPrice,
+  } = req.body;
   try {
     if (!user) {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!applianceName) {
       return res
         .status(400)
@@ -46,6 +59,11 @@ const createKitchenAppliance = AsyncHandler(async (req, res) => {
       const kitchenAppliance_location_user = await KitchenAppliance.find(
         savedKitchenAppliance._id
       ).populate({ path: "user", populate: { path: "location" } });
+      const item = new Item({
+        item: kitchenAppliance_location_user,
+        location: kitchenAppliance_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(

@@ -1,9 +1,11 @@
 import { ApiError, AsyncHandler } from "../../../utils/index.js";
-import { Car } from "../../../models/listing/car/index.js";
+import { Car } from "../../../models/listing/vehicle/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createCar = AsyncHandler(async (req, res) => {
   const {
     user,
+    productType,
     type,
     brand,
     model,
@@ -12,7 +14,7 @@ const createCar = AsyncHandler(async (req, res) => {
     transmission,
     kmDriven,
     numberOfOwner,
-    additionalFeature,
+    additionalInformation,
     media,
     location,
     askingPrice,
@@ -23,6 +25,10 @@ const createCar = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!type) {
       return res
         .status(400)
@@ -63,11 +69,15 @@ const createCar = AsyncHandler(async (req, res) => {
         .json(
           new ApiResponse(400, numberOfOwner, "number of Owner is required")
         );
-    } else if (!additionalFeature) {
+    } else if (!additionalInformation) {
       return res
         .status(400)
         .json(
-          new ApiResponse(400, additionalFeature, "additional feature required")
+          new ApiResponse(
+            400,
+            additionalInformation,
+            "additional feature required"
+          )
         );
     } else if (media.length === 0) {
       return res
@@ -94,6 +104,11 @@ const createCar = AsyncHandler(async (req, res) => {
           path: "location",
         },
       });
+      const item = new Item({
+        item: car_location_user,
+        location: car_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(
@@ -136,7 +151,7 @@ const getAllCar = AsyncHandler(async (req, res) => {
   }
 });
 
-const getSingle = AsyncHandler(async (req, res) => {
+const getSingleCar = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -174,7 +189,7 @@ const updateCar = AsyncHandler(async (req, res) => {
     transmission,
     kmDriven,
     numberOfOwner,
-    additionalFeature,
+    additionalInformation,
     media,
     location,
     askingPrice,
@@ -234,4 +249,4 @@ const deleteCar = AsyncHandler(async (req, res) => {
   }
 });
 
-export { createCar, getAllCar, getSingle, updateCar, deleteCar };
+export { createCar, getAllCar, getSingleCar, updateCar, deleteCar };

@@ -1,9 +1,11 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import Accessories from "../../../models/listing/mobile/index.js";
+import { Accessories } from "../../../models/listing/mobile/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createAccessories = AsyncHandler(async (req, res) => {
   const {
     user,
+    productType,
     accessoriesType,
     brand,
     model,
@@ -17,6 +19,10 @@ const createAccessories = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!accessoriesType) {
       return res
         .status(400)
@@ -66,6 +72,11 @@ const createAccessories = AsyncHandler(async (req, res) => {
           path: "location",
         },
       });
+      const item = new Item({
+        item: accessories_location_user,
+        location: accessories_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(

@@ -6,6 +6,10 @@ const tabletSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     brand: {
       type: String,
       required: true,

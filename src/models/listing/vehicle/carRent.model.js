@@ -6,6 +6,10 @@ const carRentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     vehicleType: {
       type: String,
       enum: ["suv", "sedan", "hutch back"],
@@ -29,9 +33,8 @@ const carRentSchema = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.Objecd,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
-      tI,
     },
     askingPrice: {
       type: Number,

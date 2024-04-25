@@ -1,14 +1,27 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import { GameEntertainment } from "../../../models/listing/index.js";
+import { GameEntertainment } from "../../../models/listing/electronics/index.js";
+import Item from "../../../models/listing/items/items.models.js";
 
 const createGameEntertainment = AsyncHandler(async (req, res) => {
-  const { user, title, description, media, location, askingPrice } = req.body;
+  const {
+    user,
+    productType,
+    title,
+    description,
+    media,
+    location,
+    askingPrice,
+  } = req.body;
 
   try {
     if (!user) {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "id of the user is required"));
+    } else if (!productType) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, productType, "product type is required"));
     } else if (!title) {
       return res
         .status(400)
@@ -43,6 +56,11 @@ const createGameEntertainment = AsyncHandler(async (req, res) => {
       const gameEntertainment_location_user = await GameEntertainment.find(
         savedGameEntertainment._id
       ).populate({ path: "user", populate: { path: "location" } });
+      const item = new Item({
+        item: gameEntertainment_location_user,
+        location: gameEntertainment_location_user[0].location,
+      });
+      const savedInItems = await item.save();
       return res
         .status(200)
         .json(

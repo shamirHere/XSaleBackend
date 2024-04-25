@@ -7,6 +7,10 @@ const phoneSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     brand: {
       type: String,
       required: true,
@@ -32,7 +36,7 @@ const phoneSchema = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Type.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
     },
     askingPrice: {

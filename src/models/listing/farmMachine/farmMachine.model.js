@@ -6,6 +6,10 @@ const farmMachineSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    productType: {
+      type: String,
+      required: [true, "product type is required"],
+    },
     machineName: {
       type: String,
       required: true,
