@@ -1,0 +1,9 @@
+export { default as Animals } from "./animals.model.js";
+export { default as Bikes } from "./bikes.model.js";
+export { default as Electronics } from "./electronics.model.js";
+export { default as Mobiles } from "./mobiles.model.js";
+export { default as Properties } from "./properties/propertiesRent.model.js";
+export { default as Vehicles } from "./vehicles/vehicles.model.js";
+export { default as Poultry } from "./poultry.model.js";
+export { default as VehiclesRent } from "./vehicles/vehiclesRent.model.js";
+export { default as PropertiesRent } from "./properties/propertiesRent.model.js";

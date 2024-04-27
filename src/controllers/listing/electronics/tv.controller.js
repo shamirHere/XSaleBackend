@@ -1,6 +1,7 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { Tv } from "../../../models/listing/electronics/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { Electronics } from "../../../models/category/index.js";
 
 const createTv = AsyncHandler(async (req, res) => {
   const {
@@ -65,12 +66,17 @@ const createTv = AsyncHandler(async (req, res) => {
         location: tv_location_user[0].location,
       });
       const savedInItems = await item.save();
+      const saveInCategory = new Electronics({
+        item: tv_location_user,
+        location: tv_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(200, tv_location_user, "new tv created successfully")
+        );
     }
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(200, tv_location_user, "new tv created successfully")
-      );
   } catch (error) {
     console.log(`error while creating new wahing machine ${error}`);
     return res

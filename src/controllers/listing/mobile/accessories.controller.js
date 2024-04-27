@@ -1,7 +1,7 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { Accessories } from "../../../models/listing/mobile/index.js";
 import Item from "../../../models/listing/items/items.models.js";
-
+import { Mobiles } from "../../../models/category/index.js";
 const createAccessories = AsyncHandler(async (req, res) => {
   const {
     user,
@@ -77,6 +77,11 @@ const createAccessories = AsyncHandler(async (req, res) => {
         location: accessories_location_user[0].location,
       });
       const savedInItems = await item.save();
+      const saveInCategory = new Animals({
+        item: accessories_location_user,
+        location: accessories_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
       return res
         .status(200)
         .json(

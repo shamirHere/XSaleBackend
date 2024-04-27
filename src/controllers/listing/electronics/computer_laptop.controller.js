@@ -1,6 +1,7 @@
 import { ComputerLaptop } from "../../../models/listing/electronics/index.js";
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { Electronics } from "../../../models/category/index.js";
 
 const createComputerLaptop = AsyncHandler(async (req, res) => {
   const {
@@ -71,6 +72,13 @@ const createComputerLaptop = AsyncHandler(async (req, res) => {
         location: computerLaptop_location_user[0].location,
       });
       const savedInItems = await item.save();
+
+      const saveInCategory = new Electronics({
+        item: computerLaptop_location_user,
+        location: computerLaptop_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
+
       return res
         .status(200)
         .json(

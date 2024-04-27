@@ -1,6 +1,7 @@
 import Horse_Cat from "../../../models/listing/animal/horse_cat.model.js";
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { Animals } from "../../../models/category/index.js";
 
 const createHorseCat = AsyncHandler(async (req, res) => {
   const {
@@ -72,7 +73,11 @@ const createHorseCat = AsyncHandler(async (req, res) => {
         location: animal_location_user[0].location,
       });
       const savedInItems = await item.save();
-
+      const saveInCategory = new Animals({
+        item: animal_location_user,
+        location: animal_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
       return res
         .status(200)
         .json(

@@ -1,6 +1,7 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { Phone } from "../../../models/listing/mobile/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { Mobiles } from "../../../models/category/index.js";
 
 const createPhone = AsyncHandler(async (req, res) => {
   const {
@@ -82,6 +83,11 @@ const createPhone = AsyncHandler(async (req, res) => {
         location: phone_location_user[0].location,
       });
       const savedInItems = await item.save();
+      const saveInCategory = new Animals({
+        item: phone_location_user,
+        location: phone_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
       return res
         .status(200)
         .json(

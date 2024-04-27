@@ -1,6 +1,7 @@
 import { Goat_Sheep } from "../../../models/listing/animal/goat_sheep.model.js";
 import Item from "../../../models/listing/items/items.models.js";
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
+import { Animals } from "../../../models/category/index.js";
 
 const createGoatSheep = AsyncHandler(async (req, res) => {
   const {
@@ -72,6 +73,12 @@ const createGoatSheep = AsyncHandler(async (req, res) => {
         location: animal_location_user[0].location,
       });
       const savedInItems = await item.save();
+      const saveInCategory = new Animals({
+        item: animal_location_user,
+        location: animal_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
+
       return res
         .status(200)
         .json(

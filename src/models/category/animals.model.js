@@ -12,5 +12,5 @@ const animalSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Animal = mongoose.model("Animal", animalSchema);
-export default Animal;
+const Animals = mongoose.model("Animal", animalSchema);
+export default Animals;

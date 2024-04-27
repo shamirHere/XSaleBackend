@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const bikeSchema = new mongoose.Schema(
+const poultrySchema = new mongoose.Schema(
   {
     item: { type: mongoose.Schema.Types.Mixed, required: true },
     location: {
@@ -12,5 +12,5 @@ const bikeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Bikes = mongoose.model("Bike", bikeSchema);
-export default Bikes;
+const Poultry = mongoose.model("Poultry", poultrySchema);
+export default Poultry;

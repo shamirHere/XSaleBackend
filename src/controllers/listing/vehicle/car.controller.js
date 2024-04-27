@@ -1,6 +1,7 @@
 import { ApiError, AsyncHandler } from "../../../utils/index.js";
 import { Car } from "../../../models/listing/vehicle/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { Vehicles } from "../../../models/category/index.js";
 
 const createCar = AsyncHandler(async (req, res) => {
   const {
@@ -109,6 +110,11 @@ const createCar = AsyncHandler(async (req, res) => {
         location: car_location_user[0].location,
       });
       const savedInItems = await item.save();
+      const saveInCategory = new Animals({
+        item: car_location_user,
+        location: car_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
       return res
         .status(200)
         .json(

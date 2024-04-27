@@ -1,16 +1,11 @@
 import mongoose from "mongoose";
 
-const propertyRentSchema = new mongoose.Schema(
+const hostelSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
-    },
-    sellingType: {
-      type: String,
-      required: true,
-      enum: ["for sale", "for rent"],
     },
     productType: {
       type: String,
@@ -19,21 +14,37 @@ const propertyRentSchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ["Flat", "House", "Farm House"],
+      enum: ["PG / Hostel", "Roommate", "Guest House"],
     },
     propertyName: {
       type: String,
       required: true,
     },
-    bedrooms: {
+    availableFor: {
       type: String,
       required: true,
-      enum: ["1", "2", "3", "4", "5", "5+"],
+      enum: ["Male", "Female", "Male & Female both"],
+    },
+    mealIncludes: {
+      type: String,
+      required: true,
+      enum: ["Yes", "No", "Available on Extra cost"],
+    },
+    roomSharing: {
+      type: String,
+      required: true,
+      enum: [
+        "Single Room",
+        "2 sharing",
+        "3 sharing",
+        "4 sharing",
+        "4+ sharing",
+      ],
     },
     bathroom: {
       type: String,
       required: true,
-      enum: ["1", "2", "3", "3+"],
+      enum: ["Attached Bathroom", "Common Bathroom"],
     },
     furnishing: {
       type: String,
@@ -81,5 +92,5 @@ const propertyRentSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const PropertyRent = mongoose.model("PropertyRent", propertyRentSchema);
-export default PropertyRent;
+const Hostel = mongoose.model("Hostel", hostelSchema);
+export default Hostel;

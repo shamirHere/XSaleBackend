@@ -1,6 +1,7 @@
 import { ApiResponse, ApiError, AsyncHandler } from "../../../utils/index.js";
 import { Bull } from "../../../models/listing/animal/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { Animals } from "../../../models/category/index.js";
 
 const createBull = async (req, res) => {
   const {
@@ -57,6 +58,11 @@ const createBull = async (req, res) => {
         location: bull_location_user[0].location,
       });
       const savedInItems = await item.save();
+      const saveInCategory = new Animals({
+        item: bull_location_user,
+        location: bull_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
       return res
         .status(200)
         .json(
@@ -69,6 +75,9 @@ const createBull = async (req, res) => {
     }
   } catch (error) {
     console.log("error while creating new bull", error);
+    return res
+      .status(500)
+      .json(new ApiResponse(500, error, "error while creating new bull"));
   }
 };
 

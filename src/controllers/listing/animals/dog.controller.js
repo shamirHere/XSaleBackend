@@ -1,6 +1,8 @@
 import { ApiError, AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { Dog } from "../../../models/listing/animal/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { Animals } from "../../../models/category/index.js";
+
 const createDog = AsyncHandler(async (req, res) => {
   const {
     user,
@@ -76,6 +78,11 @@ const createDog = AsyncHandler(async (req, res) => {
         location: dog_location_user[0].location,
       });
       const savedInItems = await item.save();
+      const saveInCategory = new Animals({
+        item: dog_location_user,
+        location: dog_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
       return res
         .status(200)
         .json(
@@ -132,7 +139,7 @@ const getSingleDog = AsyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, dog, "dog fetched successfully"));
   } catch (error) {
-    console.log("error while fetching single dog ", error);
+    console.log("error while fetching single dog", error);
     return res
       .status(500)
       .json(new ApiResponse(500, error, "error while fething single dog"));
@@ -172,7 +179,7 @@ const updateDog = AsyncHandler(async (req, res) => {
         );
     }
   } catch (error) {
-    console.log("error while updating the dog  ", error);
+    console.log("error while updating the dog", error);
     return res
       .status(500)
       .json(new ApiResponse(500, "", "erorr while updating the dog"));
@@ -198,7 +205,7 @@ const deleteDog = AsyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, "", "dog deleted successfully"));
   } catch (error) {
-    console.log("error while deleting the dog ", error);
+    console.log("error while deleting the dog", error);
     res
       .status(500)
       .json(

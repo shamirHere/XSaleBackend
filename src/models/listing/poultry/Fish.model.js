@@ -25,7 +25,6 @@ const fishModel = new mongoose.Schema(
     },
     additionalInformation: {
       type: String,
-      required: true,
     },
     quantityType: {
       type: String,

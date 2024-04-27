@@ -1,6 +1,7 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { KitchenAppliance } from "../../../models/listing/electronics/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { Electronics } from "../../../models/category/index.js";
 
 const createKitchenAppliance = AsyncHandler(async (req, res) => {
   const {
@@ -64,6 +65,11 @@ const createKitchenAppliance = AsyncHandler(async (req, res) => {
         location: kitchenAppliance_location_user[0].location,
       });
       const savedInItems = await item.save();
+      const saveInCategory = new Electronics({
+        item: kitchenAppliance_location_user,
+        location: kitchenAppliance_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
       return res
         .status(200)
         .json(

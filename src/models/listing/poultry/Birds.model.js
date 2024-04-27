@@ -5,6 +5,7 @@ const birdSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     productType: {
       type: String,
@@ -22,7 +23,6 @@ const birdSchema = new mongoose.Schema(
     },
     additionalInformation: {
       type: String,
-      required: true,
     },
     media: [{ type: String, required: true }],
     location: {

@@ -1,6 +1,7 @@
 import { ApiError, AsyncHandler } from "../../../utils/index.js";
 import { CarRent } from "../../../models/listing/vehicle/index.js";
 import Item from "../../../models/listing/items/items.models.js";
+import { VehiclesRent } from "../../../models/category/index.js";
 
 const createCarRent = AsyncHandler(async (req, res) => {
   const {

@@ -34,7 +34,6 @@ const chickenModel = new mongoose.Schema(
     },
     additionalInformation: {
       type: String,
-      required: true,
     },
     media: [{ type: String, required: true }],
     location: {

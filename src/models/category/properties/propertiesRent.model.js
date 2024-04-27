@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const propertyShema = new mongoose.Schema(
+const propertyRentShema = new mongoose.Schema(
   {
     item: { type: mongoose.Schema.Types.Mixed, required: true },
     location: {
@@ -12,5 +12,5 @@ const propertyShema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Properties = mongoose.model("Property", propertyShema);
-export default Mobiles;
+const PropertiesRent = mongoose.model("PropertyRent", propertyRentShema);
+export default propertyRentShema;
