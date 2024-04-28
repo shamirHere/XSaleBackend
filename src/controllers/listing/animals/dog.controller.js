@@ -112,7 +112,7 @@ const getAllDog = AsyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, dogs, "these are all the dogs"));
   } catch (error) {
-    console.log("error while fetching all the dogs ", error);
+    console.log("error while fetching all the dogs", error);
     return res
       .status(500)
       .json(new ApiResponse(500, error, "error while fetching all the dogs"));
