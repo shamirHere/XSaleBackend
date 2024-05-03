@@ -164,6 +164,7 @@ import {
 
 import { getCategory } from "../controllers/listing/category/category.controller.js";
 import { getSubCategory } from "../controllers/listing/category/subCategory.controller.js";
+import { getAllSubItem } from "../controllers/listing/category/item.controller.js";
 
 import {
   createFarmMachine,
@@ -231,6 +232,8 @@ import {
 
 const router = Router();
 
+//  -----------------------------------------
+
 // for all the
 router.route("/fetch/items").get(getAllItems);
 
@@ -239,6 +242,10 @@ router.route("/fetch/category/:category").get(getCategory);
 
 // for all the sub category inside the category
 router.route("/fetch/subcategory/:subcategory").get(getSubCategory);
+
+router.route("/fetch/subItem/:category/:subItem").get(getAllSubItem);
+
+//  -----------------------------------------
 
 // for cows and buffalo
 router.route("/fetch/cowbuffalo").get(getAllCowBuffalo);
@@ -298,7 +305,7 @@ router.route("/delete/bicyle").post(deleteBicycle);
 
 // for motorcycle
 router.route("/fetch/motorCycle").get(getAllBikeScooty);
-router.route("/fetch/singleMotorCycle").get(getSingleBicycle);
+router.route("/fetch/singleMotorCycle").get(getSingleBikeScooty);
 router.route("/create/motorCycle").post(createBikeScooty);
 router.route("/update/motorCycle").post(updateBikeScooty);
 router.route("/delete/motorCycle").post(deleteBikeScooty);
@@ -426,21 +433,21 @@ router.route("/update/updateBrideGroom").post(updateBride_Groom);
 router.route("/delete/deleteBrideGroom").post(deleteBride_Groom);
 
 // for mobile
-router.route("/fetch/phone").get(createPhone);
+router.route("/fetch/phone").get(getAllPhone);
 router.route("/fetch/singlePhone").get(getSinglePhone);
 router.route("/create/phone").post(createPhone);
 router.route("/update/updatePhone").post(updatePhone);
 router.route("/delete/deletePhone").post(deletePhone);
 
 // for tablet
-router.route("/fetch/tablet").get(createTablet);
+router.route("/fetch/tablet").get(getAllTablet);
 router.route("/fetch/singleTablet").get(getSingleTablet);
 router.route("/create/tablet").post(createTablet);
 router.route("/update/updateTablet").post(updateTablet);
 router.route("/delete/deleteTablet").post(deleteTablet);
 
 // for accessories
-router.route("/fetch/accessories").get(createAccessories);
+router.route("/fetch/accessories").get(getAllAccessories);
 router.route("/fetch/singleAccessories").get(getSingleAccessories);
 router.route("/create/accessories").post(createAccessories);
 router.route("/update/updateAccessories").post(updateAccessories);
