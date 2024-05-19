@@ -30,7 +30,7 @@ const motorCycle_scootySchema = new mongoose.Schema(
     fuelType: {
       type: String,
       required: true,
-      enum: ["petrol", "electric"],
+      enum: ["Petrol", "Electric"],
     },
     kmDriven: {
       type: Number,

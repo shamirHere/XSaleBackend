@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const printer_monitorSchema = new mongoose.Schema(
+const fridgeAcSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -10,13 +10,11 @@ const printer_monitorSchema = new mongoose.Schema(
       type: String,
       required: [true, "product type is required"],
     },
-    type: {
-      type: String,
+    brand: { type: String, required: true },
+    model: { type: String, required: true },
+    capacity: {
+      type: Number,
       required: true,
-      enum: ["printer", "monitor"],
-    },
-    additionalInformation: {
-      type: String,
     },
     media: [{ type: String, required: true }],
     location: {
@@ -30,5 +28,6 @@ const printer_monitorSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const PrinterMonitor = mongoose.model("PrinterMonitor", printer_monitorSchema);
-export default PrinterMonitor;
+
+const FridgeAc = mongoose.model("Fride", fridgeAcSchema);
+export default FridgeAc;

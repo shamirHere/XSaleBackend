@@ -1,5 +1,6 @@
 import { AsyncHandler, ApiResponse, ApiError } from "../../utils/index.js";
 import { User } from "../../models/user/index.js";
+import jwt from "jsonwebtoken";
 
 const loginUser = AsyncHandler(async (req, res) => {
   const { phoneNumber } = req.body;
@@ -15,8 +16,11 @@ const loginUser = AsyncHandler(async (req, res) => {
       .status(404)
       .json(new ApiResponse(404, "user is not registered , please register"));
   }
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "user logged in successfully"));
+    .json(new ApiResponse(200, user, token, "user logged in successfully"));
 });
 export default loginUser;

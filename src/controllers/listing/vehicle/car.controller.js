@@ -1,4 +1,4 @@
-import { ApiError, AsyncHandler } from "../../../utils/index.js";
+import { ApiError, AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { Car } from "../../../models/listing/vehicle/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 import { Vehicles } from "../../../models/category/index.js";
@@ -110,7 +110,7 @@ const createCar = AsyncHandler(async (req, res) => {
         location: car_location_user[0].location,
       });
       const savedInItems = await item.save();
-      const saveInCategory = new Animals({
+      const saveInCategory = new Vehicles({
         item: car_location_user,
         location: car_location_user[0].location,
       });

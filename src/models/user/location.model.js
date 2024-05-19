@@ -30,6 +30,10 @@ const locationSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    fullAddress: {
+      type: String,
+      required: true,
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

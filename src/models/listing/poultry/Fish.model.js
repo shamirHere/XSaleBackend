@@ -13,6 +13,7 @@ const fishModel = new mongoose.Schema(
     type: {
       type: String,
       required: true,
+      enum: ["Fish", "Seed"],
     },
     breed: {
       type: String,

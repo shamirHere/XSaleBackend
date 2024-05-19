@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,10 +24,9 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
-      sparse: true, // Allows null and empty string to coexist with unique index
+      sparse: true,
       validate: {
         validator: function (v) {
-          // Regular expression for email validation
           return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
         },
         message: (props) => `${props.value} is not a valid email address!`,
@@ -38,8 +35,12 @@ const userSchema = new mongoose.Schema(
     profilePicture: {
       type: String,
       required: false, // Field is optional
+      default: null,
     },
-
+    currentAddress: {
+      type: String,
+      required: true,
+    },
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",
@@ -48,7 +49,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// function to remove extra blank space between the userName
 userSchema.pre("save", function (next) {
   if (this.userName && typeof this.userName === "string") {
     this.userName = this.userName.trim().replace(/\s+/g, " ");

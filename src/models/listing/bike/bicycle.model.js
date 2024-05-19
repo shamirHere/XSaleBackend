@@ -19,7 +19,6 @@ const bicycleSchema = new mongoose.Schema(
     },
     additionInformation: {
       type: String,
-      required: true,
     },
     media: [{ type: String, required: true }],
     location: {

@@ -6,6 +6,7 @@ const registerUser = AsyncHandler(async (req, res) => {
     userName,
     phoneNumber,
     profilePicture,
+    currentAddress,
     location: locationData,
   } = req.body;
 
@@ -15,6 +16,10 @@ const registerUser = AsyncHandler(async (req, res) => {
     return res
       .status(400)
       .json(new ApiResponse(400, "Phone number is required"));
+  } else if (!currentAddress) {
+    return res
+      .status(400)
+      .json(new ApiResponse(400, "user readable address is required"));
   } else {
     try {
       const existedUser = await User.findOne({ phoneNumber });
@@ -31,6 +36,7 @@ const registerUser = AsyncHandler(async (req, res) => {
         userName,
         phoneNumber,
         profilePicture,
+        currentAddress,
       });
       const savedUser = await newUser.save();
       const userLocation = new Location({
@@ -40,6 +46,7 @@ const registerUser = AsyncHandler(async (req, res) => {
         country: locationData.country,
         latitude: locationData.latitude,
         longitude: locationData.longitude,
+        fullAddress: currentAddress,
         userId: savedUser._id,
       });
       const savedLocation = await userLocation.save();

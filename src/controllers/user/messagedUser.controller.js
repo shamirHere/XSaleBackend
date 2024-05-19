@@ -1,6 +1,7 @@
 import { AsyncHandler, ApiResponse } from "../../../src/utils/index.js";
 import { MessageUser, UserChats } from "../../models/user/index.js";
 import mongoose from "mongoose";
+import { io } from "../../app.js";
 
 const fetchMessageList = AsyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -84,6 +85,15 @@ const createMessage = AsyncHandler(async (req, res) => {
       { $addToSet: { chats: existingMessage._id } }, // Add the message ID to the chats array
       { upsert: true, new: true }
     );
+
+    try {
+      io.to(receiverUserChat.userId).emit("new_message", content.message);
+      console.log(
+        `message send to the ${receiverUserChat.userId} and this the message  ${content.message}`
+      );
+    } catch (error) {
+      console.log(`error while sending the message to the user from socket`);
+    }
 
     return res
       .status(200)

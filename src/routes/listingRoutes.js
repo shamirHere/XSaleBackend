@@ -118,12 +118,12 @@ import {
 } from "../controllers/listing/electronics/cooler_fan.controller.js";
 
 import {
-  createFridge,
-  getAllFridge,
-  getSingleFridge,
-  updateFridge,
-  deleteFridge,
-} from "../controllers/listing/electronics/fridge.controller.js";
+  createFridgeAc,
+  getAllFridgeAc,
+  getSingleFridgeAc,
+  updateFridgeAc,
+  deleteFridgeAc,
+} from "../controllers/listing/electronics/fridge_ac.controller.js";
 
 import {
   createGameEntertainment,
@@ -141,12 +141,12 @@ import {
   deleteKitchenAppliance,
 } from "../controllers/listing/electronics/kitchenAppliance.controller.js";
 import {
-  createPrinterMonitor,
-  getAllPrinterMonitor,
-  getSinglePrinterMonitor,
-  updatePrinterMonitor,
-  deletePrinterMonitor,
-} from "../controllers/listing/electronics/printer_monitor.controller.js";
+  createComputerAccessories,
+  getAllComputerAccessories,
+  getSingleComputerAccessories,
+  updateComputerAccessories,
+  deleteComputerAccessories,
+} from "../controllers/listing/electronics/computerAccessories.js";
 import {
   createTv,
   deleteTv,
@@ -355,11 +355,11 @@ router.route("/update/updateCoolerFan").post(updateCoolerFan);
 router.route("/delete/deleteCoolerFan").post(deleteCoolerFan);
 
 // for fridge
-router.route("/fetch/fridge").get(getAllFridge);
-router.route("/fetch/singleFridge").get(getSingleFridge);
-router.route("/create/fridge").post(createFridge);
-router.route("/update/updateFridge").post(updateFridge);
-router.route("/delete/deleteFridge").post(deleteFridge);
+router.route("/fetch/fridge").get(getAllFridgeAc);
+router.route("/fetch/singleFridge").get(getSingleFridgeAc);
+router.route("/create/fridge").post(createFridgeAc);
+router.route("/update/updateFridge").post(updateFridgeAc);
+router.route("/delete/deleteFridge").post(deleteFridgeAc);
 
 // for games and entertainment
 router.route("/fetch/gamesEntertainment").get(getAllcreateGameEntertainment);
@@ -377,11 +377,17 @@ router.route("/update/updateKitchenAppliance").post(updateKitchenAppliance);
 router.route("/delete/deleteKitchenAppliance").post(deleteKitchenAppliance);
 
 // printer and monitor
-router.route("/fetch/printerMonitor").get(getAllPrinterMonitor);
-router.route("/fetch/singlePrinterMonitor").get(getSinglePrinterMonitor);
-router.route("/create/printerMonitor").post(createPrinterMonitor);
-router.route("/update/updatePrinterMonitor").post(updatePrinterMonitor);
-router.route("/delete/deletePrinterMonitor").post(deletePrinterMonitor);
+router.route("/fetch/computerAccessories").get(getAllComputerAccessories);
+router
+  .route("/fetch/singleComputerAccessories")
+  .get(getSingleComputerAccessories);
+router.route("/create/computerAccessories").post(createComputerAccessories);
+router
+  .route("/update/updateComputerAccessories")
+  .post(updateComputerAccessories);
+router
+  .route("/delete/deleteComputerAccessories")
+  .post(deleteComputerAccessories);
 
 // for tv
 router.route("/fetch/tv").get(getAllTv);

@@ -15,6 +15,7 @@ const furnitureSchema = new mongoose.Schema(
     },
     additionalInformation: {
       type: String,
+      required: true,
     },
     media: [
       {

@@ -8,8 +8,7 @@ const createJob = AsyncHandler(async (req, res) => {
     productType,
     role,
     jobDescription,
-    minSalary,
-    maxSalary,
+    salaryRange,
     additionalInformation,
     media,
     location,
@@ -38,24 +37,14 @@ const createJob = AsyncHandler(async (req, res) => {
             "description of the job is required"
           )
         );
-    } else if (!minSalary) {
+    } else if (!salaryRange) {
       return res
         .status(400)
         .json(
           new ApiResponse(
             400,
             jobDescription,
-            "minimum salary of the job is required"
-          )
-        );
-    } else if (!maxSalary) {
-      return res
-        .status(400)
-        .json(
-          new ApiResponse(
-            400,
-            jobDescription,
-            "maximum salary of the job is required"
+            "salary range of the job is required"
           )
         );
     } else if (media.length === 0) {
@@ -151,8 +140,7 @@ const updateJob = AsyncHandler(async (req, res) => {
     _id,
     role,
     jobDescription,
-    minSalary,
-    maxSalary,
+    salaryRange,
     additionalInformation,
     media,
     location,

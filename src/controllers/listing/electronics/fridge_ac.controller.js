@@ -1,9 +1,9 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import { Fridge } from "../../../models/listing/electronics/index.js";
+import { FridgeAc } from "../../../models/listing/electronics/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 import { Electronics } from "../../../models/category/index.js";
 
-const createFridge = AsyncHandler(async (req, res) => {
+const createFridgeAc = AsyncHandler(async (req, res) => {
   const {
     user,
     productType,
@@ -26,15 +26,19 @@ const createFridge = AsyncHandler(async (req, res) => {
     } else if (!brand) {
       return res
         .status(400)
-        .json(new ApiResponse(400, brand, " brand of the fridge is required"));
+        .json(
+          new ApiResponse(400, brand, " brand of the FridgeAc is required")
+        );
     } else if (!model) {
       return res
         .status(400)
-        .json(new ApiResponse(400, model, "model of the fridge is required"));
+        .json(new ApiResponse(400, model, "model of the FridgeAc is required"));
     } else if (!capacity) {
       return res
         .status(400)
-        .json(new ApiResponse(400, age, "capcaity of the fridge is required"));
+        .json(
+          new ApiResponse(400, age, "capcaity of the FridgeAc is required")
+        );
     } else if (media.length === 0) {
       return res
         .status(400)
@@ -45,17 +49,17 @@ const createFridge = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(
-          new ApiResponse(400, location, "location of the fridge is required")
+          new ApiResponse(400, location, "location of the FridgeAc is required")
         );
     } else if (!askingPrice) {
       return res
         .status(400)
         .json(new ApiResponse(400, askingPrice, "asking price is required"));
     } else {
-      const newFridge = new Fridge(req.body);
-      const savedFridge = await newFridge.save();
-      const fridge_location_user = await Fridge.findById(
-        savedFridge._id
+      const newFridgeAc = new FridgeAcAc(req.body);
+      const savedFridgeAc = await newFridgeAcAc.save();
+      const FridgeAc_location_user = await FridgeAc.findById(
+        savedFridgeAc._id
       ).populate({
         path: "user",
         populate: {
@@ -63,13 +67,13 @@ const createFridge = AsyncHandler(async (req, res) => {
         },
       });
       const item = new Item({
-        item: fridge_location_user,
-        location: fridge_location_user[0].location,
+        item: FridgeAc_location_user,
+        location: FridgeAc_location_user[0].location,
       });
       const savedInItems = await item.save();
       const saveInCategory = new Electronics({
-        item: fridge_location_user,
-        location: fridge_location_user[0].location,
+        item: FridgeAc_location_user,
+        location: FridgeAc_location_user[0].location,
       });
       const savedInCategory = await saveInCategory.save();
       return res
@@ -77,21 +81,21 @@ const createFridge = AsyncHandler(async (req, res) => {
         .json(
           new ApiResponse(
             200,
-            fridge_location_user,
-            "new fridge created successfully"
+            FridgeAc_location_user,
+            "new FridgeAc created successfully"
           )
         );
     }
   } catch (error) {
-    console.log(`error while creating new fridge ${error}`);
+    console.log(`error while creating new FridgeAc ${error}`);
     return res
       .status(500)
-      .json(new ApiResponse(500, error, "error while creating new fridge"));
+      .json(new ApiResponse(500, error, "error while creating new FridgeAc"));
   }
 });
-const getAllFridge = AsyncHandler(async (req, res) => {
+const getAllFridgeAc = AsyncHandler(async (req, res) => {
   try {
-    const fridges = await Fridge.find().populate({
+    const FridgeAcs = await FridgeAc.find().populate({
       path: "user",
       populate: {
         path: "location",
@@ -99,42 +103,44 @@ const getAllFridge = AsyncHandler(async (req, res) => {
     });
     return res
       .status(200)
-      .json(new ApiResponse(200, fridges, "these are all the fridges"));
+      .json(new ApiResponse(200, FridgeAcs, "these are all the FridgeAcs"));
   } catch (error) {
-    console.log("error while fetching all fridges ", error);
+    console.log("error while fetching all FridgeAcs ", error);
     return res
       .status(500)
-      .json(new ApiResponse(500, error, "error while fething all fridges"));
+      .json(new ApiResponse(500, error, "error while fething all FridgeAcs"));
   }
 });
-const getSingleFridge = AsyncHandler(async (req, res) => {
+const getSingleFridgeAc = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
       return res
         .status(400)
-        .json(new ApiResponse(400, _id, "please provide the id of the fridge"));
+        .json(
+          new ApiResponse(400, _id, "please provide the id of the FridgeAc")
+        );
     }
-    const fridge = await Fridge.findOne({ _id }).populate({
+    const FridgeAc = await FridgeAc.findOne({ _id }).populate({
       path: "user",
       populate: { path: "location" },
     });
-    if (!fridge) {
+    if (!FridgeAc) {
       return res
         .status(404)
-        .json(new ApiResponse(404, fridge, "the fridge does not exist"));
+        .json(new ApiResponse(404, FridgeAc, "the FridgeAc does not exist"));
     }
     return res
       .status(200)
-      .json(new ApiResponse(200, fridge, "fridge fetched successfully"));
+      .json(new ApiResponse(200, FridgeAc, "FridgeAc fetched successfully"));
   } catch (error) {
-    console.log("error while fetching single fridge ", error);
+    console.log("error while fetching single FridgeAc ", error);
     return res
       .status(500)
-      .json(new ApiResponse(500, error, "error while fething single fridge"));
+      .json(new ApiResponse(500, error, "error while fething single FridgeAc"));
   }
 });
-const updateFridge = AsyncHandler(async (req, res) => {
+const updateFridgeAc = AsyncHandler(async (req, res) => {
   const { _id, brand, model, capacity, media, location, askingPrice } =
     req.body;
   try {
@@ -143,32 +149,32 @@ const updateFridge = AsyncHandler(async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, _id, "_id the of the document is required"));
     }
-    const updatedFridge = await Fridge.findByIdAndUpdate(_id, req.body, {
+    const updatedFridgeAc = await FridgeAc.findByIdAndUpdate(_id, req.body, {
       new: true,
     });
-    if (!updatedFridge) {
+    if (!updatedFridgeAc) {
       return res
         .status(404)
-        .json(new ApiResponse(404, updateFridge, "fridge not found"));
-    } else if (updatedFridge) {
+        .json(new ApiResponse(404, updateFridgeAc, "FridgeAc not found"));
+    } else if (updatedFridgeAc) {
       return res
         .status(200)
         .json(
           new ApiResponse(
             200,
-            updatedFridge,
-            "your listing for this fridge updated"
+            updatedFridgeAc,
+            "your listing for this FridgeAc updated"
           )
         );
     }
   } catch (error) {
-    console.log("error while updating the fridge  ", error);
+    console.log("error while updating the FridgeAc  ", error);
     return res
       .status(500)
-      .json(new ApiResponse(500, "", "erorr while updating the fridge"));
+      .json(new ApiResponse(500, "", "erorr while updating the FridgeAc"));
   }
 });
-const deleteFridge = AsyncHandler(async (req, res) => {
+const deleteFridgeAc = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -178,33 +184,33 @@ const deleteFridge = AsyncHandler(async (req, res) => {
           new ApiResponse(400, _id, "please provide the id of the document")
         );
     }
-    const deletedFridge = await Fridge.findByIdAndDelete(_id);
-    if (!deletedFridge) {
+    const deletedFridgeAc = await FridgeAc.findByIdAndDelete(_id);
+    if (!deletedFridgeAc) {
       return res
         .status(400)
-        .json(new ApiResponse(400, _id, "Fridge does not exist"));
+        .json(new ApiResponse(400, _id, "FridgeAc does not exist"));
     }
     return res
       .status(200)
-      .json(new ApiResponse(200, "", "fridge deleted successfully"));
+      .json(new ApiResponse(200, "", "FridgeAc deleted successfully"));
   } catch (error) {
-    console.log("error while deleting the fridge ", error);
+    console.log("error while deleting the FridgeAc ", error);
     res
       .status(500)
       .json(
         new ApiResponse(
           500,
           error,
-          "internal server error while deleting fridge"
+          "internal server error while deleting FridgeAc"
         )
       );
   }
 });
 
 export {
-  createFridge,
-  getAllFridge,
-  getSingleFridge,
-  updateFridge,
-  deleteFridge,
+  createFridgeAc,
+  getAllFridgeAc,
+  getSingleFridgeAc,
+  updateFridgeAc,
+  deleteFridgeAc,
 };

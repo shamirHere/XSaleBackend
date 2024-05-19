@@ -29,7 +29,7 @@ const groom_brideSchema = new mongoose.Schema(
     },
     maritialStatus: {
       type: String,
-      enum: ["never married", "divorced", "seperated", "widowed"],
+      enum: ["Never married", "Divorced", "Seperated", "Widowed"],
       required: true,
     },
     religion: {

@@ -10,7 +10,7 @@ const fashionSchema = new mongoose.Schema(
       type: String,
       required: [true, "product type is required"],
     },
-    adTitle: {
+    clothing: {
       type: String,
       required: true,
       minlength: [
@@ -18,7 +18,7 @@ const fashionSchema = new mongoose.Schema(
         "title of this fashion ad must be at least 10 characters long",
       ],
     },
-    desribeSelling: {
+    additionalInformation: {
       type: String,
       required: true,
       minlength: [

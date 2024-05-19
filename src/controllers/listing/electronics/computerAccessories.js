@@ -1,9 +1,9 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import { PrinterMonitor } from "../../../models/listing/electronics/index.js";
+import { ComputerAccessories } from "../../../models/listing/electronics/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 import { Electronics } from "../../../models/category/index.js";
 
-const createPrinterMonitor = AsyncHandler(async (req, res) => {
+const createComputerAccessories = AsyncHandler(async (req, res) => {
   const {
     user,
     productType,
@@ -47,19 +47,19 @@ const createPrinterMonitor = AsyncHandler(async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, askingPrice, "asking price is required"));
     } else {
-      const newPrinter_monitor = new PrinterMonitor(req.body);
-      const savedPrinterMonitor = await newPrinter_monitor.save();
-      const printerMonitor_location_user = await PrinterMonitor.find(
-        savedPrinterMonitor._id
+      const newPrinter_monitor = new ComputerAccessories(req.body);
+      const savedComputerAccessories = await newPrinter_monitor.save();
+      const ComputerAccessories_location_user = await ComputerAccessories.find(
+        savedComputerAccessories._id
       ).populate({ path: "user", populate: { path: "location" } });
       const item = new Item({
-        item: printerMonitor_location_user,
-        location: printerMonitor_location_user[0].location,
+        item: ComputerAccessories_location_user,
+        location: ComputerAccessories_location_user[0].location,
       });
       const savedInItems = await item.save();
       const saveInCategory = new Electronics({
-        item: printerMonitor_location_user,
-        location: printerMonitor_location_user[0].location,
+        item: ComputerAccessories_location_user,
+        location: ComputerAccessories_location_user[0].location,
       });
       const savedInCategory = await saveInCategory.save();
       return res
@@ -67,7 +67,7 @@ const createPrinterMonitor = AsyncHandler(async (req, res) => {
         .json(
           new ApiResponse(
             200,
-            printerMonitor_location_user,
+            ComputerAccessories_location_user,
             "printer / monitor listing created successfully"
           )
         );
@@ -85,9 +85,9 @@ const createPrinterMonitor = AsyncHandler(async (req, res) => {
       );
   }
 });
-const getAllPrinterMonitor = AsyncHandler(async (req, res) => {
+const getAllComputerAccessories = AsyncHandler(async (req, res) => {
   try {
-    const printers_monitors = await PrinterMonitor.find().populate({
+    const printers_monitors = await ComputerAccessories.find().populate({
       path: "user",
       populate: {
         path: "location",
@@ -115,7 +115,7 @@ const getAllPrinterMonitor = AsyncHandler(async (req, res) => {
       );
   }
 });
-const getSinglePrinterMonitor = AsyncHandler(async (req, res) => {
+const getSingleComputerAccessories = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -125,10 +125,12 @@ const getSinglePrinterMonitor = AsyncHandler(async (req, res) => {
           new ApiResponse(400, _id, "please provide the id of the document")
         );
     }
-    const printer_monitor = await PrinterMonitor.findOne({ _id }).populate({
-      path: "user",
-      populate: { path: "location" },
-    });
+    const printer_monitor = await ComputerAccessories.findOne({ _id }).populate(
+      {
+        path: "user",
+        populate: { path: "location" },
+      }
+    );
     if (!printer_monitor) {
       return res
         .status(404)
@@ -162,7 +164,7 @@ const getSinglePrinterMonitor = AsyncHandler(async (req, res) => {
       );
   }
 });
-const updatePrinterMonitor = AsyncHandler(async (req, res) => {
+const updateComputerAccessories = AsyncHandler(async (req, res) => {
   const { _id, type, additionalInformation, media, location, askingPrice } =
     req.body;
   try {
@@ -171,30 +173,27 @@ const updatePrinterMonitor = AsyncHandler(async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, _id, "_id the of the document is required"));
     }
-    const updatedPrinterMonitor = await PrinterMonitor.findByIdAndUpdate(
-      _id,
-      req.body,
-      {
+    const updatedComputerAccessories =
+      await ComputerAccessories.findByIdAndUpdate(_id, req.body, {
         new: true,
-      }
-    );
-    if (!updatedPrinterMonitor) {
+      });
+    if (!updatedComputerAccessories) {
       return res
         .status(404)
         .json(
           new ApiResponse(
             404,
-            updatedPrinterMonitor,
+            updatedComputerAccessories,
             "printer / monitor not found"
           )
         );
-    } else if (updatedPrinterMonitor) {
+    } else if (updatedComputerAccessories) {
       return res
         .status(200)
         .json(
           new ApiResponse(
             200,
-            updatedPrinterMonitor,
+            updatedComputerAccessories,
             "your listing for this printer / monitor updated"
           )
         );
@@ -208,7 +207,7 @@ const updatePrinterMonitor = AsyncHandler(async (req, res) => {
       );
   }
 });
-const deletePrinterMonitor = AsyncHandler(async (req, res) => {
+const deleteComputerAccessories = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -218,8 +217,9 @@ const deletePrinterMonitor = AsyncHandler(async (req, res) => {
           new ApiResponse(400, _id, "please provide the id of the document")
         );
     }
-    const deletedPrinterMonitor = await PrinterMonitor.findByIdAndDelete(_id);
-    if (!deletedPrinterMonitor) {
+    const deletedComputerAccessories =
+      await ComputerAccessories.findByIdAndDelete(_id);
+    if (!deletedComputerAccessories) {
       return res
         .status(400)
         .json(new ApiResponse(400, _id, "printer / monitor does not exist"));
@@ -242,9 +242,9 @@ const deletePrinterMonitor = AsyncHandler(async (req, res) => {
 });
 
 export {
-  createPrinterMonitor,
-  getAllPrinterMonitor,
-  getSinglePrinterMonitor,
-  updatePrinterMonitor,
-  deletePrinterMonitor,
+  createComputerAccessories,
+  getAllComputerAccessories,
+  getSingleComputerAccessories,
+  updateComputerAccessories,
+  deleteComputerAccessories,
 };

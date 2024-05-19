@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const fridgeSchema = new mongoose.Schema(
+const computerAccessories = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -10,11 +10,13 @@ const fridgeSchema = new mongoose.Schema(
       type: String,
       required: [true, "product type is required"],
     },
-    brand: { type: String, required: true },
-    model: { type: String, required: true },
-    capacity: {
-      type: Number,
+    type: {
+      type: String,
       required: true,
+      enum: ["printer", "monitor"],
+    },
+    additionalInformation: {
+      type: String,
     },
     media: [{ type: String, required: true }],
     location: {
@@ -28,6 +30,8 @@ const fridgeSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-const Fridge = mongoose.model("Fride", fridgeSchema);
-export default Fridge;
+const ComputerAccessories = mongoose.model(
+  "ComputerAccessories",
+  computerAccessories
+);
+export default ComputerAccessories;

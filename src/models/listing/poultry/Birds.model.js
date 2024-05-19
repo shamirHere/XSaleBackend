@@ -14,12 +14,11 @@ const birdSchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ["Pigeons", "Parrot", "other"],
     },
     quantity: {
       type: String,
       required: true,
-      enum: ["per kg", "per piece"],
+      enum: ["Per kg", "Per piece"],
     },
     additionalInformation: {
       type: String,

@@ -13,7 +13,7 @@ const cooler_fanSchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ["cooler", "fan"],
+      enum: ["Cooler", "Stand Fan", "Ceiling Fan", "Wall Fan", "Exhaust Fan"],
     },
     brand: {
       type: String,

@@ -1,9 +1,9 @@
 export { default as CameraLense } from "./camera_lenses.model.js";
 export { default as ComputerLaptop } from "./computer_laptop.model.js";
 export { default as CoolerFan } from "./cooler_fan.model.js";
-export { default as Fridge } from "./fridge.model.js";
+export { default as FridgeAc } from "./fridge_ac.model.js";
 export { default as GameEntertainment } from "./games_entertainment.model.js";
 export { default as KitchenAppliance } from "./kitchenAppliances.model.js";
-export { default as PrinterMonitor } from "./printer_monitor.model.js";
+export { default as ComputerAccessories } from "./computerAccessories.js";
 export { default as Tv } from "./tv.model.js";
 export { default as WashingMachine } from "./washingMachine.model.js";
