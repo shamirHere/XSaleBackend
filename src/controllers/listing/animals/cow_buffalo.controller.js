@@ -9,7 +9,6 @@ const createCowBuffalo = async (req, res) => {
     productType,
     type,
     breed,
-    lactation,
     currentCapacity,
     maximumCapacity,
     hasDeliverdBaby,
@@ -40,16 +39,6 @@ const createCowBuffalo = async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, breed, "breed of the animal is required"));
-    } else if (!lactation) {
-      return res
-        .status(400)
-        .json(
-          new ApiResponse(
-            400,
-            lactation,
-            "lactation cycle of the animal is required"
-          )
-        );
     } else if (!maximumCapacity) {
       return res
         .status(400)
@@ -212,7 +201,6 @@ const updateCowBuffalo = async (req, res) => {
   const {
     _id,
     breed,
-    lactation,
     currentCapacity,
     maximumCapacity,
     hasDeliverdBaby,

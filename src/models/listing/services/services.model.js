@@ -14,10 +14,6 @@ const serviceSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    name: {
-      type: String,
-      requried: true,
-    },
     adTitle: {
       type: String,
       required: true,

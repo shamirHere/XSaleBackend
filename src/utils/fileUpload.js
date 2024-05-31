@@ -26,4 +26,4 @@ cloudinary.config({
   api_secret: "McUGuY661Mhl09uXiqA3vMa2Efc",
 });
 
-export default uploaderOnCloudinary;
+export { uploaderOnCloudinary };

@@ -20,10 +20,6 @@ const cow_buffalo_schema = new mongoose.Schema(
       type: String,
       required: [true, "breed of the animal is required"],
     },
-    lactation: {
-      type: Number,
-      required: [true, "lcatation cycle of the animal is required"],
-    },
     currentCapacity: {
       type: Number,
     },

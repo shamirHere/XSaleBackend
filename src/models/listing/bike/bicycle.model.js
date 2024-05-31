@@ -12,7 +12,7 @@ const bicycleSchema = new mongoose.Schema(
     },
     brand: { type: String, required: true },
     model: { type: String, required: true },
-    isElectric: { type: Boolean, requried: true },
+    isElectric: { type: String, enum: ["yes", "no"], requried: true },
     oldInMonths: {
       type: String,
       requried: true,

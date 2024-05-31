@@ -10,12 +10,6 @@ const chickenModel = new mongoose.Schema(
       type: String,
       required: [true, "product type is required"],
     },
-
-    breed: {
-      type: String,
-      required: true,
-      enum: ["Chicken", "Duck", "Turkey", "Quails (Bater)", "Swan", "Other"],
-    },
     type: {
       type: String,
       required: true,
@@ -23,9 +17,6 @@ const chickenModel = new mongoose.Schema(
     },
     hasPoultryFarm: {
       type: Boolean,
-    },
-    sellerType: {
-      type: String,
     },
     quantityType: {
       type: String,

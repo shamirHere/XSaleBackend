@@ -17,7 +17,7 @@ const dogSchema = new mongoose.Schema(
     gender: {
       type: String,
       required: true,
-      enum: ["male", "female"],
+      enum: ["Male", "Female"],
     },
     age: {
       type: Number,
@@ -25,7 +25,6 @@ const dogSchema = new mongoose.Schema(
     },
     vaccination: {
       type: String,
-      required: true,
       enum: ["no Vaccination", "DHPP"],
     },
     additionalInformation: {

@@ -7,10 +7,8 @@ const createChicken = AsyncHandler(async (req, res) => {
   const {
     user,
     productType,
-    breed,
     type,
     hasPoultryFarm,
-    sellerType,
     quantityType,
     additionalInformation,
     media,
@@ -25,14 +23,10 @@ const createChicken = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, productType, "product type is required"));
-    } else if (!breed) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, breed, "breed of the chicken is required"));
     } else if (!type) {
       return res
         .status(400)
-        .json(new ApiResponse(400, breed, "type of the chicken is required"));
+        .json(new ApiResponse(400, type, "type of the chicken is required"));
     } else if (!quantityType) {
       return res
         .status(400)
@@ -143,10 +137,8 @@ const updateChicken = AsyncHandler(async (req, res) => {
   const {
     _id,
     productType,
-    breed,
     type,
     hasPoultryFarm,
-    sellerType,
     quantityType,
     additionalInformation,
     media,

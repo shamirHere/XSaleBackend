@@ -8,11 +8,12 @@ const goat_sheep_schema = new mongoose.Schema(
     },
     productType: {
       type: String,
+      enum: ["Goat", "Sheep"],
       required: [true, "product type is required"],
     },
     type: {
       type: String,
-      enum: ["goat", "sheep"],
+      enum: ["Goat", "Sheep"],
       required: [true, "type of the animal is required goat or sheep"],
     },
     gender: {
@@ -27,9 +28,6 @@ const goat_sheep_schema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    lactation: {
-      type: Number,
-    },
     currentCapacity: {
       type: Number,
     },
@@ -37,13 +35,13 @@ const goat_sheep_schema = new mongoose.Schema(
       type: Number,
     },
     hasDeliverdBaby: {
-      type: Boolean,
+      type: String,
     },
     hasKid: {
-      type: Boolean,
+      type: String,
     },
     isPregnant: {
-      type: Boolean,
+      type: String,
     },
     media: [{ type: String, required: true }],
     location: {

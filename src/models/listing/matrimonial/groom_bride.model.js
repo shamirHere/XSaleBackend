@@ -12,7 +12,7 @@ const groom_brideSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["bride", "groom"],
+      enum: ["Bride", "Groom"],
       required: true,
     },
     name: {
@@ -39,6 +39,9 @@ const groom_brideSchema = new mongoose.Schema(
     caste: {
       type: String,
     },
+    motherTounge: {
+      type: String,
+    },
     educationQualification: {
       type: String,
       required: true,
@@ -48,9 +51,6 @@ const groom_brideSchema = new mongoose.Schema(
       required: true,
     },
     additionalInformation: {
-      type: String,
-    },
-    motherTounge: {
       type: String,
     },
     media: [{ type: String, required: true }],

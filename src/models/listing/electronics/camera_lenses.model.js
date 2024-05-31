@@ -12,7 +12,7 @@ const camera_lenseSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["camera", "lenses"],
+      enum: ["Camera", "Lense"],
       required: true,
     },
     brand: {

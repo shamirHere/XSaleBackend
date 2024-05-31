@@ -12,12 +12,13 @@ const horse_cat_schema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["horse", "cat"],
+      enum: ["Horse", "Cat"],
       required: [true, "type of the animal is required horse or cat"],
     },
     gender: {
       type: String,
-      enum: ["male", "female", "kid"],
+      enum: ["Male", "Female", "Kid"],
+      required: true,
     },
     breed: {
       type: String,
@@ -27,20 +28,15 @@ const horse_cat_schema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    lactation: {
-      type: Number,
-    },
     deliveredBaby: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     hasKid: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     isPregnant: {
-      type: Boolean,
-      default: false,
+      type: String,
+      required: true,
     },
     additionalInformation: {
       type: String,

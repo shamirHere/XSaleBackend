@@ -9,7 +9,6 @@ const createDonkey = AsyncHandler(async (req, res) => {
     productType,
     gender,
     age,
-    lactation,
     hasDeliveredBaby,
     haFoal,
     isPregnant,
@@ -149,7 +148,7 @@ const updateDonkey = AsyncHandler(async (req, res) => {
     _id,
     gender,
     age,
-    lactation,
+
     hasDeliveredBaby,
     haFoal,
     isPregnant,

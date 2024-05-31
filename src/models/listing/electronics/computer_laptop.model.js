@@ -26,6 +26,7 @@ const computer_laptopSchema = new mongoose.Schema(
     ssd_hdd: {
       type: Number,
       required: true,
+      enum: ["SSD", "HD", "SSD/HD"],
     },
     additionalInformation: {
       type: String,

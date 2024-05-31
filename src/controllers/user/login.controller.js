@@ -1,6 +1,7 @@
 import { AsyncHandler, ApiResponse, ApiError } from "../../utils/index.js";
 import { User } from "../../models/user/index.js";
 import jwt from "jsonwebtoken";
+import admin from "../../firebaseAdmin.js";
 
 const loginUser = AsyncHandler(async (req, res) => {
   const { phoneNumber } = req.body;
@@ -23,4 +24,5 @@ const loginUser = AsyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, user, token, "user logged in successfully"));
 });
+
 export default loginUser;

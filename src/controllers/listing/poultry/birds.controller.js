@@ -8,6 +8,7 @@ const createBird = AsyncHandler(async (req, res) => {
     user,
     productType,
     type,
+    name,
     quantity,
     additionalInformation,
     media,
@@ -25,6 +26,10 @@ const createBird = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, type, "type of the bird is required"));
+    } else if (!name) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, name, "name of the bird is required"));
     } else if (!quantity) {
       return res
         .status(400)
@@ -135,6 +140,7 @@ const updateBird = AsyncHandler(async (req, res) => {
     _id,
     productType,
     type,
+    name,
     quantity,
     additionalInformation,
     media,

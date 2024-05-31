@@ -12,24 +12,21 @@ const donkeySchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["male", "female", "kid"],
+      enum: ["Male", "Female", "Kid"],
       required: true,
     },
     age: {
       type: Number,
       required: true,
     },
-    lactation: {
-      type: Number,
-    },
     hasDeliveredBaby: {
-      type: Boolean,
+      type: String,
     },
     hasFoal: {
-      type: Boolean,
+      type: String,
     },
     isPregnant: {
-      type: Boolean,
+      type: String,
     },
     media: [{ type: String, required: true }],
     location: {
