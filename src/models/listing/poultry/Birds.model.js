@@ -7,6 +7,10 @@ const birdSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -19,7 +23,7 @@ const birdSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    quantity: {
+    quantityType: {
       type: String,
       required: true,
       enum: ["Per kg", "Per piece"],
@@ -29,8 +33,8 @@ const birdSchema = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

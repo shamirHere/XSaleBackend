@@ -5,11 +5,13 @@ import { Mobiles } from "../../../models/category/index.js";
 const createAccessories = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     accessoriesType,
     brand,
     model,
-    otherDetails,
+    monthsOld,
+    additionalInformation,
     media,
     location,
     askingPrice,
@@ -19,6 +21,10 @@ const createAccessories = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -37,17 +43,11 @@ const createAccessories = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, model, "model is required"));
-    } else if (!additionalInformation) {
+    } else if (!monthsOld) {
       return res
         .status(400)
-        .json(
-          new ApiResponse(
-            400,
-            additionalInformation,
-            "additional information id is required"
-          )
-        );
-    } else if (media.length == 0) {
+        .json(new ApiResponse(400, monthsOld, "months Old is required"));
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -68,18 +68,15 @@ const createAccessories = AsyncHandler(async (req, res) => {
         savedAccessories._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: accessories_location_user,
-        location: accessories_location_user[0].location,
+        location: accessories_location_user.location,
       });
       const savedInItems = await item.save();
-      const saveInCategory = new Animals({
+      const saveInCategory = new Mobiles({
         item: accessories_location_user,
-        location: accessories_location_user[0].location,
+        location: accessories_location_user.location,
       });
       const savedInCategory = await saveInCategory.save();
       return res

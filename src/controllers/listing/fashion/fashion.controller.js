@@ -5,9 +5,10 @@ import Item from "../../../models/listing/items/items.models.js";
 const createFashion = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
-    adTitle,
-    desribeSelling,
+    clothing,
+    additionalInformation,
     media,
     location,
     askingPrice,
@@ -17,21 +18,31 @@ const createFashion = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
         .json(new ApiResponse(400, productType, "product type is required"));
-    } else if (!adTitle) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, adTitle, "adTitle is required"));
-    } else if (!desribeSelling) {
+    } else if (!clothing) {
       return res
         .status(400)
         .json(
-          new ApiResponse(400, desribeSelling, "describe selling is required")
+          new ApiResponse(400, clothing, "please desribe what is clothing type")
         );
-    } else if (media.length === 0) {
+    } else if (!additionalInformation) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(
+            400,
+            additionalInformation,
+            "Please add additional information like size, type etc"
+          )
+        );
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -54,9 +65,6 @@ const createFashion = AsyncHandler(async (req, res) => {
         savedFashion._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: fashion_location_user,
@@ -76,8 +84,8 @@ const createFashion = AsyncHandler(async (req, res) => {
   } catch (error) {
     console.log(`error while creating new fashion ${error}`);
     return res
-      .status(200)
-      .json(new ApiResponse(200, error, "error while creating new fashion"));
+      .status(400)
+      .json(new ApiResponse(400, error, "error while creating new fashion"));
   }
 });
 const getAllFashion = AsyncHandler(async (req, res) => {

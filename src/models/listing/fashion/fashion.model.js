@@ -5,6 +5,11 @@ const fashionSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
+    },
+    categoryName: {
+      type: String,
+      required: true,
     },
     productType: {
       type: String,
@@ -15,7 +20,7 @@ const fashionSchema = new mongoose.Schema(
       required: true,
       minlength: [
         10,
-        "title of this fashion ad must be at least 10 characters long",
+        "clothing of this fashion ad must be at least 10 characters long",
       ],
     },
     additionalInformation: {
@@ -23,13 +28,13 @@ const fashionSchema = new mongoose.Schema(
       required: true,
       minlength: [
         10,
-        "description of this fashion ad must be at least 10 characters long",
+        "additional information of this fashion ad must be at least 10 characters long",
       ],
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

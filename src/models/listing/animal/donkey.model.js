@@ -10,6 +10,10 @@ const donkeySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     gender: {
       type: String,
       enum: ["Male", "Female", "Kid"],
@@ -28,10 +32,11 @@ const donkeySchema = new mongoose.Schema(
     isPregnant: {
       type: String,
     },
+    additionalInformation: { type: String },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

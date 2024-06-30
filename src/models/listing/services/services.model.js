@@ -5,6 +5,11 @@ const serviceSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
+    },
+    categoryName: {
+      type: String,
+      required: true,
     },
     productType: {
       type: String,
@@ -20,16 +25,12 @@ const serviceSchema = new mongoose.Schema(
     },
     additionalInformation: {
       type: String,
-      requried: true,
+      required: true,
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
-    },
-    askingPrice: {
-      type: Number,
-      requried: true,
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

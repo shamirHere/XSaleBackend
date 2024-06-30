@@ -6,11 +6,12 @@ import { Bikes } from "../../../models/category/index.js";
 const createBikeScooty = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
     brand,
     model,
-    registrationYear,
+    registerationDate,
     fuelType,
     kmDriven,
     numberOfOwner,
@@ -24,6 +25,10 @@ const createBikeScooty = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -36,6 +41,16 @@ const createBikeScooty = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, brand, "brand is required"));
+    } else if (!registerationDate) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(
+            400,
+            registerationDate,
+            "registeration date is required"
+          )
+        );
     } else if (!model) {
       return res
         .status(400)
@@ -52,7 +67,7 @@ const createBikeScooty = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, numberOfOwner, "numberOfOwner is required"));
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(

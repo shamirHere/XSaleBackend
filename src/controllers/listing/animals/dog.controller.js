@@ -6,6 +6,7 @@ import { Animals } from "../../../models/category/index.js";
 const createDog = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     breed,
     gender,
@@ -22,6 +23,10 @@ const createDog = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -48,7 +53,7 @@ const createDog = AsyncHandler(async (req, res) => {
             "vaccination detail of the dog is required"
           )
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -69,9 +74,6 @@ const createDog = AsyncHandler(async (req, res) => {
       const savedDog = await newDog.save();
       const dog_location_user = await Dog.find(savedDog._id).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: dog_location_user,

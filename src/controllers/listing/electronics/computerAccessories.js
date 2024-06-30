@@ -6,8 +6,9 @@ import { Electronics } from "../../../models/category/index.js";
 const createComputerAccessories = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
-    type,
+    accessoriesName,
     additionalInformation,
     media,
     location,
@@ -18,15 +19,21 @@ const createComputerAccessories = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "id of the user is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
         .json(new ApiResponse(400, productType, "product type is required"));
-    } else if (!type) {
+    } else if (!accessoriesName) {
       return res
         .status(400)
-        .json(new ApiResponse(400, type, "type is required"));
-    } else if (media.length === 0) {
+        .json(
+          new ApiResponse(400, accessoriesName, "accessories name is required")
+        );
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -51,7 +58,7 @@ const createComputerAccessories = AsyncHandler(async (req, res) => {
       const savedComputerAccessories = await newPrinter_monitor.save();
       const ComputerAccessories_location_user = await ComputerAccessories.find(
         savedComputerAccessories._id
-      ).populate({ path: "user", populate: { path: "location" } });
+      ).populate({ path: "user" });
       const item = new Item({
         item: ComputerAccessories_location_user,
         location: ComputerAccessories_location_user[0].location,

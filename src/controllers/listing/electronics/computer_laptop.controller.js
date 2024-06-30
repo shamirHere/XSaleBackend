@@ -6,11 +6,13 @@ import { Electronics } from "../../../models/category/index.js";
 const createComputerLaptop = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
     brand,
     ram,
-    ssd_hdd,
+    storageType,
+    storage,
     additionalInformation,
     media,
     location,
@@ -21,6 +23,10 @@ const createComputerLaptop = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "id of the user is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -37,11 +43,21 @@ const createComputerLaptop = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, ram, "ram information is required"));
-    } else if (!ssd_hdd) {
+    } else if (!storageType) {
       return res
         .status(400)
-        .json(new ApiResponse(400, ssd_hdd, "ssd_hdd information is required"));
-    } else if (media.length === 0) {
+        .json(
+          new ApiResponse(
+            400,
+            storageType,
+            "storage type information is required"
+          )
+        );
+    } else if (!storage) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, storage, "storage info is required"));
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -66,7 +82,7 @@ const createComputerLaptop = AsyncHandler(async (req, res) => {
       const savedComputer_laptop = await newComputer_laptop.save();
       const computerLaptop_location_user = await ComputerLaptop.find(
         savedComputer_laptop._id
-      ).populate({ path: "user", populate: { path: "location" } });
+      ).populate({ path: "user" });
       const item = new Item({
         item: computerLaptop_location_user,
         location: computerLaptop_location_user[0].location,
@@ -187,7 +203,8 @@ const updateComputerLaptop = AsyncHandler(async (req, res) => {
     type,
     brand,
     ram,
-    ssd_hdd,
+    storage,
+    storageType,
     additionalInformation,
     media,
     location,

@@ -6,11 +6,13 @@ import { Electronics } from "../../../models/category/index.js";
 const createKitchenAppliance = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     applianceName,
     brand,
     media,
     location,
+    additionalInformation,
     askingPrice,
   } = req.body;
   try {
@@ -18,6 +20,10 @@ const createKitchenAppliance = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -36,7 +42,7 @@ const createKitchenAppliance = AsyncHandler(async (req, res) => {
             "brand of the KitchenAppliance is required"
           )
         );
-    } else if (media.length) {
+    } else if (!media) {
       return res
         .status(400)
         .json(

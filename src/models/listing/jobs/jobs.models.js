@@ -6,6 +6,10 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -18,6 +22,10 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    jobLocation: {
+      type: String,
+      required: true,
+    },
     salaryRange: {
       type: Number,
       required: true,
@@ -27,8 +35,8 @@ const jobSchema = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

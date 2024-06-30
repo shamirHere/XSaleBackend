@@ -6,6 +6,10 @@ const kitchenApplianceSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -16,9 +20,12 @@ const kitchenApplianceSchema = new mongoose.Schema(
     },
     brand: { type: String, required: true },
     media: [{ type: String, required: true }],
+    additionalInformation: {
+      type: String,
+    },
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

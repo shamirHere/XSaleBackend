@@ -5,20 +5,25 @@ import { Services } from "../../../models/listing/services/index.js";
 const createService = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
-    name,
     adTitle,
     additionalInformation,
     media,
     location,
-    askingPrice,
   } = req.body;
   try {
     if (!user) {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(400, categoryName, "category name type is required")
+        );
     } else if (!productType) {
       return res
         .status(400)
@@ -26,13 +31,7 @@ const createService = AsyncHandler(async (req, res) => {
     } else if (!type) {
       return res
         .status(400)
-        .json(new ApiResponse(400, breed, "type of service is required"));
-    } else if (!name) {
-      return res
-        .status(400)
-        .json(
-          new ApiResponse(400, name, "name of the service company is required")
-        );
+        .json(new ApiResponse(400, type, "type of service is required"));
     } else if (!adTitle) {
       return res
         .status(400)
@@ -47,7 +46,7 @@ const createService = AsyncHandler(async (req, res) => {
             "additional information of the ad is required"
           )
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -59,10 +58,6 @@ const createService = AsyncHandler(async (req, res) => {
         .json(
           new ApiResponse(400, location, "location of the service is required")
         );
-    } else if (!askingPrice) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, askingPrice, "asking price is required"));
     } else {
       const newService = new Services(req.body);
       const savedService = await newService.save();
@@ -70,9 +65,6 @@ const createService = AsyncHandler(async (req, res) => {
         savedService._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: service_location_user,
@@ -97,8 +89,8 @@ const createService = AsyncHandler(async (req, res) => {
   } catch (error) {
     console.log(`error while creating new service ${error}`);
     return res
-      .status(200)
-      .json(new ApiResponse(200, error, "error while creating new service"));
+      .status(400)
+      .json(new ApiResponse(400, error, "error while creating new service"));
   }
 });
 const getAllServices = AsyncHandler(async (req, res) => {

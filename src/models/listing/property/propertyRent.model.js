@@ -7,10 +7,9 @@ const propertyRentSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-    sellingType: {
+    categoryName: {
       type: String,
       required: true,
-      enum: ["for sale", "for rent"],
     },
     productType: {
       type: String,
@@ -19,21 +18,21 @@ const propertyRentSchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ["Flat", "House", "Farm House"],
+      enum: [
+        "Flat",
+        "House",
+        "Farm House",
+        "Shop",
+        "Office",
+        "Other commercial property",
+      ],
     },
-    propertyName: {
+    bedroom: {
       type: String,
-      required: true,
-    },
-    bedrooms: {
-      type: String,
-      required: true,
-      enum: ["1", "2", "3", "4", "5", "5+"],
     },
     bathroom: {
       type: String,
       required: true,
-      enum: ["1", "2", "3", "3+"],
     },
     furnishing: {
       type: String,
@@ -43,17 +42,18 @@ const propertyRentSchema = new mongoose.Schema(
     listedBy: {
       type: String,
       required: true,
-      enum: ["Owner", "Dealer"],
+      enum: ["Owner", "Broker"],
     },
     carpetArea: {
-      type: Number,
-    },
-    floorInBuilding: {
-      type: Number,
+      type: String,
       required: true,
     },
     whichFloor: {
-      type: Number,
+      type: String,
+      required: true,
+    },
+    totalFloor: {
+      type: String,
       required: true,
     },
     liftAvailable: {
@@ -71,8 +71,8 @@ const propertyRentSchema = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

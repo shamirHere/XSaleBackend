@@ -6,6 +6,10 @@ const chickenModel = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -13,10 +17,14 @@ const chickenModel = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ["Birds", "Chicks", "Eggs"],
+      enum: ["Chicken", "Chicks", "Eggs"],
     },
     hasPoultryFarm: {
       type: Boolean,
+    },
+    quantity: {
+      type: Number,
+      required: true,
     },
     quantityType: {
       type: String,
@@ -28,8 +36,8 @@ const chickenModel = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

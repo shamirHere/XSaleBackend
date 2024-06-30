@@ -1,27 +1,31 @@
 import mongoose from "mongoose";
 
-const games_entertainmentSchema = new mongoose.Schema(
+const otherElectronicsSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
     },
-    title: {
+    name: {
       type: String,
       required: true,
     },
-    description: {
+    additionalInformation: {
       type: String,
       required: true,
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: String,
@@ -30,8 +34,8 @@ const games_entertainmentSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const GameEntertainment = mongoose.model(
-  "GamesEntertainment",
-  games_entertainmentSchema
+const OtherElectronics = mongoose.model(
+  "otherElectronic",
+  otherElectronicsSchema
 );
-export default GameEntertainment;
+export default OtherElectronics;

@@ -7,6 +7,7 @@ const createFarmMachine = AsyncHandler(async (req, res) => {
     user,
     productType,
     machineName,
+    categoryName,
     additionalInformation,
     media,
     location,
@@ -18,6 +19,10 @@ const createFarmMachine = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -26,7 +31,7 @@ const createFarmMachine = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, brand, "machine name is required"));
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -53,13 +58,11 @@ const createFarmMachine = AsyncHandler(async (req, res) => {
         savedFarmMachine._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
+      console.log(farmMachine_location_user, "this is here");
       const item = new Item({
         item: farmMachine_location_user,
-        location: farmMachine_location_user[0].location,
+        location: farmMachine_location_user.location,
       });
       const savedInItems = await item.save();
       return res
@@ -75,9 +78,9 @@ const createFarmMachine = AsyncHandler(async (req, res) => {
   } catch (error) {
     console.log(`error while creating new farm machine ${error}`);
     return res
-      .status(200)
+      .status(400)
       .json(
-        new ApiResponse(200, error, "error while creating new farm machine")
+        new ApiResponse(400, error, "error while creating new farm machine")
       );
   }
 });

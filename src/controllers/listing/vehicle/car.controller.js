@@ -6,11 +6,12 @@ import { Vehicles } from "../../../models/category/index.js";
 const createCar = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
     brand,
     model,
-    registerationYear,
+    registerationDate,
     fuelType,
     transmission,
     kmDriven,
@@ -26,6 +27,10 @@ const createCar = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -42,14 +47,14 @@ const createCar = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, model, "model is required"));
-    } else if (!registerationYear) {
+    } else if (!registerationDate) {
       return res
         .status(400)
         .json(
           new ApiResponse(
             400,
-            registerationYear,
-            "registeration year is required"
+            registerationDate,
+            "registeration date is required"
           )
         );
     } else if (!fuelType) {
@@ -80,7 +85,7 @@ const createCar = AsyncHandler(async (req, res) => {
             "additional feature required"
           )
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -101,9 +106,6 @@ const createCar = AsyncHandler(async (req, res) => {
       const savedCar = await newCar.save();
       const car_location_user = await Car.find(savedCar._id).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: car_location_user,
@@ -190,7 +192,7 @@ const updateCar = AsyncHandler(async (req, res) => {
     type,
     brand,
     model,
-    registerationYear,
+    registerationDate,
     fuelType,
     transmission,
     kmDriven,

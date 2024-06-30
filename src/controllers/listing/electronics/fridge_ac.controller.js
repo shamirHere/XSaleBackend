@@ -6,11 +6,14 @@ import { Electronics } from "../../../models/category/index.js";
 const createFridgeAc = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     brand,
     model,
+    acType,
     capacity,
     media,
+    additionalInformation,
     location,
     askingPrice,
   } = req.body;
@@ -19,6 +22,10 @@ const createFridgeAc = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -29,17 +36,13 @@ const createFridgeAc = AsyncHandler(async (req, res) => {
         .json(
           new ApiResponse(400, brand, " brand of the FridgeAc is required")
         );
-    } else if (!model) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, model, "model of the FridgeAc is required"));
     } else if (!capacity) {
       return res
         .status(400)
         .json(
           new ApiResponse(400, age, "capcaity of the FridgeAc is required")
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -56,24 +59,21 @@ const createFridgeAc = AsyncHandler(async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, askingPrice, "asking price is required"));
     } else {
-      const newFridgeAc = new FridgeAcAc(req.body);
-      const savedFridgeAc = await newFridgeAcAc.save();
+      const newFridgeAc = new FridgeAc(req.body);
+      const savedFridgeAc = await newFridgeAc.save();
       const FridgeAc_location_user = await FridgeAc.findById(
         savedFridgeAc._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: FridgeAc_location_user,
-        location: FridgeAc_location_user[0].location,
+        location: FridgeAc_location_user.location,
       });
       const savedInItems = await item.save();
       const saveInCategory = new Electronics({
         item: FridgeAc_location_user,
-        location: FridgeAc_location_user[0].location,
+        location: FridgeAc_location_user.location,
       });
       const savedInCategory = await saveInCategory.save();
       return res

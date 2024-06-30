@@ -7,6 +7,10 @@ const hostelSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -14,11 +18,7 @@ const hostelSchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ["PG / Hostel", "Roommate", "Guest House"],
-    },
-    propertyName: {
-      type: String,
-      required: true,
+      enum: ["PG/Hostel", "Guest House"],
     },
     availableFor: {
       type: String,
@@ -46,11 +46,6 @@ const hostelSchema = new mongoose.Schema(
       required: true,
       enum: ["Attached Bathroom", "Common Bathroom"],
     },
-    furnishing: {
-      type: String,
-      required: true,
-      enum: ["Furnished", "Semi Furnished", "Unfurnished"],
-    },
     listedBy: {
       type: String,
       required: true,
@@ -58,8 +53,9 @@ const hostelSchema = new mongoose.Schema(
     },
     carpetArea: {
       type: Number,
+      required: true,
     },
-    floorInBuilding: {
+    totalFloor: {
       type: Number,
       required: true,
     },
@@ -82,8 +78,8 @@ const hostelSchema = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

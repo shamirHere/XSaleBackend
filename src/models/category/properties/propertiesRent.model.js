@@ -4,13 +4,12 @@ const propertyRentShema = new mongoose.Schema(
   {
     item: { type: mongoose.Schema.Types.Mixed, required: true },
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
       required: true,
     },
   },
   { timestamps: true }
 );
 
-const PropertiesRent = mongoose.model("PropertyRent", propertyRentShema);
-export default propertyRentShema;
+const PropertiesRent = mongoose.model("PropertiesRent", propertyRentShema);
+export default PropertiesRent;

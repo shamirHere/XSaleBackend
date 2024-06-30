@@ -6,6 +6,7 @@ import { Animals } from "../../../models/category/index.js";
 const createGoatSheep = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
     gender,
@@ -25,6 +26,10 @@ const createGoatSheep = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "id of the user is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -41,7 +46,7 @@ const createGoatSheep = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, age, "age of the animal is required"));
-    } else if (media.length == 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(

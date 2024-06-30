@@ -6,9 +6,10 @@ import { Electronics } from "../../../models/category/index.js";
 const createTv = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     brand,
-    brandModel,
+    model,
     screenSize,
     additionalInformation,
     media,
@@ -20,6 +21,10 @@ const createTv = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -27,18 +32,16 @@ const createTv = AsyncHandler(async (req, res) => {
     } else if (!brand) {
       return res
         .status(400)
-        .json(new ApiResponse(400, brand, " brand of the tv is required"));
-    } else if (!brandModel) {
+        .json(new ApiResponse(400, brand, "brand of the tv is required"));
+    } else if (!model) {
       return res
         .status(400)
-        .json(
-          new ApiResponse(400, brandModel, "brand model of tv is required")
-        );
+        .json(new ApiResponse(400, model, "model of tv is required"));
     } else if (!screenSize) {
       return res
         .status(400)
-        .json(new ApiResponse(400, age, "screen size is required"));
-    } else if (media.length === 0) {
+        .json(new ApiResponse(400, screenSize, "screen size is required"));
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -57,18 +60,15 @@ const createTv = AsyncHandler(async (req, res) => {
       const savedTv = await newTv.save();
       const tv_location_user = await Tv.findById(savedTv._id).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: tv_location_user,
-        location: tv_location_user[0].location,
+        location: tv_location_user.location,
       });
       const savedInItems = await item.save();
       const saveInCategory = new Electronics({
         item: tv_location_user,
-        location: tv_location_user[0].location,
+        location: tv_location_user.location,
       });
       const savedInCategory = await saveInCategory.save();
       return res
@@ -78,10 +78,10 @@ const createTv = AsyncHandler(async (req, res) => {
         );
     }
   } catch (error) {
-    console.log(`error while creating new wahing machine ${error}`);
+    console.log(`error while creating new TV ${error}`);
     return res
-      .status(200)
-      .json(new ApiResponse(200, error, "error while creating new Tv"));
+      .status(500)
+      .json(new ApiResponse(500, error, "error while creating new Tv"));
   }
 });
 const getAllTv = AsyncHandler(async (req, res) => {
@@ -133,7 +133,7 @@ const updateTv = AsyncHandler(async (req, res) => {
   const {
     _id,
     brand,
-    brandModel,
+    model,
     screenSize,
     additionalInformation,
     media,

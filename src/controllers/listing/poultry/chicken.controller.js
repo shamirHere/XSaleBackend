@@ -6,8 +6,10 @@ import { Chicken } from "../../../models/listing/poultry/index.js";
 const createChicken = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
+    quantity,
     hasPoultryFarm,
     quantityType,
     additionalInformation,
@@ -19,6 +21,10 @@ const createChicken = AsyncHandler(async (req, res) => {
   try {
     if (!user) {
       return res.status(400, user, "id of the user is required");
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -27,11 +33,15 @@ const createChicken = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, type, "type of the chicken is required"));
+    } else if (!quantity) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, quantity, "quantity is required"));
     } else if (!quantityType) {
       return res
         .status(400)
         .json(new ApiResponse(400, quantityType, "quantity type  is required"));
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(

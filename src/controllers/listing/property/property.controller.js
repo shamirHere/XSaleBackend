@@ -1,20 +1,21 @@
-import { ApiError, AsyncHandler } from "../../../utils/index.js";
+import { ApiResponse, AsyncHandler } from "../../../utils/index.js";
 import { Property } from "../../../models/listing/property/index.js";
 import Item from "../../../models/listing/items/items.models.js";
-import { Properties } from "../../../models/category/index.js";
+import Properties from "../../../models/category/properties/properties.model.js";
 
 const createProperty = AsyncHandler(async (req, res) => {
+  console.log("this function called");
   const {
     user,
+    categoryName,
     productType,
     type,
-    propertyName,
     bedroom,
     bathroom,
     furnishing,
     listedBy,
     carpetArea,
-    floorInBuilding,
+    totalFloor,
     whichFloor,
     liftAvailable,
     parkingAvailable,
@@ -29,6 +30,10 @@ const createProperty = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -37,14 +42,6 @@ const createProperty = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, type, "type of the property is required"));
-    } else if (!propertyName) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, propertyName, "property name is required"));
-    } else if (!bedroom) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, bedroom, "no of bedroom is required"));
     } else if (!bathroom) {
       return res
         .status(400)
@@ -57,14 +54,18 @@ const createProperty = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, listedBy, "listed by required"));
-    } else if (!floorInBuilding) {
+    } else if (!carpetArea) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, carpetArea, "carpetArea by required"));
+    } else if (!totalFloor) {
       return res
         .status(400)
         .json(
           new ApiResponse(
             400,
-            floorInBuilding,
-            "floor in building is required required"
+            totalFloor,
+            "total floor building is required required"
           )
         );
     } else if (!whichFloor) {
@@ -97,7 +98,7 @@ const createProperty = AsyncHandler(async (req, res) => {
             "parking available in building is required required"
           )
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -120,29 +121,17 @@ const createProperty = AsyncHandler(async (req, res) => {
         savedProperty._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: property_location_user,
         location: property_location_user[0].location,
       });
       const savedInItems = await item.save();
-
-      if (property_location_user[0].sellingType === "for sale") {
-        const saveInCategory = new Properties({
-          item: property_location_user,
-          location: property_location_user[0].location,
-        });
-        const savedInCategory = await saveInCategory.save();
-      } else if (property_location_user[0].sellingType === "for rent") {
-        const saveInCategory = new PropertiesRent({
-          item: property_location_user,
-          location: property_location_user[0].location,
-        });
-        const savedInCategory = await saveInCategory.save();
-      }
+      const saveInCategory = new Properties({
+        item: property_location_user[0],
+        location: property_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
 
       return res
         .status(200)

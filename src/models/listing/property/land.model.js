@@ -6,10 +6,14 @@ const landSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  sellingType: {
+  // sellingType: {
+  //   type: String,
+  //   required: true,
+  //   enum: ["for selling", "for rent"],
+  // },
+  categoryName: {
     type: String,
     required: true,
-    enum: ["for selling", "for rent"],
   },
   productType: {
     type: String,
@@ -18,15 +22,16 @@ const landSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ["Agriculture Land", "Land for Lease"],
+    enum: ["Agricultural Land", "Residential Plot"],
   },
   totalArea: {
-    value: { type: Number, required: true },
-    measurementType: {
-      type: String,
-      required: true,
-      enum: ["Sq ft", "Yard", "Dhur", "Kattha", "Bigha", "Acre"],
-    },
+    type: Number,
+    required: true,
+  },
+  measurementType: {
+    type: String,
+    required: true,
+    enum: ["Sq ft", "Yard", "Dhur", "Kattha", "Bigha", "Acre"],
   },
   listedBy: {
     type: String,
@@ -38,8 +43,8 @@ const landSchema = new mongoose.Schema({
   },
   media: [{ type: String, required: true }],
   location: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Location",
+    type: String,
+    required: true,
   },
   askingPrice: {
     type: Number,

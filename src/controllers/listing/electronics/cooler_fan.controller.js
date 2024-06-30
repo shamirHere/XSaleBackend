@@ -6,6 +6,7 @@ import { Electronics } from "../../../models/category/index.js";
 const createCoolerFan = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
     brand,
@@ -19,6 +20,10 @@ const createCoolerFan = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "id of the user is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -31,7 +36,7 @@ const createCoolerFan = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, brand, "brand is required"));
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -56,7 +61,7 @@ const createCoolerFan = AsyncHandler(async (req, res) => {
       const savedCooler_fan = await newCooler_fan.save();
       const coolerFan_location_user = await CoolerFan.find(
         savedCooler_fan._id
-      ).populate({ path: "user", populate: { path: "location" } });
+      ).populate({ path: "user" });
       const item = new Item({
         item: coolerFan_location_user,
         location: coolerFan_location_user[0].location,

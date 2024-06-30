@@ -5,15 +5,16 @@ import Item from "../../../models/listing/items/items.models.js";
 const createBride_Groom = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
     name,
     age,
     height,
-    maritialStatus,
+    maritalStatus,
     religion,
     caste,
-    educationQualification,
+    educationalQualification,
     currentOccupation,
     additionalInformation,
     motherTounge,
@@ -25,6 +26,10 @@ const createBride_Groom = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "_id of the user is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -43,23 +48,23 @@ const createBride_Groom = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, age, "height is required"));
-    } else if (!maritialStatus) {
+    } else if (!maritalStatus) {
       return res
         .status(400)
         .json(
-          new ApiResponse(400, maritialStatus, "maritialStatus is required")
+          new ApiResponse(400, maritalStatus, "marital status is required")
         );
     } else if (!religion) {
       return res
         .status(400)
         .json(new ApiResponse(400, religion, "religion is required"));
-    } else if (!educationQualification) {
+    } else if (!educationalQualification) {
       return res
         .status(400)
         .json(
           new ApiResponse(
             400,
-            educationQualification,
+            educationalQualification,
             "education qualification is required"
           )
         );
@@ -73,7 +78,7 @@ const createBride_Groom = AsyncHandler(async (req, res) => {
             "cureent occupation is required"
           )
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -96,13 +101,11 @@ const createBride_Groom = AsyncHandler(async (req, res) => {
         savedBride_Groom._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
+      console.log(brideGroom_location_user, "this is the object");
       const item = new Item({
         item: brideGroom_location_user,
-        location: brideGroom_location_user[0].location,
+        location: brideGroom_location_user.location,
       });
       const savedInItems = await item.save();
       return res

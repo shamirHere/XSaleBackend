@@ -6,12 +6,13 @@ import { Fish } from "../../../models/listing/poultry/index.js";
 const createFish = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
     breed,
     hasFishPound,
-    sellerType,
     additionalInformation,
+    quantityAvailable,
     quantityType,
     media,
     location,
@@ -20,6 +21,10 @@ const createFish = AsyncHandler(async (req, res) => {
   try {
     if (!user) {
       return res.status(400, user, "id of the user is required");
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "catgegory name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -28,6 +33,16 @@ const createFish = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, type, "type of the fish is required"));
+    } else if (!quantityAvailable) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(
+            400,
+            quantityAvailable,
+            "quantity available is required"
+          )
+        );
     } else if (!quantityType) {
       return res
         .status(400)
@@ -38,7 +53,7 @@ const createFish = AsyncHandler(async (req, res) => {
             "quantity type of the fish is required"
           )
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -55,11 +70,10 @@ const createFish = AsyncHandler(async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, askingPrice, "asking price is required"));
     } else {
-      const newFile = new Fish(req.body);
+      const newFish = new Fish(req.body);
       const savedFish = await newFish.save();
       const fish_location_user = await Fish.find(savedFish._id).populate({
         path: "user",
-        populate: { path: "location" },
       });
       const item = new Item({
         item: fish_location_user,

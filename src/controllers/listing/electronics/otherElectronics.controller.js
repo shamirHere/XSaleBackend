@@ -1,19 +1,18 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
-import { GameEntertainment } from "../../../models/listing/electronics/index.js";
+import OtherElectronics from "../../../models/listing/electronics/otherElectronics.model.js";
 import Item from "../../../models/listing/items/items.models.js";
 import { Electronics } from "../../../models/category/index.js";
 
-const createGameEntertainment = AsyncHandler(async (req, res) => {
+const createOtherElectronics = AsyncHandler(async (req, res) => {
   const {
     user,
     productType,
-    title,
-    description,
+    name,
+    additionalInformation,
     media,
     location,
     askingPrice,
   } = req.body;
-
   try {
     if (!user) {
       return res
@@ -23,15 +22,21 @@ const createGameEntertainment = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, productType, "product type is required"));
-    } else if (!title) {
+    } else if (!name) {
       return res
         .status(400)
-        .json(new ApiResponse(400, type, "title is required"));
-    } else if (!description) {
+        .json(new ApiResponse(400, name, "title is required"));
+    } else if (!additionalInformation) {
       return res
         .status(400)
-        .json(new ApiResponse(400, brand, "description is required"));
-    } else if (media.length === 0) {
+        .json(
+          new ApiResponse(
+            400,
+            additionalInformation,
+            "additionalInformation is required"
+          )
+        );
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -52,19 +57,19 @@ const createGameEntertainment = AsyncHandler(async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, askingPrice, "asking price is required"));
     } else {
-      const newGameEntertainment = new GameEntertainment(req.body);
-      const savedGameEntertainment = new newGameEntertainment.save();
-      const gameEntertainment_location_user = await GameEntertainment.find(
-        savedGameEntertainment._id
-      ).populate({ path: "user", populate: { path: "location" } });
+      const newOtherElectronics = new OtherElectronics(req.body);
+      const savedOtherElectronics = await newOtherElectronics.save();
+      const otherElectronics_location_user = await OtherElectronics.find(
+        savedOtherElectronics._id
+      ).populate({ path: "user" });
       const item = new Item({
-        item: gameEntertainment_location_user,
-        location: gameEntertainment_location_user[0].location,
+        item: otherElectronics_location_user,
+        location: otherElectronics_location_user[0].location,
       });
       const savedInItems = await item.save();
       const saveInCategory = new Electronics({
-        item: gameEntertainment_location_user,
-        location: gameEntertainment_location_user[0].location,
+        item: otherElectronics_location_user,
+        location: otherElectronics_location_user[0].location,
       });
       const savedInCategory = await saveInCategory.save();
       return res
@@ -72,29 +77,27 @@ const createGameEntertainment = AsyncHandler(async (req, res) => {
         .json(
           new ApiResponse(
             200,
-            gameEntertainment_location_user,
+            otherElectronics_location_user,
             "game / entertainment listing created successfully"
           )
         );
     }
   } catch (error) {
-    console.log(
-      `error while creating a new games and entertainment fan ${error}`
-    );
+    console.log(`error while creating a new otherElectronics ${error}`);
     return res
       .status(500)
       .json(
         new ApiResponse(
           500,
           error,
-          "internal server error while creating the new games and entertainment"
+          "internal server error while creating the new otherElectronics"
         )
       );
   }
 });
-const getAllcreateGameEntertainment = AsyncHandler(async (req, res) => {
+const getAllcreateOtherElectronics = AsyncHandler(async (req, res) => {
   try {
-    const games_entertainment = await GameEntertainment.find().populate({
+    const otherElectronics = await OtherElectronics.find().populate({
       path: "user",
       populate: {
         path: "location",
@@ -105,24 +108,24 @@ const getAllcreateGameEntertainment = AsyncHandler(async (req, res) => {
       .json(
         new ApiResponse(
           200,
-          games_entertainment,
-          "these are all the games_entertainment fans"
+          otherElectronics,
+          "these are all the otherElectronics"
         )
       );
   } catch (error) {
-    console.log("error while fetching all the games_entertainment fans", error);
+    console.log("error while fetching all the otherElectronics", error);
     return res
       .status(500)
       .json(
         new ApiResponse(
           500,
           error,
-          "error while fetching all the games_entertainment "
+          "error while fetching all the otherElectronics "
         )
       );
   }
 });
-const getSingleGameEntertainment = AsyncHandler(async (req, res) => {
+const getSingleOtherElectronics = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -132,20 +135,18 @@ const getSingleGameEntertainment = AsyncHandler(async (req, res) => {
           new ApiResponse(400, _id, "please provide the id of the document")
         );
     }
-    const gameEntertainment = await GameEntertainment.findOne({ _id }).populate(
-      {
-        path: "user",
-        populate: { path: "location" },
-      }
-    );
-    if (!gameEntertainment) {
+    const otherElectronics = await OtherElectronics.findOne({ _id }).populate({
+      path: "user",
+      populate: { path: "location" },
+    });
+    if (!OtherElectronics) {
       return res
         .status(404)
         .json(
           new ApiResponse(
             404,
-            gameEntertainment,
-            "the gameEntertainment does not exist"
+            OtherElectronics,
+            "the Other Electronics does not exist"
           )
         );
     }
@@ -154,8 +155,8 @@ const getSingleGameEntertainment = AsyncHandler(async (req, res) => {
       .json(
         new ApiResponse(
           200,
-          gameEntertainment,
-          "gameEntertainment fetched successfully"
+          OtherElectronics,
+          "OtherElectronics fetched successfully"
         )
       );
   } catch (error) {
@@ -171,7 +172,7 @@ const getSingleGameEntertainment = AsyncHandler(async (req, res) => {
       );
   }
 });
-const updateGameEntertainment = AsyncHandler(async (req, res) => {
+const updateOtherElectronics = AsyncHandler(async (req, res) => {
   const { _id, title, description, media, location, askingPrice } = req.body;
   try {
     if (!_id) {
@@ -179,30 +180,26 @@ const updateGameEntertainment = AsyncHandler(async (req, res) => {
         .status(400)
         .json(new ApiResponse(400, _id, "_id the of the document is required"));
     }
-    const updatedGameEntertainment = await GameEntertainment.findByIdAndUpdate(
+    const updatedOtherElectronics = await OtherElectronics.findByIdAndUpdate(
       _id,
       req.body,
       {
         new: true,
       }
     );
-    if (!updatedGameEntertainment) {
+    if (!OtherElectronics) {
       return res
         .status(404)
         .json(
-          new ApiResponse(
-            404,
-            updatedGameEntertainment,
-            "game and entertaiment not found"
-          )
+          new ApiResponse(404, OtherElectronics, "OtherElectronics not found")
         );
-    } else if (updatedGameEntertainment) {
+    } else if (OtherElectronics) {
       return res
         .status(200)
         .json(
           new ApiResponse(
             200,
-            updatedGameEntertainment,
+            OtherElectronics,
             "your listing for this game / entertainment updated"
           )
         );
@@ -216,7 +213,7 @@ const updateGameEntertainment = AsyncHandler(async (req, res) => {
       );
   }
 });
-const deleteGameEntertainment = AsyncHandler(async (req, res) => {
+const deleteOtherElectronics = AsyncHandler(async (req, res) => {
   const { _id } = req.body;
   try {
     if (!_id) {
@@ -226,10 +223,10 @@ const deleteGameEntertainment = AsyncHandler(async (req, res) => {
           new ApiResponse(400, _id, "please provide the id of the document")
         );
     }
-    const deletedGameEntertainment = await GameEntertainment.findByIdAndDelete(
+    const deletedOtherElectronics = await OtherElectronics.findByIdAndDelete(
       _id
     );
-    if (!deletedGameEntertainment) {
+    if (!OtherElectronics) {
       return res
         .status(400)
         .json(new ApiResponse(400, _id, "game / entertainment does not exist"));
@@ -254,9 +251,9 @@ const deleteGameEntertainment = AsyncHandler(async (req, res) => {
 });
 
 export {
-  createGameEntertainment,
-  getAllcreateGameEntertainment,
-  getSingleGameEntertainment,
-  updateGameEntertainment,
-  deleteGameEntertainment,
+  createOtherElectronics,
+  getAllcreateOtherElectronics,
+  getSingleOtherElectronics,
+  updateOtherElectronics,
+  deleteOtherElectronics,
 };

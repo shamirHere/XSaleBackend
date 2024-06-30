@@ -1,101 +1,342 @@
-import { ApiError, AsyncHandler } from "../../../utils/index.js";
+import { ApiResponse, AsyncHandler } from "../../../utils/index.js";
 import { CarRent } from "../../../models/listing/vehicle/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 import { VehiclesRent } from "../../../models/category/index.js";
 
 const createCarRent = AsyncHandler(async (req, res) => {
-  const {
-    user,
-    productType,
-    vehicleType,
-    vehicleModel,
-    availibility,
-    fareKm,
-    seatsInBus,
-    isBusAc,
-    media,
-    location,
-    askingPrice,
-  } = req.body;
+  const { productType } = req.body;
 
   try {
-    if (!user) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, user, "user id is required"));
-    } else if (!productType) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, productType, "product type is required"));
-    } else if (!vehicleType) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, vehicleType, "vehicle type is required"));
-    } else if (!vehicleModel) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, vehicleModel, "vehicle model is required"));
-    } else if (!availibility) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, availibility, "availibity is required"));
-    } else if (!fareKm) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, fareKm, "fareKm type is required"));
-    } else if (!seatsInBus) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, seatsInBus, "seat in bus is required"));
-    } else if (!kmDriven) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, kmDriven, "kmDriven is required"));
-    } else if (!isBusAc) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, isBusAc, "is bus ac of Owner is required"));
-    } else if (media.length === 0) {
-      return res
-        .status(400)
-        .json(
-          new ApiResponse(400, media, "atleast one image or video is required")
-        );
-    } else if (!location) {
-      return res
-        .status(400)
-        .json(
-          new ApiResponse(400, location, "location of the CarRent is required")
-        );
-    } else if (!askingPrice) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, askingPrice, "asking price is required"));
+    if (productType === "Car") {
+      const {
+        user,
+        categoryName,
+        productType,
+        vehicleType,
+        vehicleModel,
+        availibility,
+        fareKm,
+        additionalInformation,
+        media,
+        location,
+      } = req.body;
+      if (!user) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, user, "user id is required"));
+      } else if (!categoryName) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(400, categoryName, "category name is required")
+          );
+      } else if (!productType) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, productType, "product type is required"));
+      } else if (!vehicleType) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, vehicleType, "vehicle type is required"));
+      } else if (!vehicleModel) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(400, vehicleModel, "vehicle model is required")
+          );
+      } else if (!availibility) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, availibility, "availibity is required"));
+      } else if (!fareKm) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, fareKm, "fareKm type is required"));
+      } else if (!media) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(
+              400,
+              media,
+              "atleast one image or video is required"
+            )
+          );
+      } else if (!location) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(
+              400,
+              location,
+              "location of the CarRent is required"
+            )
+          );
+      } else {
+        const newCarRent = new CarRent(req.body);
+        const savedCarRent = await newCarRent.save();
+        const carRent_location_user = await CarRent.find(
+          savedCarRent._id
+        ).populate({
+          path: "user",
+        });
+        const item = new Item({
+          item: carRent_location_user,
+          location: carRent_location_user[0].location,
+        });
+        const savedInItems = await item.save();
+        const saveInCategory = new VehiclesRent({
+          item: carRent_location_user[0],
+          location: carRent_location_user[0].location,
+        });
+        const savedInCategory = await saveInCategory.save();
+        return res
+          .status(200)
+          .json(
+            new ApiResponse(
+              200,
+              carRent_location_user,
+              "new CarRent created successfully"
+            )
+          );
+      }
+    } else if (productType === "Ambulance") {
+      const {
+        user,
+        categoryName,
+        productType,
+        availibility,
+        additionalInformation,
+        fareKm,
+        location,
+        media,
+      } = req.body;
+
+      if (!user) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, user, "user id is required"));
+      } else if (!categoryName) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(400, categoryName, "category name is required")
+          );
+      } else if (!productType) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, productType, "product type is required"));
+      } else if (!availibility) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, availibility, "availibity is required"));
+      } else if (!fareKm) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, fareKm, "fareKm type is required"));
+      } else if (!media) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(
+              400,
+              media,
+              "atleast one image or video is required"
+            )
+          );
+      } else if (!location) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(
+              400,
+              location,
+              "location of the CarRent is required"
+            )
+          );
+      } else {
+        const newCarRent = new CarRent(req.body);
+        const savedCarRent = await newCarRent.save();
+        const carRent_location_user = await CarRent.find(
+          savedCarRent._id
+        ).populate({
+          path: "user",
+        });
+        const item = new Item({
+          item: carRent_location_user,
+          location: carRent_location_user[0].location,
+        });
+        const savedInItems = await item.save();
+        const saveInCategory = new VehiclesRent({
+          item: carRent_location_user[0],
+          location: carRent_location_user[0].location,
+        });
+        const savedInCategory = await saveInCategory.save();
+        return res
+          .status(200)
+          .json(
+            new ApiResponse(
+              200,
+              carRent_location_user,
+              "new CarRent created successfully"
+            )
+          );
+      }
+    } else if (productType === "Bus") {
+      const {
+        user,
+        categoryName,
+        productType,
+        vehicleModel,
+        seatsInBus,
+        isBusAc,
+        media,
+        location,
+        additionalInformation,
+        fareKm,
+      } = req.body;
+
+      if (!user) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, user, "user id is required"));
+      } else if (!categoryName) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(400, categoryName, "category name is required")
+          );
+      } else if (!productType) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, productType, "product type is required"));
+      } else if (!vehicleModel) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(400, vehicleModel, "vehicle model is required")
+          );
+      } else if (!seatsInBus) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, seatsInBus, "seatsInBus is required"));
+      } else if (!media) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(
+              400,
+              media,
+              "atleast one image or video is required"
+            )
+          );
+      } else if (!location) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(
+              400,
+              location,
+              "location of the CarRent is required"
+            )
+          );
+      } else if (!fareKm) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, fareKm, "fareKm is required"));
+      } else {
+        const newCarRent = new CarRent(req.body);
+        const savedCarRent = await newCarRent.save();
+        const carRent_location_user = await CarRent.find(
+          savedCarRent._id
+        ).populate({
+          path: "user",
+        });
+        const item = new Item({
+          item: carRent_location_user,
+          location: carRent_location_user[0].location,
+        });
+        const savedInItems = await item.save();
+        const saveInCategory = new VehiclesRent({
+          item: carRent_location_user[0],
+          location: carRent_location_user[0].location,
+        });
+        const savedInCategory = await saveInCategory.save();
+        return res
+          .status(200)
+          .json(
+            new ApiResponse(
+              200,
+              carRent_location_user,
+              "new CarRent created successfully"
+            )
+          );
+      }
     } else {
-      const newCarRent = new CarRent(req.body);
-      const savedCarRent = await newCarRent.save();
-      const carRent_location_user = await CarRent.find(
-        savedCarRent._id
-      ).populate({
-        path: "user",
-        populate: {
-          path: "location",
-        },
-      });
-      const item = new Item({
-        item: carRent_location_user,
-        location: carRent_location_user[0].location,
-      });
-      const savedInItems = await item.save();
-      return res
-        .status(200)
-        .json(
-          new ApiResponse(
-            200,
-            carRent_location_user,
-            "new CarRent created successfully"
-          )
-        );
+      const {
+        user,
+        categoryName,
+        productType,
+        vehicleModel,
+        additionalInformation,
+        media,
+        location,
+        fareKm,
+      } = req.body;
+      if (!user) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, user, "user id is required"));
+      } else if (!categoryName) {
+        return res
+          .status(400)
+          .json(
+            new ApiResponse(400, categoryName, "category name is required")
+          );
+      } else if (!productType) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, productType, "product type is required"));
+      } else if (!vehicleModel) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, vehicleModel, "vehicleModel is required"));
+      } else if (!location) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, location, "location is required"));
+      } else if (!fareKm) {
+        return res
+          .status(400)
+          .json(new ApiResponse(400, fareKm, "fareKm is required"));
+      } else {
+        const newCarRent = new CarRent(req.body);
+        const savedCarRent = await newCarRent.save();
+        const carRent_location_user = await CarRent.find(
+          savedCarRent._id
+        ).populate({
+          path: "user",
+        });
+        const item = new Item({
+          item: carRent_location_user,
+          location: carRent_location_user[0].location,
+        });
+        const savedInItems = await item.save();
+        const saveInCategory = new VehiclesRent({
+          item: carRent_location_user[0],
+          location: carRent_location_user[0].location,
+        });
+        const savedInCategory = await saveInCategory.save();
+        return res
+          .status(200)
+          .json(
+            new ApiResponse(
+              200,
+              carRent_location_user,
+              "new CarRent created successfully"
+            )
+          );
+      }
     }
   } catch (error) {
     console.log(error, "erorr while creating the new CarRent");

@@ -4,8 +4,7 @@ const itemSchema = new mongoose.Schema(
   {
     item: { type: mongoose.Schema.Types.Mixed, required: true },
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
       required: true,
     },
   },

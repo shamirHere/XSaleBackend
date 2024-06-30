@@ -6,6 +6,7 @@ import Item from "../../../models/listing/items/items.models.js";
 const createFurniture = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     furnitureName,
     additionalInformation,
@@ -19,6 +20,10 @@ const createFurniture = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -27,7 +32,7 @@ const createFurniture = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, brand, "name of the furniture is required"));
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -54,13 +59,10 @@ const createFurniture = AsyncHandler(async (req, res) => {
         savedFurniture._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: furniture_location_user,
-        location: furniture_location_user[0].location,
+        location: furniture_location_user.location,
       });
       const savedInItems = await item.save();
       return res
@@ -76,8 +78,8 @@ const createFurniture = AsyncHandler(async (req, res) => {
   } catch (error) {
     console.log(`error while creating new furniture ${error}`);
     return res
-      .status(200)
-      .json(new ApiResponse(200, error, "error while creating new furniture"));
+      .status(400)
+      .json(new ApiResponse(400, error, "error while creating new furniture"));
   }
 });
 

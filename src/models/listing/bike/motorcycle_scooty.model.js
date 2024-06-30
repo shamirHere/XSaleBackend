@@ -6,6 +6,10 @@ const motorCycle_scootySchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -13,7 +17,7 @@ const motorCycle_scootySchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ["motorcycle", "scooty"],
+      enum: ["Bike", "Scooty"],
     },
     brand: {
       type: String,
@@ -23,8 +27,8 @@ const motorCycle_scootySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    registrationYear: {
-      type: Number,
+    registerationDate: {
+      type: String,
       required: true,
     },
     fuelType: {
@@ -33,11 +37,11 @@ const motorCycle_scootySchema = new mongoose.Schema(
       enum: ["Petrol", "Electric"],
     },
     kmDriven: {
-      type: Number,
+      type: String,
       required: true,
     },
     numberOfOwner: {
-      type: Number,
+      type: String,
       required: true,
     },
     additionalInformation: {
@@ -45,8 +49,8 @@ const motorCycle_scootySchema = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

@@ -1,4 +1,4 @@
-import { ApiError, AsyncHandler } from "../../../utils/index.js";
+import { ApiResponse, AsyncHandler } from "../../../utils/index.js";
 import { Hostel } from "../../../models/listing/property/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 import { PropertiesRent } from "../../../models/category/index.js";
@@ -6,17 +6,16 @@ import { PropertiesRent } from "../../../models/category/index.js";
 const createHostel = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
-    propertyName,
     availableFor,
     mealIncludes,
     roomSharing,
     bathroom,
-    furnishing,
     listedBy,
     carpetArea,
-    floorInBuilding,
+    totalFloor,
     whichFloor,
     liftAvailable,
     parkingAvailable,
@@ -31,6 +30,10 @@ const createHostel = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -39,16 +42,6 @@ const createHostel = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, type, "type of the hostel is required"));
-    } else if (!propertyName) {
-      return res
-        .status(400)
-        .json(
-          new ApiResponse(
-            400,
-            propertyName,
-            "property name of the hostel is required"
-          )
-        );
     } else if (!availableFor) {
       return res
         .status(400)
@@ -89,16 +82,6 @@ const createHostel = AsyncHandler(async (req, res) => {
             "bathroom info of the hostel is required"
           )
         );
-    } else if (!furnishing) {
-      return res
-        .status(400)
-        .json(
-          new ApiResponse(
-            400,
-            furnishing,
-            "furnishing info of the hostel is required"
-          )
-        );
     } else if (!listedBy) {
       return res
         .status(400)
@@ -109,13 +92,17 @@ const createHostel = AsyncHandler(async (req, res) => {
             "listed by info of the hostel is required"
           )
         );
-    } else if (!floorInBuilding) {
+    } else if (!carpetArea) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, carpetArea, "carpet area is required"));
+    } else if (!totalFloor) {
       return res
         .status(400)
         .json(
           new ApiResponse(
             400,
-            floorInBuilding,
+            totalFloor,
             "floor in building info of the hostel is required"
           )
         );
@@ -149,7 +136,7 @@ const createHostel = AsyncHandler(async (req, res) => {
             "parking available info of the hostel is required"
           )
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -253,12 +240,10 @@ const updateHostel = AsyncHandler(async (req, res) => {
     _id,
     productType,
     type,
-    propertyName,
     availableFor,
     mealIncludes,
     roomSharing,
     bathroom,
-    furnishing,
     listedBy,
     carpetArea,
     floorInBuilding,

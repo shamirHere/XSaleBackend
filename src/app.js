@@ -15,8 +15,7 @@ app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: "100mb" }));
-// app.use(morgan("dev"));
-app.use(morgan("dev :size"));
+app.use(morgan("dev"));
 
 io.on("connection", (socket) => {
   console.log("A user connected");

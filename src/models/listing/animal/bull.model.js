@@ -7,13 +7,17 @@ const bullSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
     },
     breed: {
       type: String,
-      requried: true,
+      required: true,
     },
     age: {
       type: Number,
@@ -24,8 +28,8 @@ const bullSchema = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

@@ -110,6 +110,14 @@ import {
 } from "../controllers/listing/electronics/computer_laptop.controller.js";
 
 import {
+  createComputerAccessories,
+  getAllComputerAccessories,
+  getSingleComputerAccessories,
+  updateComputerAccessories,
+  deleteComputerAccessories,
+} from "../controllers/listing/electronics/computerAccessories.js";
+
+import {
   createCoolerFan,
   getAllCoolerFans,
   getSingleCoolerFan,
@@ -126,12 +134,12 @@ import {
 } from "../controllers/listing/electronics/fridge_ac.controller.js";
 
 import {
-  createGameEntertainment,
-  getAllcreateGameEntertainment,
-  getSingleGameEntertainment,
-  updateGameEntertainment,
-  deleteGameEntertainment,
-} from "../controllers/listing/electronics/games_entertainment.controller.js";
+  createOtherElectronics,
+  getAllcreateOtherElectronics,
+  getSingleOtherElectronics,
+  updateOtherElectronics,
+  deleteOtherElectronics,
+} from "../controllers/listing/electronics/otherElectronics.controller.js";
 
 import {
   createKitchenAppliance,
@@ -140,13 +148,7 @@ import {
   updateKitchenAppliance,
   deleteKitchenAppliance,
 } from "../controllers/listing/electronics/kitchenAppliance.controller.js";
-import {
-  createComputerAccessories,
-  getAllComputerAccessories,
-  getSingleComputerAccessories,
-  updateComputerAccessories,
-  deleteComputerAccessories,
-} from "../controllers/listing/electronics/computerAccessories.js";
+
 import {
   createTv,
   deleteTv,
@@ -230,6 +232,70 @@ import {
   deleteAccessories,
 } from "../controllers/listing/mobile/accessories.controller.js";
 
+import {
+  createService,
+  getAllServices,
+  getSingleService,
+  updateService,
+  deleteService,
+} from "../controllers/listing/services/services.controller.js";
+
+import {
+  createChicken,
+  getAllChickens,
+  getSingleChicken,
+  updateChicken,
+  deleteChicken,
+} from "../controllers/listing/poultry/chicken.controller.js";
+
+import {
+  createFish,
+  getAllFishes,
+  getSingleFish,
+  updateFish,
+  deleteFish,
+} from "../controllers/listing/poultry/fish.controller.js";
+
+import {
+  createBird,
+  getAllBirds,
+  getSingleBird,
+  updateBird,
+  deleteBird,
+} from "../controllers/listing/poultry/birds.controller.js";
+
+import {
+  createProperty,
+  getAllProperties,
+  getSingleProperty,
+  updateProperty,
+  deleteProperty,
+} from "../controllers/listing/property/property.controller.js";
+
+import {
+  createPropertyRent,
+  getAllPropertiesRent,
+  getSinglePropertyRent,
+  updatePropertyRent,
+  deletePropertyRent,
+} from "../controllers/listing/property/propertyRent.controller.js";
+
+import {
+  createHostel,
+  getAllHostel,
+  getSingleHostel,
+  updateHostel,
+  deleteHostel,
+} from "../controllers/listing/property/hostel.controller.js";
+
+import {
+  createLand,
+  getAllLand,
+  getSingleLand,
+  updateLand,
+  deleteLand,
+} from "../controllers/listing/property/land.controller.js";
+
 const router = Router();
 
 //  -----------------------------------------
@@ -246,6 +312,34 @@ router.route("/fetch/subcategory/:subcategory").get(getSubCategory);
 router.route("/fetch/subItem/:category/:subItem").get(getAllSubItem);
 
 //  -----------------------------------------
+
+// for land
+router.route("/fetch/land").get(getAllLand);
+router.route("/fetch/singleLand").get(getSingleLand);
+router.route("/create/land").post(createLand);
+router.route("/update/land").post(updateLand);
+router.route("/delete/land").post(deleteLand);
+
+// for property
+router.route("/fetch/properties").get(getAllProperties);
+router.route("/fetch/singleProperty").get(getSingleProperty);
+router.route("/create/property").post(createProperty);
+router.route("/update/property").post(updateProperty);
+router.route("/delete/property").post(deleteProperty);
+
+// for property rent
+router.route("/fetch/propertiesRent").get(getAllPropertiesRent);
+router.route("/fetch/singlePropertyRent").get(getSinglePropertyRent);
+router.route("/create/propertyRent").post(createPropertyRent);
+router.route("/update/propertyRent").post(updatePropertyRent);
+router.route("/delete/propertyRent").post(deletePropertyRent);
+
+// for hostel and pg
+router.route("/fetch/hostel").get(getAllHostel);
+router.route("/fetch/singleHostel").get(getSingleHostel);
+router.route("/create/Hostel").post(createHostel);
+router.route("/update/hostel").post(updateHostel);
+router.route("/delete/hostel").post(deleteHostel);
 
 // for cows and buffalo
 router.route("/fetch/cowbuffalo").get(getAllCowBuffalo);
@@ -299,7 +393,7 @@ router.route("/delete/otherAnimal").post(deleteOtherAnimal);
 // for bicycle
 router.route("/fetch/bicycle").get(getAllBicycle);
 router.route("/fetch/singleBicyle").get(getSingleBicycle);
-router.route("/create/bicyle").post(createBicycle);
+router.route("/create/bicycle").post(createBicycle);
 router.route("/update/bicycle").post(updateBicycle);
 router.route("/delete/bicyle").post(deleteBicycle);
 
@@ -347,47 +441,48 @@ router.route("/create/computerLaptop").post(createComputerLaptop);
 router.route("/update/updateComputerLaptop").post(updateComputerLaptop);
 router.route("/delete/deleteComputerLaptop").post(deleteComputerLaptop);
 
+// for computer laptop accessories
+
+router.route("/fetch/laptopPcAccessories").get(getAllComputerAccessories);
+router
+  .route("/fetch/singleLaptopPcAccessories")
+  .get(getSingleComputerAccessories);
+router.route("/create/LaptopPcAccessories").post(createComputerAccessories);
+router
+  .route("/update/updateLaptopPcAccessories")
+  .post(updateComputerAccessories);
+router
+  .route("/delete/deleteLaptopPcAccessories")
+  .post(deleteComputerAccessories);
+
 // for cooler fans
-router.route("/fetch/coolerFan").get(getAllCoolerFans);
+router.route("/fetch/coolerFans").get(getAllCoolerFans);
 router.route("/fetch/singleCoolerFan").get(getSingleCoolerFan);
 router.route("/create/coolerFan").post(createCoolerFan);
 router.route("/update/updateCoolerFan").post(updateCoolerFan);
 router.route("/delete/deleteCoolerFan").post(deleteCoolerFan);
 
 // for fridge
-router.route("/fetch/fridge").get(getAllFridgeAc);
-router.route("/fetch/singleFridge").get(getSingleFridgeAc);
-router.route("/create/fridge").post(createFridgeAc);
-router.route("/update/updateFridge").post(updateFridgeAc);
-router.route("/delete/deleteFridge").post(deleteFridgeAc);
+router.route("/fetch/fridgeAC").get(getAllFridgeAc);
+router.route("/fetch/singleFridgeAC").get(getSingleFridgeAc);
+router.route("/create/fridgeAC").post(createFridgeAc);
+router.route("/update/updateFridgeAC").post(updateFridgeAc);
+router.route("/delete/deleteFridgeAC").post(deleteFridgeAc);
 
-// for games and entertainment
-router.route("/fetch/gamesEntertainment").get(getAllcreateGameEntertainment);
-router.route("/fetch/singleGamesEntertainment").get(getSingleGameEntertainment);
-router.route("/create/gamesEntertainment").post(createGameEntertainment);
-router.route("/update/updateGamesEntertainment").post(updateGameEntertainment);
-router.route("/delete/deleteGamesEntertainment").post(deleteGameEntertainment);
+// for otherElectronics
+router.route("/fetch/otherElectronics").get(getAllcreateOtherElectronics);
+router.route("/fetch/singleOtherElectronics").get(getSingleOtherElectronics);
+router.route("/create/OtherElectronics").post(createOtherElectronics);
+router.route("/update/updateOtherElectronics").post(updateOtherElectronics);
+router.route("/delete/deleteOtherElectronics").post(deleteOtherElectronics);
 
 // for kitchen applicances
 
-router.route("/fetch/kitchenAppliance").get(getAllKitchenAppliance);
+router.route("/fetch/kitchenAppliances").get(getAllKitchenAppliance);
 router.route("/fetch/singleKitchenAppliance").get(getSingleKitchenAppliance);
 router.route("/create/kitchenAppliance").post(createKitchenAppliance);
 router.route("/update/updateKitchenAppliance").post(updateKitchenAppliance);
 router.route("/delete/deleteKitchenAppliance").post(deleteKitchenAppliance);
-
-// printer and monitor
-router.route("/fetch/computerAccessories").get(getAllComputerAccessories);
-router
-  .route("/fetch/singleComputerAccessories")
-  .get(getSingleComputerAccessories);
-router.route("/create/computerAccessories").post(createComputerAccessories);
-router
-  .route("/update/updateComputerAccessories")
-  .post(updateComputerAccessories);
-router
-  .route("/delete/deleteComputerAccessories")
-  .post(deleteComputerAccessories);
 
 // for tv
 router.route("/fetch/tv").get(getAllTv);
@@ -458,5 +553,33 @@ router.route("/fetch/singleAccessories").get(getSingleAccessories);
 router.route("/create/accessories").post(createAccessories);
 router.route("/update/updateAccessories").post(updateAccessories);
 router.route("/delete/deleteAccessories").post(deleteAccessories);
+
+//  for services
+router.route("/fetch/services").get(getAllServices);
+router.route("/fetch/singleService").get(getSingleService);
+router.route("/create/service").post(createService);
+router.route("/update/updateService").post(updateService);
+router.route("/delete/deleteService").post(deleteService);
+
+//  for poultry $ birds
+
+//  for chicken
+router.route("/fetch/chickens").get(getAllChickens);
+router.route("/fetch/singleChicken").get(getSingleChicken);
+router.route("/create/chicken").post(createChicken);
+router.route("/update/updateChicken").post(updateChicken);
+router.route("/delete/deleteChicken").post(deleteChicken);
+
+router.route("/fetch/fish").get(getAllFishes);
+router.route("/fetch/singleFish").get(getSingleFish);
+router.route("/create/fish").post(createFish);
+router.route("/update/updateFish").post(updateFish);
+router.route("/delete/deleteFish").post(deleteFish);
+
+router.route("/fetch/birds").get(getAllBirds);
+router.route("/fetch/singleBird").get(getSingleBird);
+router.route("/create/bird").post(createBird);
+router.route("/update/updateBird").post(updateBird);
+router.route("/delete/deleteBird").post(deleteBird);
 
 export default router;

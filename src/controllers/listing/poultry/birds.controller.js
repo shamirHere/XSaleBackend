@@ -1,15 +1,16 @@
 import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 import { Poultry } from "../../../models/category/index.js";
-import { Bird } from "../../../models/listing/poultry/index.js";
+import Bird from "../../../models/listing/poultry/Birds.model.js";
 
 const createBird = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
     name,
-    quantity,
+    quantityType,
     additionalInformation,
     media,
     location,
@@ -17,7 +18,14 @@ const createBird = AsyncHandler(async (req, res) => {
   } = req.body;
   try {
     if (!user) {
-      return res.status(400, user, "id of the user is required");
+      console.log("here");
+      return res
+        .status(400)
+        .json(new ApiResponse(400, user, "id of the user is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -30,13 +38,17 @@ const createBird = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, name, "name of the bird is required"));
-    } else if (!quantity) {
+    } else if (!quantityType) {
       return res
         .status(400)
         .json(
-          new ApiResponse(400, quantity, "quantity of the bird is required")
+          new ApiResponse(
+            400,
+            quantityType,
+            "quantity type of the bird is required"
+          )
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -57,7 +69,6 @@ const createBird = AsyncHandler(async (req, res) => {
       const savedBird = await newBird.save();
       const bird_location_user = await Bird.find(savedBird._id).populate({
         path: "user",
-        populate: { path: "location" },
       });
       const item = new Item({
         item: bird_location_user,

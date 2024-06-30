@@ -1,7 +1,6 @@
 import { AsyncHandler, ApiResponse, ApiError } from "../../utils/index.js";
 import { User } from "../../models/user/index.js";
 import jwt from "jsonwebtoken";
-import admin from "../../firebaseAdmin.js";
 
 const loginUser = AsyncHandler(async (req, res) => {
   const { phoneNumber } = req.body;

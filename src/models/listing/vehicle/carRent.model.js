@@ -6,6 +6,10 @@ const carRentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -19,25 +23,23 @@ const carRentSchema = new mongoose.Schema(
     },
     availibility: {
       type: String,
-      enum: ["24 hours", "only in night", "only in day"],
+      enum: ["24 Hours", "Only in Night", "Only in Day"],
     },
 
     // options only for bus
     seatsInBus: {
       type: Number,
-      required: true,
     },
     isBusAc: {
-      type: Boolean,
+      type: String,
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
-    },
-    askingPrice: {
-      type: Number,
+      type: String,
       required: true,
+    },
+    additionalInformation: {
+      type: String,
     },
     fareKm: {
       type: Number,

@@ -6,16 +6,16 @@ import { Animals } from "../../../models/category/index.js";
 const createCowBuffalo = async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
     breed,
     currentCapacity,
     maximumCapacity,
-    hasDeliverdBaby,
+    hasDeliveredBaby,
     whenDelivered,
-    hasCalf,
+    hasKid,
     isPregnant,
-    monthsPregnant,
     additionalInformation,
     media,
     askingPrice,
@@ -27,6 +27,10 @@ const createCowBuffalo = async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "id of the user is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -49,7 +53,7 @@ const createCowBuffalo = async (req, res) => {
             "maximum capacity the animal is required"
           )
         );
-    } else if (media.length == 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -70,7 +74,7 @@ const createCowBuffalo = async (req, res) => {
       const savedCowBuffalo = await newCowBuffalo.save();
       const animal_location_user = await CowBuffalo.find(
         savedCowBuffalo._id
-      ).populate({ path: "user", populate: { path: "location" } });
+      ).populate({ path: "user" });
       const item = new Item({
         item: animal_location_user,
         location: animal_location_user[0].location,
@@ -207,7 +211,6 @@ const updateCowBuffalo = async (req, res) => {
     whenDelivered,
     hasCalf,
     isPregnant,
-    monthsPregnant,
     addtionalInformation,
     media,
     askingPrice,

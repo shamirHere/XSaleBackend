@@ -1,23 +1,20 @@
-import { ApiError, AsyncHandler } from "../../../utils/index.js";
-import {
-  PropertyRent,
-  Property,
-} from "../../../models/listing/property/index.js";
+import { ApiError, ApiResponse, AsyncHandler } from "../../../utils/index.js";
+import { PropertyRent } from "../../../models/listing/property/index.js";
 import Item from "../../../models/listing/items/items.models.js";
-import { PropertiesRent, Properties } from "../../../models/category/index.js";
+import { PropertiesRent } from "../../../models/category/properties/index.js";
 
 const createPropertyRent = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     type,
-    propertyName,
     bedroom,
     bathroom,
     furnishing,
     listedBy,
     carpetArea,
-    floorInBuilding,
+    totalFloor,
     whichFloor,
     liftAvailable,
     parkingAvailable,
@@ -31,6 +28,10 @@ const createPropertyRent = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -39,14 +40,6 @@ const createPropertyRent = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, type, "type of the property is required"));
-    } else if (!propertyName) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, propertyName, "property name is required"));
-    } else if (!bedroom) {
-      return res
-        .status(400)
-        .json(new ApiResponse(400, bedroom, "no of bedroom is required"));
     } else if (!bathroom) {
       return res
         .status(400)
@@ -59,13 +52,13 @@ const createPropertyRent = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, listedBy, "listed by required"));
-    } else if (!floorInBuilding) {
+    } else if (!totalFloor) {
       return res
         .status(400)
         .json(
           new ApiResponse(
             400,
-            floorInBuilding,
+            totalFloor,
             "floor in building is required required"
           )
         );
@@ -76,6 +69,16 @@ const createPropertyRent = AsyncHandler(async (req, res) => {
           new ApiResponse(
             400,
             whichFloor,
+            "which floor in building is required required"
+          )
+        );
+    } else if (!carpetArea) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(
+            400,
+            carpetArea,
             "which floor in building is required required"
           )
         );
@@ -99,7 +102,7 @@ const createPropertyRent = AsyncHandler(async (req, res) => {
             "parking available in building is required required"
           )
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -122,28 +125,23 @@ const createPropertyRent = AsyncHandler(async (req, res) => {
         savedPropertyRent._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: propertyRent_location_user,
         location: propertyRent_location_user[0].location,
       });
       const savedInItems = await item.save();
-      if (propertyRent_location_user[0].sellingType === "for sale") {
-        const saveInCategory = new Properties({
-          item: propertyRent_location_user,
-          location: propertyRent_location_user[0].location,
-        });
-        const savedInCategory = await saveInCategory.save();
-      } else if (propertyRent_location_user[0].sellingType === "for rent") {
-        const saveInCategory = new PropertiesRent({
-          item: propertyRent_location_user,
-          location: propertyRent_location_user[0].location,
-        });
-        const savedInCategory = await saveInCategory.save();
-      }
+
+      // const saveInCategory = new PropertiesRent({
+      //   item: propertyRent_location_user,
+      //   location: propertyRent_location_user[0].location,
+      // });
+      const saveInCategory = new PropertiesRent({
+        item: propertyRent_location_user,
+        location: propertyRent_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
+
       return res
         .status(200)
         .json(

@@ -6,6 +6,7 @@ import { Bikes } from "../../../models/category/index.js";
 const createSparePart = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     sparePartName,
     additionalInformation,
@@ -18,6 +19,10 @@ const createSparePart = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -35,7 +40,7 @@ const createSparePart = AsyncHandler(async (req, res) => {
           new ApiResponse(
             400,
             additionalInformation,
-            "additional feature is required"
+            "additional information is required"
           )
         );
     } else if (media.lenth === 0) {
@@ -63,9 +68,6 @@ const createSparePart = AsyncHandler(async (req, res) => {
         savedSparePart._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: sparePart_location_user,

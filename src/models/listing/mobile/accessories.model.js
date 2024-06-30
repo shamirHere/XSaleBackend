@@ -6,6 +6,10 @@ const accessoriesSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -22,14 +26,17 @@ const accessoriesSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    monthsOld: {
+      type: Number,
+      required: true,
+    },
     additionalInformation: {
       type: String,
-      required: true,
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,
@@ -39,5 +46,5 @@ const accessoriesSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Accessories = mongoose.model("Acessorries", accessoriesSchema);
+const Accessories = mongoose.model("Accessorries", accessoriesSchema);
 export default Accessories;

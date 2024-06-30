@@ -6,6 +6,10 @@ const tabletSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -20,16 +24,15 @@ const tabletSchema = new mongoose.Schema(
     },
     oldInMonths: {
       type: Number,
-      requried: true,
+      required: true,
     },
     additonalInformation: {
       type: String,
-      required: true,
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

@@ -6,6 +6,10 @@ const fishModel = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -21,11 +25,12 @@ const fishModel = new mongoose.Schema(
     hasFishPound: {
       type: Boolean,
     },
-    sellerType: {
-      type: String,
-    },
     additionalInformation: {
       type: String,
+    },
+    quantityAvailable: {
+      type: Number,
+      required: true,
     },
     quantityType: {
       type: String,
@@ -34,8 +39,8 @@ const fishModel = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

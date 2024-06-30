@@ -6,6 +6,10 @@ const tvSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
@@ -14,7 +18,7 @@ const tvSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    brandModel: {
+    model: {
       type: String,
       required: true,
     },
@@ -25,7 +29,11 @@ const tvSchema = new mongoose.Schema(
     additionalInformation: {
       type: String,
     },
-    media: [{ type: String, requried: true }],
+    location: {
+      type: String,
+      required: true,
+    },
+    media: [{ type: String, required: true }],
     askingPrice: {
       type: Number,
       required: true,

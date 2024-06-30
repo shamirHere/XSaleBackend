@@ -6,12 +6,14 @@ import { Animals } from "../../../models/category/index.js";
 const createDonkey = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     gender,
     age,
     hasDeliveredBaby,
     haFoal,
     isPregnant,
+    additionalInformation,
     media,
     location,
     askingPrice,
@@ -21,6 +23,10 @@ const createDonkey = AsyncHandler(async (req, res) => {
     return res
       .status(400)
       .json(new ApiResponse(400, user, "user id is required"));
+  } else if (!categoryName) {
+    return res
+      .status(400)
+      .json(new ApiResponse(400, categoryName, "category name is required"));
   } else if (!productType) {
     return res
       .status(400)
@@ -59,9 +65,6 @@ const createDonkey = AsyncHandler(async (req, res) => {
       const savedDonkey = await newDonkey.save();
       const donkey_location_user = await Donkey.find(savedDonkey._id).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: donkey_location_user,

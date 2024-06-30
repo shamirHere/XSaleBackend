@@ -1,16 +1,15 @@
 import mongoose from "mongoose";
 
-const propertySchema = new mongoose.Schema(
+const propertySaleSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    sellingType: {
+    categoryName: {
       type: String,
       required: true,
-      enum: ["for selling", "for rent"],
     },
     productType: {
       type: String,
@@ -19,21 +18,21 @@ const propertySchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ["Flat", "House", "Farm House"],
-    },
-    propertyName: {
-      type: String,
-      required: true,
+      enum: [
+        "Flat",
+        "House",
+        "Farm House",
+        "Shop",
+        "Office",
+        "Other commercial property",
+      ],
     },
     bedroom: {
       type: String,
-      required: true,
-      enum: ["1", "2", "3", "4", "5", "5+"],
     },
     bathroom: {
       type: String,
       required: true,
-      enum: ["1", "2", "3", "3+"],
     },
     furnishing: {
       type: String,
@@ -43,16 +42,17 @@ const propertySchema = new mongoose.Schema(
     listedBy: {
       type: String,
       required: true,
-      enum: ["Owner", "Dealer"],
+      enum: ["Owner", "Broker"],
     },
     carpetArea: {
-      type: Number,
-    },
-    floorInBuilding: {
       type: Number,
       required: true,
     },
     whichFloor: {
+      type: Number,
+      required: true,
+    },
+    totalFloor: {
       type: Number,
       required: true,
     },
@@ -71,8 +71,8 @@ const propertySchema = new mongoose.Schema(
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      require: true,
     },
     askingPrice: {
       type: Number,
@@ -81,5 +81,5 @@ const propertySchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const Property = mongoose.model("Property", propertySchema);
+const Property = mongoose.model("PropertySale", propertySaleSchema);
 export default Property;

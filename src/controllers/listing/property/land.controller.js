@@ -1,4 +1,4 @@
-import { ApiError, AsyncHandler } from "../../../utils/index.js";
+import { ApiError, ApiResponse, AsyncHandler } from "../../../utils/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 import { Land } from "../../../models/listing/property/index.js";
 import {
@@ -7,12 +7,14 @@ import {
 } from "../../../models/category/properties/index.js";
 
 const createLand = AsyncHandler(async (req, res) => {
+  console.log("this function called");
   const {
     user,
-    sellingType,
+    categoryName,
     productType,
     type,
     totalArea,
+    measurementType,
     listedBy,
     additionalInformation,
     media,
@@ -24,6 +26,10 @@ const createLand = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -38,11 +44,17 @@ const createLand = AsyncHandler(async (req, res) => {
         .json(
           new ApiResponse(400, totalArea, "total are of the land is required")
         );
+    } else if (!measurementType) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(400, measurementType, "measurement type is required")
+        );
     } else if (!listedBy) {
       return res
         .status(400)
         .json(new ApiResponse(400, listedBy, "listed by is required"));
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -63,28 +75,18 @@ const createLand = AsyncHandler(async (req, res) => {
       const savedLand = await newLand.save();
       const land_location_user = await Land.find(savedLand._id).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: land_location_user,
         location: land_location_user[0].location,
       });
       const savedInItems = await item.save();
-      if (land_location_user[0].sellingType === "for sale") {
-        const saveInCategory = new Properties({
-          item: land_location_user,
-          location: land_location_user[0].location,
-        });
-        const savedInCategory = await saveInCategory.save();
-      } else if (land_location_user[0].sellingType === "for rent") {
-        const saveInCategory = new PropertiesRent({
-          item: land_location_user,
-          location: land_location_user[0].location,
-        });
-        const savedInCategory = await saveInCategory.save();
-      }
+      const saveInCategory = new Properties({
+        item: land_location_user[0],
+        location: land_location_user[0].location,
+      });
+      const savedInCategory = await saveInCategory.save();
+
       return res
         .status(200)
         .json(

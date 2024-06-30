@@ -6,24 +6,28 @@ const bicycleSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
     },
     brand: { type: String, required: true },
     model: { type: String, required: true },
-    isElectric: { type: String, enum: ["yes", "no"], requried: true },
+    isElectric: { type: String, enum: ["yes", "no"], required: true },
     oldInMonths: {
       type: String,
-      requried: true,
+      required: true,
     },
     additionInformation: {
       type: String,
     },
     media: [{ type: String, required: true }],
     location: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
+      type: String,
+      required: true,
     },
     askingPrice: {
       type: Number,

@@ -2,9 +2,11 @@ import { AsyncHandler, ApiResponse } from "../../../utils/index.js";
 import { Bicycle } from "../../../models/listing/bike/index.js";
 import Item from "../../../models/listing/items/items.models.js";
 import { Bikes } from "../../../models/category/index.js";
+
 const createBicycle = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     brand,
     model,
@@ -21,6 +23,10 @@ const createBicycle = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -36,20 +42,12 @@ const createBicycle = AsyncHandler(async (req, res) => {
     } else if (!isElectric) {
       return res
         .status(400)
-        .json(
-          new ApiResponse(
-            400,
-            isElectric,
-            "please send true or false on isElectrice"
-          )
-        );
+        .json(new ApiResponse(400, isElectric, "send yes or no on isElectric"));
     } else if (!oldInMonths) {
       return res
         .status(400)
-        .json(
-          new ApiResponse(400, oldInMonths, "please provide how much month old")
-        );
-    } else if (media.length === 0) {
+        .json(new ApiResponse(400, oldInMonths, "provide how much month old"));
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -61,7 +59,7 @@ const createBicycle = AsyncHandler(async (req, res) => {
         .json(
           new ApiResponse(400, location, "location of the bicycle is required")
         );
-    } else if (askingPrice) {
+    } else if (!askingPrice) {
       return res
         .status(400)
         .json(new ApiResponse(400, askingPrice, "asking price is required"));
@@ -70,11 +68,8 @@ const createBicycle = AsyncHandler(async (req, res) => {
       const savedBicycle = await newBicycle.save();
       const bicycle_location_user = await Bicycle.find(
         savedBicycle._id
-      ).poppulate({
+      ).populate({
         path: "user",
-        poppulate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: bicycle_location_user,
@@ -86,7 +81,6 @@ const createBicycle = AsyncHandler(async (req, res) => {
         location: bicycle_location_user[0].location,
       });
       const savedInCategory = await saveInCategory.save();
-
       return res
         .status(200)
         .json(
@@ -134,9 +128,7 @@ const getSingleBicycle = AsyncHandler(async (req, res) => {
     if (!_id) {
       return res
         .status(400)
-        .json(
-          new ApiResponse(400, _id, "please provide the id of the bicycle")
-        );
+        .json(new ApiResponse(400, _id, "provide the id of the bicycle"));
     }
     const bicycle = await Bicycle.findOne({ _id }).populate({
       path: "user",
@@ -207,9 +199,7 @@ const deleteBicycle = AsyncHandler(async (req, res) => {
     if (!_id) {
       return res
         .send(400)
-        .json(
-          new ApiResponse(400, _id, "please provide the id of the document")
-        );
+        .json(new ApiResponse(400, _id, "provide the id of the document"));
     }
     const deletedBicycle = await Bicycle.findByIdAndDelete(_id);
     if (!deletedBicycle) {

@@ -6,6 +6,7 @@ import { Animals } from "../../../models/category/index.js";
 const createBull = async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     breed,
     age,
@@ -18,6 +19,10 @@ const createBull = async (req, res) => {
   try {
     if (!user) {
       return res.status(400, user, "id of the user is required");
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -30,7 +35,7 @@ const createBull = async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, age, "age of the bull is required"));
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -51,7 +56,6 @@ const createBull = async (req, res) => {
       const savedBull = await newBull.save();
       const bull_location_user = await Bull.find(savedBull._id).populate({
         path: "user",
-        populate: { path: "location" },
       });
       const item = new Item({
         item: bull_location_user,
@@ -110,7 +114,6 @@ const getSingleBull = async (req, res) => {
     }
     const bull = await Bull.findOne({ _id }).populate({
       path: "user",
-      populate: { path: "location" },
     });
     if (!bull) {
       return res

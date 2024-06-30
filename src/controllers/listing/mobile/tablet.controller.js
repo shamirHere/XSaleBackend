@@ -6,6 +6,7 @@ import { Mobiles } from "../../../models/category/index.js";
 const createTablet = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     brand,
     model,
@@ -20,6 +21,10 @@ const createTablet = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -36,17 +41,7 @@ const createTablet = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, oldInMonths, "old in months is required"));
-    } else if (!additionalInformation) {
-      return res
-        .status(400)
-        .json(
-          new ApiResponse(
-            400,
-            oldInMonths,
-            "additional information is required"
-          )
-        );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -69,18 +64,15 @@ const createTablet = AsyncHandler(async (req, res) => {
         savedTablet._id
       ).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: tablet_location_user,
-        location: tablet_location_user[0].location,
+        location: tablet_location_user.location,
       });
       const savedInItems = await item.save();
-      const saveInCategory = new Animals({
+      const saveInCategory = new Mobiles({
         item: tablet_location_user,
-        location: tablet_location_user[0].location,
+        location: tablet_location_user.location,
       });
       const savedInCategory = await saveInCategory.save();
       return res

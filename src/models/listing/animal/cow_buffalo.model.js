@@ -7,13 +7,17 @@ const cow_buffalo_schema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    categoryName: {
+      type: String,
+      required: true,
+    },
     productType: {
       type: String,
       required: [true, "product type is required"],
     },
     type: {
       type: String,
-      enum: ["cow", "buffalo"],
+      enum: ["Cow", "Buffalo"],
       required: [true, "type of the animal is required cow or buffalo"],
     },
     breed: {
@@ -28,23 +32,19 @@ const cow_buffalo_schema = new mongoose.Schema(
       required: [true, "maximum capacity per day is required"],
     },
     hasDeliveredBaby: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     whenDelivered: {
       type: String,
     },
-    hasCalf: {
-      type: Boolean,
-      default: false,
+    hasKid: {
+      type: String,
     },
     isPregnant: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     monthsPregnant: {
       type: Number,
-      default: false,
     },
     additionalInformation: {
       type: String,
@@ -65,9 +65,8 @@ const cow_buffalo_schema = new mongoose.Schema(
     // ],
     media: [{ type: String, required: true }],
     location: {
+      type: String,
       required: true,
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Location",
     },
     askingPrice: {
       type: Number,

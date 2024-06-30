@@ -5,11 +5,12 @@ import { Job } from "../../../models/listing/jobs/index.js";
 const createJob = AsyncHandler(async (req, res) => {
   const {
     user,
+    categoryName,
     productType,
     role,
     jobDescription,
+    jobLocation,
     salaryRange,
-    additionalInformation,
     media,
     location,
   } = req.body;
@@ -19,6 +20,10 @@ const createJob = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, user, "user id is required"));
+    } else if (!categoryName) {
+      return res
+        .status(400)
+        .json(new ApiResponse(400, categoryName, "category name is required"));
     } else if (!productType) {
       return res
         .status(400)
@@ -27,6 +32,12 @@ const createJob = AsyncHandler(async (req, res) => {
       return res
         .status(400)
         .json(new ApiResponse(400, role, "role of the job is required"));
+    } else if (!jobLocation) {
+      return res
+        .status(400)
+        .json(
+          new ApiResponse(400, jobLocation, "location of the job is required")
+        );
     } else if (!jobDescription) {
       return res
         .status(400)
@@ -47,7 +58,7 @@ const createJob = AsyncHandler(async (req, res) => {
             "salary range of the job is required"
           )
         );
-    } else if (media.length === 0) {
+    } else if (!media) {
       return res
         .status(400)
         .json(
@@ -64,13 +75,10 @@ const createJob = AsyncHandler(async (req, res) => {
       const savedJob = await newJob.save();
       const job_location_user = await Job.findById(savedJob._id).populate({
         path: "user",
-        populate: {
-          path: "location",
-        },
       });
       const item = new Item({
         item: job_location_user,
-        location: job_location_user[0].location,
+        location: job_location_user.location,
       });
       const savedInItems = await item.save();
       return res
